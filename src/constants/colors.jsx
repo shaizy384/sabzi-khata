@@ -1,0 +1,8 @@
+export const primaryColor= '[#F4B733]'
+export const secondaryColor= '[#3B3B3B]'
+export const successColor='[#2D9D46]'
+export const successBg='[#F0FFFA]'
+export const dangerColor='[#F34A7C]'
+export const dangerBg='[#FFF5F5]'
+export const alertColor='[#FB7E15]'
+export const alertBg='[#FFF5EB]'

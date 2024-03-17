@@ -1,13 +1,16 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+  .group.active{
+    background-color: #3b3b3b; /* Change to your desired active background color */
+    color: #f4b733; /* Change to your desired active text color */
+  }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+  .group.active svg{
+    background-color: #3b3b3b; /* Change to your desired active background color */
+    color: #f4b733; /* Change to your desired active text color */
+  }
+
+  .w-64 {
+    width: 16rem !important;
+  }
