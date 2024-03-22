@@ -18,10 +18,9 @@ import UserAppSettings from '../pages/appSettings/Index';
 import Notification from '../pages/Notification';
 import BlockedUsers from '../pages/appSettings/BlockedUsers';
 import Signup from '../pages/auth/Signup';
-import SupplierReport from '../pages/SupplierReport/Index';
-import CustomersReport from '../pages/CustomerReport/Index';
 import Products from '../pages/Products/Index';
 import AddSale from '../components/ui/AddSale';
+import GenerateReport from '../pages/GenerateReport';
 const Routers = () => {
     return (
         <>
@@ -113,12 +112,20 @@ const Routers = () => {
                     />
                     <Route
                         path="/supplierreport"
+                        element={<Layout><GenerateReport /></Layout>}
+                    />
+                    <Route
+                        path="/customerreport"
+                        element={<Layout><GenerateReport /></Layout>}
+                    />
+                    {/* <Route
+                        path="/supplierreport"
                         element={<Layout><SupplierReport /></Layout>}
                     />
                     <Route
                         path="/customerreport"
                         element={<Layout><CustomersReport /></Layout>}
-                    />
+                    /> */}
                     <Route
                         path="/userappsettings"
                         element={<Layout><UserAppSettings /></Layout>}
