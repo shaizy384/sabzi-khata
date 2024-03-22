@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import DataTable from 'react-data-table-component';
+import Input from './Input';
+import { successColor } from '../../constants/colors';
 import { useNavigate } from 'react-router';
-import ViewTransactionModal from '../../components/ui/ViewTransactionModal';
-
-const Datatable = () => {
+import ViewTransactionModal from './ViewTransactionModal';
+const TransactionsDatatable = () => {
     const navigate = useNavigate();
     const [selectedFilter, setSelectedFilter] = useState('all');
     const [searchTerm, setSearchTerm] = useState('');
@@ -48,6 +49,7 @@ const Datatable = () => {
             // </button>),
         },
     ];
+
     const data = [
         {
             id: 1,
@@ -111,7 +113,7 @@ const Datatable = () => {
             return row.customer.toLowerCase().includes(searchTerm.toLowerCase());
         });
     return (
-        <div className="sm:mx-10 mx-5 shadow-md mt-2 rounded-xl p-2 bg-white">
+        <div className="mx-10 shadow-md mt-2 rounded-xl p-2 bg-white">
             <DataTable
                 columns={columns}
                 data={filteredData}
@@ -122,4 +124,4 @@ const Datatable = () => {
         </div>
     )
 }
-export default Datatable
+export default TransactionsDatatable

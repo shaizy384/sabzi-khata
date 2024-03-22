@@ -1,5 +1,4 @@
 import React from 'react'
-import ProviderPersonalDetails from '../Supplier/ProviderPersonalDetails'
 import Modal from '../Supplier/Modal'
 import Breadcrumbs from '../../components/ui/Breadcrumbs'
 import SettingsForm from './SettingsForm'

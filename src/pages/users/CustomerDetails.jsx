@@ -1,12 +1,11 @@
 import React from 'react'
 import deUser from "../../assets/svgs/deactivate-user.svg"
 import UserCard from '../../components/ui/UserCard'
-import DisabledInput from './DisabledInput'
-import Datatable from './Datatable'
+import Datatable from '../../components/ui/TransactionsDatatable'
 import Breadcrumbs from '../../components/ui/Breadcrumbs'
 import Modal from './Modal'
 import PersonalDetails from '../../components/ui/PersonalDetails'
-const UserDetails = () => {
+const CustomerDetails = () => {
   return (
     <div className="py-1 rounded-lg bg-gray-50">
       <div className='mx-10 mt-10 flex justify-between'>
@@ -47,4 +46,4 @@ const UserDetails = () => {
   )
 }
 
-export default UserDetails
+export default CustomerDetails

@@ -2,14 +2,11 @@ import React from 'react'
 import Breadcrumbs from '../../components/ui/Breadcrumbs'
 // import deUser from "../../assets/svgs/deactivate-user.svg"
 import UserCard from '../../components/ui/UserCard'
-import DisabledInput from './DisabledInput'
-import Datatable from './Datatable'
 import Modal from './Modal'
-import ProviderPersonalDetails from './ProviderPersonalDetails'
-import ProvideOtherDetails from './ProvideOtherDetails'
 import PersonalDetails from '../../components/ui/PersonalDetails'
+import TransactionsDatatable from '../../components/ui/TransactionsDatatable'
 
-const ProviderDetails = () => {
+const SupplierDetails = () => {
   return (
     <div className="py-1 rounded-lg bg-gray-50">
       <div className='sm:mx-10 mx-5 mt-10 flex justify-between sm:flex-row flex-col'>
@@ -23,7 +20,7 @@ const ProviderDetails = () => {
         </div>
       </div>
       <div className="grid xl:grid-cols-4 md:grid-cols-2 gap-4 mb-4 sm:m-10 m-8">
-        <UserCard value={'02'} label={'Total Vehicle'} Link={'/serviceprovider/serviceproviderdetails/vehicledetails'} />
+        <UserCard value={'02'} label={'Total Vehicle'} Link={'/serviceprovider/serviceSupplierDetails/vehicledetails'} />
         <UserCard value={'500'} label={'Total Orders'} />
         <UserCard value={'09'} label={'Warnings'} />
         <UserCard value={'4.9'} label={'Ratings'} />
@@ -31,9 +28,9 @@ const ProviderDetails = () => {
       {/* <ProviderPersonalDetails /> */}
       <PersonalDetails />
       {/* <ProvideOtherDetails /> */}
-      <Datatable />
+      <TransactionsDatatable />
     </div>
   )
 }
 
-export default ProviderDetails
+export default SupplierDetails

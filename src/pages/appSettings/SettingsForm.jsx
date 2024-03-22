@@ -1,5 +1,4 @@
 import React from 'react'
-import DisabledInput from '../users/DisabledInput'
 import Input from './Input'
 import TextArea from '../../components/ui/TextArea'
 import png_img from '../../assets/svgs/transparent-img.svg'

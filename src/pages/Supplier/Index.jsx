@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import DataTable from 'react-data-table-component';
 import { useNavigate } from 'react-router';
 import ModalAddSupplier from './ModalAddSupplier';
-import AddSaleModal from './AddSaleModal';
+
 const ServiceProvider = () => {
   const navigate = useNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -297,7 +297,6 @@ const ServiceProvider = () => {
         <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">All Suppliers</div>
         <div className="flex gap-2">
           <ModalAddSupplier />
-          {/* <AddSaleModal /> */}
           <button onClick={() => navigate("/addpurchase")} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}>
             Add Purchase
           </button>

@@ -9,12 +9,9 @@ import Dasboard from '../pages/Dashboard';
 import OrderManagement from '../pages/OrderManagement/Index';
 import OrderDetails from '../pages/OrderManagement/OrderDetails';
 import Users from '../pages/users/Index';
-import UserDetails from '../pages/users/UserDetails';
+import CustomerDetails from '../pages/users/CustomerDetails';
 import ServiceProvider from '../pages/Supplier/Index';
-import ProviderDetails from '../pages/Supplier/providerDetails';
-import Addresses from '../pages/users/Addresses';
-import Receiver from '../pages/users/Receiver';
-import VehicleDetails from '../pages/Supplier/VehicleDetails';
+import SupplierDetails from '../pages/Supplier/SupplierDetails';
 import AdminRoles from '../pages/AdminRoles';
 import EditAdminRole from '../pages/AdminRoles/EditAdminRole';
 import UserAppSettings from '../pages/appSettings/Index';
@@ -68,7 +65,7 @@ const Routers = () => {
                     />
                     <Route
                         path="/users/userdetails"
-                        element={<Layout><UserDetails /></Layout>}
+                        element={<Layout><CustomerDetails /></Layout>}
                     />
                     <Route
                         path="/request"
@@ -88,20 +85,20 @@ const Routers = () => {
                     />
                     <Route
                         path="/serviceprovider/serviceproviderdetails"
-                        element={<Layout><ProviderDetails /></Layout>}
+                        element={<Layout><SupplierDetails /></Layout>}
                     />
-                    <Route
+                    {/* <Route
                         path="/serviceprovider/serviceproviderdetails/vehicledetails"
                         element={<Layout><VehicleDetails /></Layout>}
-                    />
-                    <Route
+                    /> */}
+                    {/* <Route
                         path="/users/userdetails/addresses"
                         element={<Layout><Addresses /></Layout>}
-                    />
-                    <Route
+                    /> */}
+                    {/* <Route
                         path="/users/userdetails/receiver"
                         element={<Layout><Receiver /></Layout>}
-                    />
+                    /> */}
                     <Route
                         path="/adminroles"
                         element={<Layout><AdminRoles /></Layout>}
