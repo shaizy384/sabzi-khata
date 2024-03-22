@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import DataTable from 'react-data-table-component';
 import { useNavigate } from 'react-router';
-import ModalAddCustomer from './ModalAddCustomer';
-const Users = () => {
+import ModalAddSupplier from './ModalAddSupplier';
+const SupplierReport = () => {
   const navigate = useNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState('all');
@@ -55,6 +55,7 @@ const Users = () => {
     {
       name: 'Approved/ Disapproved',
       selector: row => (
+
         <label class="relative inline-flex items-center cursor-pointer">
           <input type="checkbox" value="" class="sr-only peer" />
           <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4   rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-colorPrimary"></div>
@@ -63,7 +64,7 @@ const Users = () => {
     },
     {
       name: 'Action',
-      selector: row => (<button onClick={() => navigate('/users/userdetails')} className={`bg-[#2D9D46] hover:bg-[#217E36] text-white font-bold py-2 px-2 rounded`}>
+      selector: row => (<button onClick={() => navigate('/serviceprovider/serviceproviderdetails')} className={`bg-[#2D9D46] hover:bg-[#217E36] text-white font-bold py-2 px-2 rounded`}>
         <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 14">
           <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
             <path d="M10 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
@@ -77,6 +78,7 @@ const Users = () => {
     {
       "picture": "https://dummyimage.com/200x200/000/fff&text=Person+1",
       "name": "John Smith",
+      "email": "john.smith@example.com",
       "address": "SDK",
       "total_amount": "1813",
       "phone": "+1 (555) 123-4567",
@@ -86,6 +88,7 @@ const Users = () => {
     {
       "picture": "https://dummyimage.com/200x200/000/fff&text=Person+2",
       "name": "Jane Doe",
+      "email": "jane.doe@example.com",
       "address": "SDK",
       "total_amount": "1813",
       "phone": "+1 (555) 234-5678",
@@ -95,6 +98,7 @@ const Users = () => {
     {
       "picture": "https://dummyimage.com/200x200/000/fff&text=Person+3",
       "name": "Alex Johnson",
+      "email": "alex.johnson@example.com",
       "address": "SDK",
       "total_amount": "1813",
       "phone": "+1 (555) 345-6789",
@@ -104,6 +108,7 @@ const Users = () => {
     {
       "picture": "https://dummyimage.com/200x200/000/fff&text=Person+4",
       "name": "Emily Davis",
+      "email": "emily.davis@example.com",
       "address": "SDK",
       "total_amount": "1813",
       "phone": "+1 (555) 456-7890",
@@ -113,6 +118,7 @@ const Users = () => {
     {
       "picture": "https://dummyimage.com/200x200/000/fff&text=Person+5",
       "name": "Michael Brown",
+      "email": "michael.brown@example.com",
       "address": "SDK",
       "total_amount": "1813",
       "phone": "+1 (555) 567-8901",
@@ -122,6 +128,7 @@ const Users = () => {
     {
       "picture": "https://dummyimage.com/200x200/000/fff&text=Person+6",
       "name": "Olivia Taylor",
+      "email": "olivia.taylor@example.com",
       "address": "SDK",
       "total_amount": "1813",
       "phone": "+1 (555) 678-9012",
@@ -131,6 +138,7 @@ const Users = () => {
     {
       "picture": "https://dummyimage.com/200x200/000/fff&text=Person+7",
       "name": "Daniel Wilson",
+      "email": "daniel.wilson@example.com",
       "address": "SDK",
       "total_amount": "1813",
       "phone": "+1 (555) 789-0123",
@@ -140,6 +148,7 @@ const Users = () => {
     {
       "picture": "https://dummyimage.com/200x200/000/fff&text=Person+8",
       "name": "Sophia Miller",
+      "email": "sophia.miller@example.com",
       "address": "SDK",
       "total_amount": "1813",
       "phone": "+1 (555) 890-1234",
@@ -149,6 +158,7 @@ const Users = () => {
     {
       "picture": "https://dummyimage.com/200x200/000/fff&text=Person+9",
       "name": "Ethan Martinez",
+      "email": "ethan.martinez@example.com",
       "address": "SDK",
       "total_amount": "1813",
       "phone": "+1 (555) 901-2345",
@@ -158,6 +168,7 @@ const Users = () => {
     {
       "picture": "https://dummyimage.com/200x200/000/fff&text=Person+10",
       "name": "Ava Garcia",
+      "email": "ava.garcia@example.com",
       "address": "SDK",
       "total_amount": "1813",
       "phone": "+1 (555) 012-3456",
@@ -167,6 +178,7 @@ const Users = () => {
     {
       "picture": "https://dummyimage.com/200x200/000/fff&text=Person+11",
       "name": "Matthew Brown",
+      "email": "matthew.brown@example.com",
       "address": "SDK",
       "total_amount": "1813",
       "phone": "+1 (555) 123-4567",
@@ -176,6 +188,7 @@ const Users = () => {
     {
       "picture": "https://dummyimage.com/200x200/000/fff&text=Person+12",
       "name": "Grace Davis",
+      "email": "grace.davis@example.com",
       "address": "SDK",
       "total_amount": "1813",
       "phone": "+1 (555) 234-5678",
@@ -185,6 +198,7 @@ const Users = () => {
     {
       "picture": "https://dummyimage.com/200x200/000/fff&text=Person+13",
       "name": "Noah Taylor",
+      "email": "noah.taylor@example.com",
       "address": "SDK",
       "total_amount": "1813",
       "phone": "+1 (555) 345-6789",
@@ -194,6 +208,7 @@ const Users = () => {
     {
       "picture": "https://dummyimage.com/200x200/000/fff&text=Person+14",
       "name": "Lily Moore",
+      "email": "lily.moore@example.com",
       "address": "SDK",
       "total_amount": "1813",
       "phone": "+1 (555) 456-7890",
@@ -203,6 +218,7 @@ const Users = () => {
     {
       "picture": "https://dummyimage.com/200x200/000/fff&text=Person+15",
       "name": "Carter Johnson",
+      "email": "carter.johnson@example.com",
       "address": "SDK",
       "total_amount": "1813",
       "phone": "+1 (555) 567-8901",
@@ -212,6 +228,7 @@ const Users = () => {
     {
       "picture": "https://dummyimage.com/200x200/000/fff&text=Person+16",
       "name": "Chloe White",
+      "email": "chloe.white@example.com",
       "address": "SDK",
       "total_amount": "1813",
       "phone": "+1 (555) 678-9012",
@@ -221,6 +238,7 @@ const Users = () => {
     {
       "picture": "https://dummyimage.com/200x200/000/fff&text=Person+17",
       "name": "Logan Harris",
+      "email": "logan.harris@example.com",
       "address": "SDK",
       "total_amount": "1813",
       "phone": "+1 (555) 789-0123",
@@ -230,6 +248,7 @@ const Users = () => {
     {
       "picture": "https://dummyimage.com/200x200/000/fff&text=Person+18",
       "name": "Emma Wilson",
+      "email": "emma.wilson@example.com",
       "address": "SDK",
       "total_amount": "1813",
       "phone": "+1 (555) 890-1234",
@@ -239,6 +258,7 @@ const Users = () => {
     {
       "picture": "https://dummyimage.com/200x200/000/fff&text=Person+19",
       "name": "Mason Miller",
+      "email": "mason.miller@example.com",
       "address": "SDK",
       "total_amount": "1813",
       "phone": "+1 (555) 901-2345",
@@ -248,6 +268,7 @@ const Users = () => {
     {
       "picture": "https://dummyimage.com/200x200/000/fff&text=Person+20",
       "name": "Isabella Clark",
+      "email": "isabella.clark@example.com",
       "address": "SDK",
       "total_amount": "1813",
       "phone": "+1 (555) 012-3456",
@@ -272,13 +293,9 @@ const Users = () => {
   return (
     <div className="py-1 rounded-lg bg-gray-50">
       <div className='sm:mx-10 mx-5 mt-10 mb-5 flex justify-between items-center'>
-        <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">All Customers</div>
-        <div className="flex gap-2">
-          <ModalAddCustomer />
-          <button onClick={() => navigate("/addsale")} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}>
-            Add Sale
-          </button>
-        </div>
+        <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">Suppliers Report</div>
+        {/* <ModalAddSupplier /> */}
+        <button className='w-[148px] h-[37px] bg-colorPrimary text-white hover:ring-2 ring-inset hover:bg-white hover:text-colorPrimary hover:ring-colorPrimary rounded-lg text-base'>Generate Report</button>
       </div>
       <div className='mx-10 mt-10 flex'>
         <div className="relative w-11/12">
@@ -300,7 +317,7 @@ const Users = () => {
           <button
             id="dropdownHoverButton"
             data-dropdown-toggle="dropdownHover"
-            data-dropdown-trigger="hover"
+            data-dropdoFwn-trigger="hover"
             className={`text-black bg-white shadow-sm hover:bg-slate-100 focus:ring-2 focus:outline-none focus:ring-colorPrimary focus:ring-offset-colorPrimary font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center relative`}
             onClick={() => setDropdownVisible(!dropdownVisible)}
           >
@@ -371,10 +388,8 @@ const Users = () => {
           customStyles={customStyles}
         />
       </div>
-
-
     </div>
   )
 }
 
-export default Users
+export default SupplierReport

@@ -17,7 +17,7 @@ const EmailForm = () => {
     //       Enter the email address associated with your account and we will send you a link to reset your password.
     // </h3>
     //     <Input type={'email'} logo={email} placeholder={'Email address'}/>
-    //     <button className="mt-6 cursor-pointer group relative flex gap-1.5 justify-center py-4 bg-yellowPrimary sm:w-96 w-full  text-[#f1f1f1] rounded-xl  hover:bg-[#E99F01] transition font-semibold ">
+    //     <button className="mt-6 cursor-pointer group relative flex gap-1.5 justify-center py-4 bg-colorPrimary sm:w-96 w-full  text-[#f1f1f1] rounded-xl  hover:bg-[#E99F01] transition font-semibold ">
     // Continue
     // </button>
     //       </div>
@@ -36,12 +36,12 @@ const EmailForm = () => {
         </h3>
         <Input type={'email'} logo={email} placeholder={'Email address'} />
 
-        <button className="  mt-6 cursor-pointer group relative flex gap-1.5 justify-center py-4 bg-yellowPrimary sm:w-96 w-full bg-opacity-80 text-white rounded-xl  hover:bg-[#E99F01] transition font-bold ">
+        <button className="  mt-6 cursor-pointer group relative flex gap-1.5 justify-center py-4 bg-colorPrimary sm:w-96 w-full bg-opacity-80 text-white rounded-xl  hover:bg-[#E99F01] transition font-bold ">
           Send
         </button>
         <div className="flex justify-center">
           <div className="">
-            <Link to={`/`} className="mt-3 px-2s flex flex-wrap text-yellowPrimary hover:text-[#E99F01] items-center justify-center">
+            <Link to={`/`} className="mt-3 px-2s flex flex-wrap text-colorPrimary hover:text-[#E99F01] items-center justify-center">
               Back to Login
             </Link>
           </div>

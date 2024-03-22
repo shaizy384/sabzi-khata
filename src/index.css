@@ -3,12 +3,12 @@
 @tailwind utilities;
   .group.active{
     background-color: #3b3b3b; /* Change to your desired active background color */
-    color: #f4b733; /* Change to your desired active text color */
+    color: #2cb766; /* Change to your desired active text color */
   }
 
   .group.active svg{
     background-color: #3b3b3b; /* Change to your desired active background color */
-    color: #f4b733; /* Change to your desired active text color */
+    color: #2cb766; /* Change to your desired active text color */
   }
 
   .w-64 {

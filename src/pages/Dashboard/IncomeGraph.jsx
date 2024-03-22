@@ -101,7 +101,7 @@ const IncomeGraph = () => {
                 <YAxis dataKey="income" orientation='right' axisLine={false} />
                 <Tooltip />
                 <Legend />
-                <Line type="linear" dataKey="income" stroke="#F4B733" activeDot={{ r: 8 }} />
+                <Line type="linear" dataKey="income" stroke="#2cb766" activeDot={{ r: 8 }} />
               </LineChart>
             </ResponsiveContainer>
           }

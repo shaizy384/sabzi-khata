@@ -10,17 +10,21 @@ import OrderManagement from '../pages/OrderManagement/Index';
 import OrderDetails from '../pages/OrderManagement/OrderDetails';
 import Users from '../pages/users/Index';
 import UserDetails from '../pages/users/UserDetails';
-import ServiceProvider from '../pages/serviceProvider/Index';
-import ProviderDetails from '../pages/serviceProvider/providerDetails';
+import ServiceProvider from '../pages/Supplier/Index';
+import ProviderDetails from '../pages/Supplier/providerDetails';
 import Addresses from '../pages/users/Addresses';
 import Receiver from '../pages/users/Receiver';
-import VehicleDetails from '../pages/serviceProvider/VehicleDetails';
+import VehicleDetails from '../pages/Supplier/VehicleDetails';
 import AdminRoles from '../pages/AdminRoles';
 import EditAdminRole from '../pages/AdminRoles/EditAdminRole';
 import UserAppSettings from '../pages/appSettings/Index';
 import Notification from '../pages/Notification';
 import BlockedUsers from '../pages/appSettings/BlockedUsers';
 import Signup from '../pages/auth/Signup';
+import SupplierReport from '../pages/SupplierReport/Index';
+import CustomersReport from '../pages/CustomerReport/Index';
+import Products from '../pages/Products/Index';
+import AddSale from '../components/ui/AddSale';
 const Routers = () => {
     return (
         <>
@@ -71,6 +75,14 @@ const Routers = () => {
                         element={<Layout><ServiceProvider /></Layout>}
                     />
                     <Route
+                        path="/addsale"
+                        element={<Layout><AddSale /></Layout>}
+                    />
+                    <Route
+                        path="/addpurchase"
+                        element={<Layout><AddSale /></Layout>}
+                    />
+                    <Route
                         path="/serviceprovider"
                         element={<Layout><ServiceProvider /></Layout>}
                     />
@@ -97,6 +109,18 @@ const Routers = () => {
                     <Route
                         path="/adminroles/edit"
                         element={<Layout><EditAdminRole /></Layout>}
+                    />
+                    <Route
+                        path="/products"
+                        element={<Layout><Products /></Layout>}
+                    />
+                    <Route
+                        path="/supplierreport"
+                        element={<Layout><SupplierReport /></Layout>}
+                    />
+                    <Route
+                        path="/customerreport"
+                        element={<Layout><CustomersReport /></Layout>}
                     />
                     <Route
                         path="/userappsettings"

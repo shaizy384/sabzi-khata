@@ -145,17 +145,17 @@ const CompanyDetails = ({ data, setData, formType, setFormType }) => {
                     <hr className='my-3' />
                     <div className="flex gap-2 justify-end">
                         <button onClick={handleBack} className={`rounded px-5 py-2 bg-white hover:bg-gray-50 border ${loading && "opacity-50 cursor-not-allowed"}`}>Back</button>
-                        <button onClick={handleNext} className={`rounded px-5 py-2 bg-yellowPrimary ${loading && "opacity-50 cursor-not-allowed"}`}>Next</button>
+                        <button onClick={handleNext} className={`rounded px-5 py-2 bg-colorPrimary ${loading && "opacity-50 cursor-not-allowed"}`}>Next</button>
                     </div>
                 </> : <div className='flex flex-col gap-4 my-3'>
                     <div className="flex justify-center align-middle gap-3">
                         <img className='w-9' src={partyPopper} alt="partyPopper" />
-                        <h1 className='text-yellowPrimary font-medium text-2xl'>Congratulations</h1>
+                        <h1 className='text-colorPrimary font-medium text-2xl'>Congratulations</h1>
                         <img className='w-9' src={partyPopper} alt="partyPopper" />
                     </div>
                     <img src={certifiedSuccess} className='h-36' alt="" />
                     <p className='text-gray-400 text-sm text-center'>Your Company has been registered successfully<br />Your will be able to perform operations After verifcations</p>
-                    <NavLink to="/dashboard" className="text-yellowPrimary mx-auto">Go to home page</NavLink>
+                    <NavLink to="/dashboard" className="text-colorPrimary mx-auto">Go to home page</NavLink>
                 </div>}
             </div>
         </div >

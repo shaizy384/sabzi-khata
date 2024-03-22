@@ -89,7 +89,7 @@ const DashboardCards = () => {
 
                     </div>
                     <div className='flex mx-8 items-center my-2'>
-                        <div className='bg-[#F4B733]   text-red p-2 rounded-full w-5 h-5 mr-2'></div>
+                        <div className='bg-[#2cb766]   text-red p-2 rounded-full w-5 h-5 mr-2'></div>
                         <span className='text-lg'>
                             Pending
                         </span>
