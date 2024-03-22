@@ -261,7 +261,7 @@ const OrderManagement = () => {
           <input
             type="search"
             id="rounded-email"
-            className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-10 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-yellowPrimary focus:border-transparent"
+            className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-10 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-colorPrimary focus:border-transparent"
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -272,7 +272,7 @@ const OrderManagement = () => {
             id="dropdownHoverButton"
             data-dropdown-toggle="dropdownHover"
             data-dropdown-trigger="hover"
-            className={`text-black bg-white shadow-sm hover:bg-slate-100 focus:ring-2 focus:outline-none focus:ring-yellowPrimary focus:ring-offset-yellowPrimary font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center relative`}
+            className={`text-black bg-white shadow-sm hover:bg-slate-100 focus:ring-2 focus:outline-none focus:ring-colorPrimary focus:ring-offset-colorPrimary font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center relative`}
             onClick={() => setDropdownVisible(!dropdownVisible)}
           >
             <svg
@@ -298,7 +298,7 @@ const OrderManagement = () => {
                       setSelectedFilter('all');
                       setDropdownVisible(false);
                     }}
-                    className={` w-full block px-4 py-2 hover:bg-gray-100 ${selectedFilter === 'all' ? 'bg-yellowPrimary text-white' : ''
+                    className={` w-full block px-4 py-2 hover:bg-gray-100 ${selectedFilter === 'all' ? 'bg-colorPrimary text-white' : ''
                       }`}
                   >
                     All
@@ -310,7 +310,7 @@ const OrderManagement = () => {
                       setSelectedFilter('active');
                       setDropdownVisible(false);
                     }}
-                    className={` w-full block px-4 py-2 hover:bg-gray-100 ${selectedFilter === 'active' ? 'bg-yellowPrimary text-white' : ''
+                    className={` w-full block px-4 py-2 hover:bg-gray-100 ${selectedFilter === 'active' ? 'bg-colorPrimary text-white' : ''
                       }`}
                   >
                     Active
@@ -322,7 +322,7 @@ const OrderManagement = () => {
                       setSelectedFilter('pending');
                       setDropdownVisible(false);
                     }}
-                    className={`w-full block px-4 py-2 hover:bg-gray-100 ${selectedFilter === 'pending' ? 'bg-yellowPrimary text-white' : ''
+                    className={`w-full block px-4 py-2 hover:bg-gray-100 ${selectedFilter === 'pending' ? 'bg-colorPrimary text-white' : ''
                       }`}
                   >
                     Pending
@@ -334,7 +334,7 @@ const OrderManagement = () => {
                       setSelectedFilter('cancelled');
                       setDropdownVisible(false);
                     }}
-                    className={`w-full block px-4 py-2 hover:bg-gray-100 ${selectedFilter === 'cancelled' ? 'bg-yellowPrimary text-white' : ''
+                    className={`w-full block px-4 py-2 hover:bg-gray-100 ${selectedFilter === 'cancelled' ? 'bg-colorPrimary text-white' : ''
                       }`}
                   >
                     Cancelled

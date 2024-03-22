@@ -19,7 +19,7 @@ const EmailVerficationForm = () => {
       Thank you, check your email for instructions to reset your password
       </h3> 
    <div className='flex justify-center'>
-   <button className="  mt-6 cursor-pointer group relative flex gap-1.5 justify-center py-4 bg-yellowPrimary sm:w-96 w-full bg-opacity-80 text-white rounded-xl  hover:bg-[#E99F01] transition font-bold ">
+   <button className="  mt-6 cursor-pointer group relative flex gap-1.5 justify-center py-4 bg-colorPrimary sm:w-96 w-full bg-opacity-80 text-white rounded-xl  hover:bg-[#E99F01] transition font-bold ">
 Skip Now
 </button>
    </div>

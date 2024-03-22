@@ -46,7 +46,7 @@ const EditAdminRole = () => {
                             id="dropdownHoverButton"
                             data-dropdown-toggle="dropdownHover"
                             data-dropdown-trigger="hover"
-                            className={`lg:w-96 w-full rounded-2xl border border-neutral-300 bg-transparent py-4 px-5 shadow-sm hover:bg-slate-100 focus:ring-2 focus:outline-none focus:ring-yellowPrimary focus:ring-offset-yellowPrimary font-medium text-sm text-center inline-flex items-center relative`}
+                            className={`lg:w-96 w-full rounded-2xl border border-neutral-300 bg-transparent py-4 px-5 shadow-sm hover:bg-slate-100 focus:ring-2 focus:outline-none focus:ring-colorPrimary focus:ring-offset-colorPrimary font-medium text-sm text-center inline-flex items-center relative`}
                             onClick={() => setDropdownVisible(!dropdownVisible)}
                         >
                             Select
@@ -101,7 +101,7 @@ const EditAdminRole = () => {
                         <div className="flex lg:w-96 w-full">
                             {Object.keys(roles).map((keyName, i) => {
                                 console.log("role: ", keyName, i);
-                                return <div className="flex items-baseline rounded-lg bg-yellowPrimary text-white py-1.5 px-3 me-3 mt-3">
+                                return <div className="flex items-baseline rounded-lg bg-colorPrimary text-white py-1.5 px-3 me-3 mt-3">
                                     <span>{roles[keyName]}</span>
                                     <img className='block cursor-pointer ms-2' width={9} src={cross} alt="" onClick={() => handleDeleteRole(keyName)} />
                                 </div>

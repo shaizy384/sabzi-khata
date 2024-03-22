@@ -131,7 +131,7 @@ const SignupForm = ({ data, setData, formType, setFormType }) => {
             <div className="">
               <Link
                 to={`/forgotpassword`}
-                className="cursor-pointer mt-3 px-2s flex flex-wrap text-yellowPrimary hover:text-[#E99F01] items-center justify-center"
+                className="cursor-pointer mt-3 px-2s flex flex-wrap text-colorPrimary hover:text-[#E99F01] items-center justify-center"
               >
                 Forgot password
               </Link>
@@ -139,7 +139,7 @@ const SignupForm = ({ data, setData, formType, setFormType }) => {
           </div>
 
           <button
-            className={`h-12 font-bold mt-3 cursor-pointer group relative flex gap-1.5 items-center justify-center ${loading ? "py-2" : "py-4"}  bg-yellowPrimary sm:w-96 w-full bg-opacity-80 text-white rounded-xl  hover:bg-[#E99F01] transition `}
+            className={`h-12 font-bold mt-3 cursor-pointer group relative flex gap-1.5 items-center justify-center ${loading ? "py-2" : "py-4"}  bg-colorPrimary sm:w-96 w-full bg-opacity-80 text-white rounded-xl  hover:bg-[#E99F01] transition `}
             onClick={() => handleSubmit(data?.email, data?.password)}
           >
             {
@@ -149,7 +149,7 @@ const SignupForm = ({ data, setData, formType, setFormType }) => {
           </button>
           <p className="mt-3 text-center text-sm text-gray-500">
             Already have an account?{' '}
-            <Link to="/" className="font-semibold leading-6 text-yellowPrimary">
+            <Link to="/" className="font-semibold leading-6 text-colorPrimary">
               Log in
             </Link>
           </p>

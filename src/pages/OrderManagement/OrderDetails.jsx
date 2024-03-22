@@ -21,7 +21,7 @@ const OrderDetails = () => {
           <div className="grow md:w-3/6 rounded-2xl bg-white shadow ">
             <div className='flex justify-between m-5'>
               <h1 className='font-semibold'>Parcel Devlivery Details</h1>
-              <h1 className='font-semibold'>Status:<span className='text-yellowPrimary'> Pending</span></h1>
+              <h1 className='font-semibold'>Status:<span className='text-colorPrimary'> Pending</span></h1>
             </div>
             <div className='flex flex-wrap justify-between m-5 gap-3'>
               <DisabledInput label={'Order ID'} value={'#2346254293847'} />

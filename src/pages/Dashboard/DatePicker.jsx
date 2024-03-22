@@ -12,14 +12,14 @@ const DatePickerComponent = ({ onChange }) => {
         minDate: new Date("2023-01-01"),
         theme: {
             background: "bg-white",
-            todayBtn: "bg-yellowPrimary hover:bg-yellow-500 ",
+            todayBtn: "bg-colorPrimary hover:bg-yellow-500 ",
             clearBtn: "",
             icons: "",
             text: "",
             disabledText: "text-gray-400",
-            input: "border bg-white focus:border-yellowPrimary ring-transparent focus:ring-yellowPrimary focus-visible: border-yellowPrimary",
+            input: "border bg-white focus:border-colorPrimary ring-transparent focus:ring-colorPrimary focus-visible: border-colorPrimary",
             inputIcon: "",
-            selected: "bg-yellowPrimary",
+            selected: "bg-colorPrimary",
         },
         icons: {
             // () => ReactElement | JSX.Element

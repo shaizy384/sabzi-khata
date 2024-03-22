@@ -1,4 +1,4 @@
-export const primaryColor= '[#F4B733]'
+export const primaryColor= '[#2cb766]'
 export const secondaryColor= '[#3B3B3B]'
 export const successColor='[#2D9D46]'
 export const successBg='[#F0FFFA]'

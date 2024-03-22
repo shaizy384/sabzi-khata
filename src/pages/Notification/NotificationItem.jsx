@@ -4,7 +4,7 @@ const NotificationItem = ({ title, desc }) => {
     return (
         <div className="w-full flex justify-between items-center bg-white rounded-md shadow-sm p-3 md:pe-6 mb-3">
             <div className="">
-                <h1 className='font-medium text-yellowPrimary text-lg'>{title}</h1>
+                <h1 className='font-medium text-colorPrimary text-lg'>{title}</h1>
                 <h2 className='text-sm'>{desc}</h2>
             </div>
             <div>

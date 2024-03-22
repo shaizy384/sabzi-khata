@@ -6,7 +6,7 @@ const DisabledInput = ({value,label,innerLabel,unitLabel}) => {
     <span className='font-semibold'>{label}</span>
     <div className="relative mt-2">
         { innerLabel&&
-            <span className="text-yellowPrimary  font-semibold absolute top-1 left-4  left-0 ml-2  ">{innerLabel}</span>
+            <span className="text-colorPrimary  font-semibold absolute top-1 left-4  left-0 ml-2  ">{innerLabel}</span>
         }
          { unitLabel&&
             <span className="text-black absolute right-4 top-4 ml-2  ">{unitLabel}</span>

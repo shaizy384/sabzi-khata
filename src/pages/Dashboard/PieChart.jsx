@@ -5,7 +5,7 @@ const data = [
   { name: 'Pending', value: 8 },
   { name: 'Cancelled', value: 2 },
 ];
-const COLORS = ['#2D9D46', '#E63E36', '#F4B733'];
+const COLORS = ['#2D9D46', '#E63E36', '#2cb766'];
 const PieChartComponent = () => {
   return (
     <ResponsiveContainer width="100%" height="50%">

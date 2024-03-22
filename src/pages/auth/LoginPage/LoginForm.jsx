@@ -33,17 +33,17 @@ const LoginForm = () => {
             </label>
           </div>
           <div className="">
-            <Link to={`/updatepassword`} className="cursor-pointer mt-3 px-2s flex flex-wrap text-yellowPrimary hover:text-[#E99F01] items-center justify-center">
+            <Link to={`/updatepassword`} className="cursor-pointer mt-3 px-2s flex flex-wrap text-colorPrimary hover:text-[#E99F01] items-center justify-center">
               Update password
             </Link>
           </div>
         </div>
-        <button className="font-bold mt-6 cursor-pointer group relative flex gap-1.5 justify-center py-4 bg-yellowPrimary sm:w-96 w-full bg-opacity-80 text-white rounded-xl  hover:bg-[#E99F01] transition " onClick={() => { dispatch(login()); navigate("/dashboard") }}>
+        <button className="font-bold mt-6 cursor-pointer group relative flex gap-1.5 justify-center py-4 bg-colorPrimary sm:w-96 w-full bg-opacity-80 text-white rounded-xl  hover:bg-[#219551] transition " onClick={() => { dispatch(login()); navigate("/dashboard") }}>
           Sign In
         </button>
         <p className="mt-3 mb-8 text-center text-sm text-gray-500">
           Not a member?{' '}
-          <Link to="/signup" className="font-semibold leading-6 text-yellowPrimary">
+          <Link to="/signup" className="font-semibold leading-6 text-colorPrimary">
             Sign up
           </Link>
         </p>

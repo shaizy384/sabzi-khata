@@ -6,7 +6,7 @@ import uploadIcon from "../../assets/svgs/upload.svg";
 import { AVAILABLE, NOT_AVAILABLE, RESERVED } from "../../constants/constants";
 import Input from "../../components/ui/Input";
 
-export default function ModalAddCustomer() {
+export default function ModalAddProduct() {
   const fileInpRef = useRef()
   const dispatch = useDispatch()
   const [data, setData] = useState([]);
@@ -62,7 +62,7 @@ export default function ModalAddCustomer() {
   }
   return (
     <>
-      <button onClick={() => setShowModal(true)} className='bg-yellowPrimary items-center justify-between flex hover:bg-opacity-90 text-white hover:ring-2 hover:ring-yellowPrimary ring-inset hover:bg-white hover:text-yellowPrimary py-2 px-5 rounded ml-auto'>Add Customer</button>
+      <button onClick={() => setShowModal(true)} className='w-[128px] h-[37px] bg-colorPrimary text-white hover:ring-2 ring-inset hover:bg-white hover:text-colorPrimary hover:ring-colorPrimary rounded-lg text-base'>Add New</button>
       {showModal ? (
         <>
           <div
