@@ -7,6 +7,7 @@ import Datatable from './Datatable'
 import Modal from './Modal'
 import ProviderPersonalDetails from './ProviderPersonalDetails'
 import ProvideOtherDetails from './ProvideOtherDetails'
+import PersonalDetails from '../../components/ui/PersonalDetails'
 
 const ProviderDetails = () => {
   return (
@@ -27,8 +28,9 @@ const ProviderDetails = () => {
         <UserCard value={'09'} label={'Warnings'} />
         <UserCard value={'4.9'} label={'Ratings'} />
       </div>
-      <ProviderPersonalDetails />
-      <ProvideOtherDetails />
+      {/* <ProviderPersonalDetails /> */}
+      <PersonalDetails />
+      {/* <ProvideOtherDetails /> */}
       <Datatable />
     </div>
   )
