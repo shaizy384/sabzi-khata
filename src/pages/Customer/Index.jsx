@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import DataTable from 'react-data-table-component';
 import { useNavigate } from 'react-router';
 import ModalAddCustomer from './ModalAddCustomer';
-const Users = () => {
+const Customers = () => {
   const navigate = useNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState('all');
@@ -275,7 +275,7 @@ const Users = () => {
         <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">All Customers</div>
         <div className="flex gap-2">
           <ModalAddCustomer />
-          <button onClick={() => navigate("/addsale")} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}>
+          <button onClick={() => navigate("addsale")} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}>
             Add Sale
           </button>
         </div>
@@ -371,10 +371,8 @@ const Users = () => {
           customStyles={customStyles}
         />
       </div>
-
-
     </div>
   )
 }
 
-export default Users
+export default Customers

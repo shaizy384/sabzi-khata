@@ -20,7 +20,7 @@ const SupplierDetails = () => {
         </div>
       </div>
       <div className="grid xl:grid-cols-4 md:grid-cols-2 gap-4 mb-4 sm:m-10 m-8">
-        <UserCard value={'02'} label={'Total Vehicle'} Link={'/serviceprovider/serviceSupplierDetails/vehicledetails'} />
+        <UserCard value={'02'} label={'Total Vehicle'} Link={'/suppliers/supplierdetails/vehicledetails'} />
         <UserCard value={'500'} label={'Total Orders'} />
         <UserCard value={'09'} label={'Warnings'} />
         <UserCard value={'4.9'} label={'Ratings'} />

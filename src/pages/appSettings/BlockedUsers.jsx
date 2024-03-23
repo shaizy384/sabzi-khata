@@ -64,7 +64,7 @@ const BlockedUsers = () => {
         },
         {
             name: 'Action',
-            selector: row => (<button onClick={() => navigate('/serviceprovider/serviceproviderdetails')} className={`bg-[#2D9D46] hover:bg-[#217E36] text-white font-bold py-2 px-2 rounded`}>
+            selector: row => (<button onClick={() => navigate('/suppliers/supplierdetails')} className={`bg-[#2D9D46] hover:bg-[#217E36] text-white font-bold py-2 px-2 rounded`}>
                 <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 14">
                     <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                         <path d="M10 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />

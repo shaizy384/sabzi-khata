@@ -123,7 +123,7 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
                         <p className="text-red-600 text-sm" ref={modErrorRef}></p>
                     </div>
                     <div className="flex justify-end gap-2">
-                        <button onClick={() => navigate(`${pageType === 'addsale' ? '/user' : '/serviceprovider'}`)} className={`bg-gray-400 items-center justify-between flex hover:bg-gray-500 text-white py-2 px-5 rounded`}>
+                        <button onClick={() => navigate(`${pageType === 'addsale' ? '/customers' : '/suppliers'}`)} className={`bg-gray-400 items-center justify-between flex hover:bg-gray-500 text-white py-2 px-5 rounded`}>
                             Cancel
                         </button>
                         <button onClick={() => navigate("/addpurchase")} className={`bg-[#2D9D46] items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded`}>

@@ -8,8 +8,8 @@ import Layout from '../components/layout';
 import Dasboard from '../pages/Dashboard';
 import OrderManagement from '../pages/OrderManagement/Index';
 import OrderDetails from '../pages/OrderManagement/OrderDetails';
-import Users from '../pages/users/Index';
-import CustomerDetails from '../pages/users/CustomerDetails';
+import Customers from '../pages/Customer/Index';
+import CustomerDetails from '../pages/Customer/CustomerDetails';
 import ServiceProvider from '../pages/Supplier/Index';
 import SupplierDetails from '../pages/Supplier/SupplierDetails';
 import AdminRoles from '../pages/AdminRoles';
@@ -59,11 +59,11 @@ const Routers = () => {
                         element={<Layout><OrderDetails /></Layout>}
                     />
                     <Route
-                        path="/users"
-                        element={<Layout><Users /></Layout>}
+                        path="/customers"
+                        element={<Layout><Customers /></Layout>}
                     />
                     <Route
-                        path="/users/userdetails"
+                        path="/customers/customerdetails"
                         element={<Layout><CustomerDetails /></Layout>}
                     />
                     <Route
@@ -71,19 +71,19 @@ const Routers = () => {
                         element={<Layout><ServiceProvider /></Layout>}
                     />
                     <Route
-                        path="/addsale"
+                        path="customers/addsale"
                         element={<Layout><AddSale /></Layout>}
                     />
                     <Route
-                        path="/addpurchase"
+                        path="suppliers/addpurchase"
                         element={<Layout><AddSale /></Layout>}
                     />
                     <Route
-                        path="/serviceprovider"
+                        path="/suppliers"
                         element={<Layout><ServiceProvider /></Layout>}
                     />
                     <Route
-                        path="/serviceprovider/serviceproviderdetails"
+                        path="/suppliers/supplierdetails"
                         element={<Layout><SupplierDetails /></Layout>}
                     />
                     {/* <Route
