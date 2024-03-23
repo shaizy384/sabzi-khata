@@ -94,7 +94,7 @@ const SideBar = () => {
               </NavLink>
             </li> */}
             <li>
-              <NavLink onClick={closeSidebar} to='/users' className={`flex items-center p-2  text-gray-500 rounded-lg hover:text-colorPrimary hover:bg-${secondaryColor} group`}>
+              <NavLink onClick={closeSidebar} to='/customers' className={`flex items-center p-2  text-gray-500 rounded-lg hover:text-colorPrimary hover:bg-${secondaryColor} group`}>
                 <svg
                   className={`flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-colorPrimary`}
                   aria-hidden="true"
@@ -111,7 +111,7 @@ const SideBar = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink onClick={closeSidebar} to='/serviceprovider' className={`flex items-center p-2  text-gray-500 rounded-lg hover:text-colorPrimary hover:bg-${secondaryColor} group`}>
+              <NavLink onClick={closeSidebar} to='/suppliers' className={`flex items-center p-2  text-gray-500 rounded-lg hover:text-colorPrimary hover:bg-${secondaryColor} group`}>
                 <svg
                   className={`flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-colorPrimary`}
                   aria-hidden="true"

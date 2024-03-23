@@ -1,7 +1,7 @@
 import React from 'react'
-import DisabledInput from '../users/DisabledInput'
+import DisabledInput from './DisabledInput'
 
-const ProviderPersonalDetails = () => {
+const PersonalDetails = () => {
   return (
     <div className="shadow-md my-4 rounded-xl p-3 pb-4 bg-white sm:mx-10 mx-8">
       <div className='flex justify-end flex-row m-5'>
@@ -31,4 +31,4 @@ const ProviderPersonalDetails = () => {
   )
 }
 
-export default ProviderPersonalDetails
+export default PersonalDetails

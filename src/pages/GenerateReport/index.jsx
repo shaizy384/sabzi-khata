@@ -1,12 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component';
 import { useNavigate } from 'react-router';
 
-const BlockedUsers = () => {
+const GenerateReport = () => {
     const navigate = useNavigate();
+    const [title, setTitle] = useState('')
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const [selectedFilter, setSelectedFilter] = useState('all');
     const [searchTerm, setSearchTerm] = useState('');
+    useEffect(() => {
+        window.location.href.split("/")[2] === "customerreport" ?
+            setTitle("Customer") :
+            setTitle("Supplier")
+        console.log("Title: ", title);
+    }, [])
     const customStyles = {
         rows: {
             style: {
@@ -29,6 +36,10 @@ const BlockedUsers = () => {
     };
     const columns = [
         {
+            name: 'Account no',
+            selector: row => row.id,
+        },
+        {
             name: 'Picture',
             selector: row => (<img
                 className="ml-5 w-8 h-8 rounded-full"
@@ -45,192 +56,231 @@ const BlockedUsers = () => {
             selector: row => row.phone,
         },
         {
-            name: 'Email',
-            selector: row => row.email,
+            name: 'Address',
+            selector: row => row.address,
         },
         {
-            name: 'Gender',
-            selector: row => row.gender,
-        },
-        {
-            name: 'Date of Birth',
-            selector: row => row.dob,
-        },
-        {
-            name: 'Status',
-            selector: row => (
-                <button className="bg-red-600 items-center justify-between flex hover:bg-red-700 text-white  py-2 px-4 rounded me-2">Blocked</button>
-            ),
-        },
-        {
-            name: 'Action',
-            selector: row => (<button onClick={() => navigate('/suppliers/supplierdetails')} className={`bg-[#2D9D46] hover:bg-[#217E36] text-white font-bold py-2 px-2 rounded`}>
-                <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 14">
-                    <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                        <path d="M10 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                        <path d="M10 13c4.97 0 9-2.686 9-6s-4.03-6-9-6-9 2.686-9 6 4.03 6 9 6Z" />
-                    </g>
-                </svg>
-            </button>),
+            name: 'Total Amount',
+            selector: row => row.total_amount,
         },
     ];
     const data = [
         {
+            id: 1,
             "picture": "https://dummyimage.com/200x200/000/fff&text=Person+1",
             "name": "John Smith",
             "email": "john.smith@example.com",
+            "address": "SDK",
+            "total_amount": "1813",
             "phone": "+1 (555) 123-4567",
             "gender": "Male",
             "dob": "1985-03-10"
         },
         {
+            id: 1,
             "picture": "https://dummyimage.com/200x200/000/fff&text=Person+2",
             "name": "Jane Doe",
             "email": "jane.doe@example.com",
+            "address": "SDK",
+            "total_amount": "1813",
             "phone": "+1 (555) 234-5678",
             "gender": "Female",
             "dob": "1990-07-18"
         },
         {
+            id: 1,
             "picture": "https://dummyimage.com/200x200/000/fff&text=Person+3",
             "name": "Alex Johnson",
             "email": "alex.johnson@example.com",
+            "address": "SDK",
+            "total_amount": "1813",
             "phone": "+1 (555) 345-6789",
             "gender": "Non-binary",
             "dob": "1988-12-05"
         },
         {
+            id: 1,
             "picture": "https://dummyimage.com/200x200/000/fff&text=Person+4",
             "name": "Emily Davis",
             "email": "emily.davis@example.com",
+            "address": "SDK",
+            "total_amount": "1813",
             "phone": "+1 (555) 456-7890",
             "gender": "Female",
             "dob": "1995-01-22"
         },
         {
+            id: 1,
             "picture": "https://dummyimage.com/200x200/000/fff&text=Person+5",
             "name": "Michael Brown",
             "email": "michael.brown@example.com",
+            "address": "SDK",
+            "total_amount": "1813",
             "phone": "+1 (555) 567-8901",
             "gender": "Male",
             "dob": "1982-09-14"
         },
         {
+            id: 1,
             "picture": "https://dummyimage.com/200x200/000/fff&text=Person+6",
             "name": "Olivia Taylor",
             "email": "olivia.taylor@example.com",
+            "address": "SDK",
+            "total_amount": "1813",
             "phone": "+1 (555) 678-9012",
             "gender": "Female",
             "dob": "1993-04-30"
         },
         {
+            id: 1,
             "picture": "https://dummyimage.com/200x200/000/fff&text=Person+7",
             "name": "Daniel Wilson",
             "email": "daniel.wilson@example.com",
+            "address": "SDK",
+            "total_amount": "1813",
             "phone": "+1 (555) 789-0123",
             "gender": "Male",
             "dob": "1987-06-08"
         },
         {
+            id: 1,
             "picture": "https://dummyimage.com/200x200/000/fff&text=Person+8",
             "name": "Sophia Miller",
             "email": "sophia.miller@example.com",
+            "address": "SDK",
+            "total_amount": "1813",
             "phone": "+1 (555) 890-1234",
             "gender": "Female",
             "dob": "1997-11-17"
         },
         {
+            id: 1,
             "picture": "https://dummyimage.com/200x200/000/fff&text=Person+9",
             "name": "Ethan Martinez",
             "email": "ethan.martinez@example.com",
+            "address": "SDK",
+            "total_amount": "1813",
             "phone": "+1 (555) 901-2345",
             "gender": "Male",
             "dob": "1984-02-25"
         },
         {
+            id: 1,
             "picture": "https://dummyimage.com/200x200/000/fff&text=Person+10",
             "name": "Ava Garcia",
             "email": "ava.garcia@example.com",
+            "address": "SDK",
+            "total_amount": "1813",
             "phone": "+1 (555) 012-3456",
             "gender": "Female",
             "dob": "1994-08-12"
         },
         {
+            id: 1,
             "picture": "https://dummyimage.com/200x200/000/fff&text=Person+11",
             "name": "Matthew Brown",
             "email": "matthew.brown@example.com",
+            "address": "SDK",
+            "total_amount": "1813",
             "phone": "+1 (555) 123-4567",
             "gender": "Male",
             "dob": "1986-03-20"
         },
         {
+            id: 1,
             "picture": "https://dummyimage.com/200x200/000/fff&text=Person+12",
             "name": "Grace Davis",
             "email": "grace.davis@example.com",
+            "address": "SDK",
+            "total_amount": "1813",
             "phone": "+1 (555) 234-5678",
             "gender": "Female",
             "dob": "1991-07-25"
         },
         {
+            id: 1,
             "picture": "https://dummyimage.com/200x200/000/fff&text=Person+13",
             "name": "Noah Taylor",
             "email": "noah.taylor@example.com",
+            "address": "SDK",
+            "total_amount": "1813",
             "phone": "+1 (555) 345-6789",
             "gender": "Male",
             "dob": "1989-12-12"
         },
         {
+            id: 1,
             "picture": "https://dummyimage.com/200x200/000/fff&text=Person+14",
             "name": "Lily Moore",
             "email": "lily.moore@example.com",
+            "address": "SDK",
+            "total_amount": "1813",
             "phone": "+1 (555) 456-7890",
             "gender": "Female",
             "dob": "1996-01-28"
         },
         {
+            id: 1,
             "picture": "https://dummyimage.com/200x200/000/fff&text=Person+15",
             "name": "Carter Johnson",
             "email": "carter.johnson@example.com",
+            "address": "SDK",
+            "total_amount": "1813",
             "phone": "+1 (555) 567-8901",
             "gender": "Male",
             "dob": "1983-09-18"
         },
         {
+            id: 1,
             "picture": "https://dummyimage.com/200x200/000/fff&text=Person+16",
             "name": "Chloe White",
             "email": "chloe.white@example.com",
+            "address": "SDK",
+            "total_amount": "1813",
             "phone": "+1 (555) 678-9012",
             "gender": "Female",
             "dob": "1992-05-05"
         },
         {
+            id: 1,
             "picture": "https://dummyimage.com/200x200/000/fff&text=Person+17",
             "name": "Logan Harris",
             "email": "logan.harris@example.com",
+            "address": "SDK",
+            "total_amount": "1813",
             "phone": "+1 (555) 789-0123",
             "gender": "Male",
             "dob": "1988-07-10"
         },
         {
+            id: 1,
             "picture": "https://dummyimage.com/200x200/000/fff&text=Person+18",
             "name": "Emma Wilson",
             "email": "emma.wilson@example.com",
+            "address": "SDK",
+            "total_amount": "1813",
             "phone": "+1 (555) 890-1234",
             "gender": "Female",
             "dob": "1998-11-23"
         },
         {
+            id: 1,
             "picture": "https://dummyimage.com/200x200/000/fff&text=Person+19",
             "name": "Mason Miller",
             "email": "mason.miller@example.com",
+            "address": "SDK",
+            "total_amount": "1813",
             "phone": "+1 (555) 901-2345",
             "gender": "Male",
             "dob": "1985-02-28"
         },
         {
+            id: 1,
             "picture": "https://dummyimage.com/200x200/000/fff&text=Person+20",
             "name": "Isabella Clark",
             "email": "isabella.clark@example.com",
+            "address": "SDK",
+            "total_amount": "1813",
             "phone": "+1 (555) 012-3456",
             "gender": "Female",
             "dob": "1993-08-15"
@@ -252,6 +302,11 @@ const BlockedUsers = () => {
         });
     return (
         <div className="py-1 rounded-lg bg-gray-50">
+            <div className='sm:mx-10 mx-5 mt-10 mb-5 flex justify-between items-center'>
+                <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">{title} Report</div>
+                {/* <ModalAddSupplier /> */}
+                <button className='w-[148px] h-[37px] bg-colorPrimary text-white hover:ring-2 ring-inset hover:bg-white hover:text-colorPrimary hover:ring-colorPrimary rounded-lg text-base'>Generate Report</button>
+            </div>
             <div className='mx-10 mt-10 flex'>
                 <div className="relative w-11/12">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none  focus:border-transparent">
@@ -347,4 +402,4 @@ const BlockedUsers = () => {
     )
 }
 
-export default BlockedUsers
+export default GenerateReport

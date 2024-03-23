@@ -8,23 +8,19 @@ import Layout from '../components/layout';
 import Dasboard from '../pages/Dashboard';
 import OrderManagement from '../pages/OrderManagement/Index';
 import OrderDetails from '../pages/OrderManagement/OrderDetails';
-import Users from '../pages/users/Index';
-import UserDetails from '../pages/users/UserDetails';
+import Customers from '../pages/Customer/Index';
+import CustomerDetails from '../pages/Customer/CustomerDetails';
 import ServiceProvider from '../pages/Supplier/Index';
-import ProviderDetails from '../pages/Supplier/providerDetails';
-import Addresses from '../pages/users/Addresses';
-import Receiver from '../pages/users/Receiver';
-import VehicleDetails from '../pages/Supplier/VehicleDetails';
+import SupplierDetails from '../pages/Supplier/SupplierDetails';
 import AdminRoles from '../pages/AdminRoles';
 import EditAdminRole from '../pages/AdminRoles/EditAdminRole';
 import UserAppSettings from '../pages/appSettings/Index';
 import Notification from '../pages/Notification';
 import BlockedUsers from '../pages/appSettings/BlockedUsers';
 import Signup from '../pages/auth/Signup';
-import SupplierReport from '../pages/SupplierReport/Index';
-import CustomersReport from '../pages/CustomerReport/Index';
 import Products from '../pages/Products/Index';
 import AddSale from '../components/ui/AddSale';
+import GenerateReport from '../pages/GenerateReport';
 const Routers = () => {
     return (
         <>
@@ -63,45 +59,45 @@ const Routers = () => {
                         element={<Layout><OrderDetails /></Layout>}
                     />
                     <Route
-                        path="/users"
-                        element={<Layout><Users /></Layout>}
+                        path="/customers"
+                        element={<Layout><Customers /></Layout>}
                     />
                     <Route
-                        path="/users/userdetails"
-                        element={<Layout><UserDetails /></Layout>}
+                        path="/customers/customerdetails"
+                        element={<Layout><CustomerDetails /></Layout>}
                     />
                     <Route
                         path="/request"
                         element={<Layout><ServiceProvider /></Layout>}
                     />
                     <Route
-                        path="/addsale"
+                        path="customers/addsale"
                         element={<Layout><AddSale /></Layout>}
                     />
                     <Route
-                        path="/addpurchase"
+                        path="suppliers/addpurchase"
                         element={<Layout><AddSale /></Layout>}
                     />
                     <Route
-                        path="/serviceprovider"
+                        path="/suppliers"
                         element={<Layout><ServiceProvider /></Layout>}
                     />
                     <Route
-                        path="/serviceprovider/serviceproviderdetails"
-                        element={<Layout><ProviderDetails /></Layout>}
+                        path="/suppliers/supplierdetails"
+                        element={<Layout><SupplierDetails /></Layout>}
                     />
-                    <Route
+                    {/* <Route
                         path="/serviceprovider/serviceproviderdetails/vehicledetails"
                         element={<Layout><VehicleDetails /></Layout>}
-                    />
-                    <Route
+                    /> */}
+                    {/* <Route
                         path="/users/userdetails/addresses"
                         element={<Layout><Addresses /></Layout>}
-                    />
-                    <Route
+                    /> */}
+                    {/* <Route
                         path="/users/userdetails/receiver"
                         element={<Layout><Receiver /></Layout>}
-                    />
+                    /> */}
                     <Route
                         path="/adminroles"
                         element={<Layout><AdminRoles /></Layout>}
@@ -116,12 +112,20 @@ const Routers = () => {
                     />
                     <Route
                         path="/supplierreport"
+                        element={<Layout><GenerateReport /></Layout>}
+                    />
+                    <Route
+                        path="/customerreport"
+                        element={<Layout><GenerateReport /></Layout>}
+                    />
+                    {/* <Route
+                        path="/supplierreport"
                         element={<Layout><SupplierReport /></Layout>}
                     />
                     <Route
                         path="/customerreport"
                         element={<Layout><CustomersReport /></Layout>}
-                    />
+                    /> */}
                     <Route
                         path="/userappsettings"
                         element={<Layout><UserAppSettings /></Layout>}

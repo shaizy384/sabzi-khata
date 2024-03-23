@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import DataTable from 'react-data-table-component';
+import Input from './Input';
+import { successColor } from '../../constants/colors';
 import { useNavigate } from 'react-router';
-
-const Datatable = () => {
+import ViewTransactionModal from './ViewTransactionModal';
+const TransactionsDatatable = () => {
     const navigate = useNavigate();
     const [selectedFilter, setSelectedFilter] = useState('all');
     const [searchTerm, setSearchTerm] = useState('');
@@ -28,32 +30,26 @@ const Datatable = () => {
     };
     const columns = [
         {
-            name: 'Order Details',
-            selector: row => row.orderdetail,
+            name: 'Date',
+            selector: row => row.date,
         },
         {
-            name: 'Customer',
-            selector: row => row.customer,
+            name: 'Amount',
+            selector: row => row.amount,
         },
         {
-            name: 'Vehicle',
-            selector: row => <div className='font-bold'>{row.vehicle}</div>
-        },
-        {
-            name: 'Price',
-            selector: row => row.price,
-        },
-        {
-            name: 'Order Status',
-            selector: row => (row.orderstatus === 1 ? <div className='text-[#0DA06A] bg-[#F0FFFA] py-2 px-5 rounded-full'> Active</div> : row.orderstatus === 2 ? <div className='text-[#FB7E15] bg-[#FFF5EB] py-2 px-5 rounded-full'>Pending</div> : <div className='text-[#F34A7C] bg-[#FFF5F5] py-2 px-5 rounded-full'>Cancelled</div>),
+            name: 'Transactions',
+            selector: row => row.transactions,
         },
         {
             name: 'Details',
-            selector: row => (<button onClick={() => navigate('/ordermanagement/orderdetails')} className={`bg-[#2D9D46] hover:bg-[#217E36] text-white font-bold py-2 px-4 rounded`}>
-                view
-            </button>),
+            selector: row => (<ViewTransactionModal />),
+            // selector: row => (<button onClick={() => navigate('/ordermanagement/orderdetails')} className={`bg-[#2D9D46] hover:bg-[#217E36] text-white font-bold py-2 px-4 rounded`}>
+            //     view
+            // </button>),
         },
     ];
+
     const data = [
         {
             id: 1,
@@ -62,7 +58,10 @@ const Datatable = () => {
             providedby: 'Furqan',
             vehicle: "ABX 1234",
             price: "$12.00",
-            orderstatus: 1
+            orderstatus: 1,
+            date: "2023-09-05",
+            amount: 1500,
+            transactions: 3
         },
         {
             id: 2,
@@ -71,7 +70,10 @@ const Datatable = () => {
             providedby: 'Furqan',
             vehicle: 'ABX 4312',
             price: "$12.00",
-            orderstatus: 1
+            orderstatus: 1,
+            date: "2023-09-05",
+            amount: 1500,
+            transactions: 3
         },
         {
             id: 3,
@@ -80,7 +82,10 @@ const Datatable = () => {
             providedby: 'Furqan',
             vehicle: 'ABX 4312',
             price: "$12.00",
-            orderstatus: 1
+            orderstatus: 1,
+            date: "2023-09-05",
+            amount: 1500,
+            transactions: 3
         },
         {
             id: 4,
@@ -89,7 +94,10 @@ const Datatable = () => {
             providedby: 'Furqan',
             vehicle: 'ABX 4312',
             price: "$12.00",
-            orderstatus: 1
+            orderstatus: 1,
+            date: "2023-09-05",
+            amount: 1500,
+            transactions: 3
         },
     ]
     const filteredData = data
@@ -105,7 +113,7 @@ const Datatable = () => {
             return row.customer.toLowerCase().includes(searchTerm.toLowerCase());
         });
     return (
-        <div className="sm:mx-10 mx-5 shadow-md mt-2 rounded-xl p-2 bg-white">
+        <div className="mx-10 shadow-md mt-2 rounded-xl p-2 bg-white">
             <DataTable
                 columns={columns}
                 data={filteredData}
@@ -116,4 +124,4 @@ const Datatable = () => {
         </div>
     )
 }
-export default Datatable
+export default TransactionsDatatable
