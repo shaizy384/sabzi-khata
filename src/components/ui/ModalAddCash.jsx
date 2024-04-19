@@ -7,9 +7,7 @@ export default function ModalAddCash() {
   // console.log(path);
   return (
     <>
-      <button onClick={() => setShowModal(true)} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}>
-        Add Product
-      </button>
+      <button onClick={() => setShowModal(true)} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-2 rounded-e text-lg pt-1 leading-none`}>💷</button>
       {showModal ? (
         <>
           <div
@@ -19,9 +17,9 @@ export default function ModalAddCash() {
               {/*content*/}
               <div className="border-0 rounded-3xl shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
-                <div className="flex items-start bg-colorPrimary justify-center p-5 border-b border-solid border-blueGray-200 rounded-t-3xl">
+                <div className="flex items-start bg-colorPrimary justify-center p-5 border-b border-solid border-blueGray-200 rounded-t">
                   <h3 className="text-2xl text-white font-semibold">
-                    Add Product
+                    Payment Recovery
                   </h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-white  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -35,12 +33,12 @@ export default function ModalAddCash() {
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <div class="mb-6">
-                    <label for="default-input" class="block mb-2 text-lg font-bold text-gray-900">Product Name</label>
-                    <input type="text" placeholder="Enter Product Name" id="default-input" class=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" />
+                    <label for="default-input" class="block mb-2 text-lg font-bold text-gray-900">Payable Amount</label>
+                    <input type="text" placeholder="Total Payable Amount" id="default-input" class=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" value={1813} disabled />
                   </div>
                   <div class="mb-6">
-                    <label for="default-input" class="block mb-2 text-lg font-bold text-gray-900">Product Unit</label>
-                    <input type="text" placeholder="kg/pcs" id="default-input" class=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" />
+                    <label for="default-input" class="block mb-2 text-lg font-bold text-gray-900">Pay Amount</label>
+                    <input type="text" placeholder="Enter Pay Amount" id="default-input" class=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" />
                   </div>
                 </div>
                 {/*footer*/}
@@ -51,7 +49,7 @@ export default function ModalAddCash() {
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
-                    Add Product
+                    Pay Amount
                   </button>
                 </div>
               </div>

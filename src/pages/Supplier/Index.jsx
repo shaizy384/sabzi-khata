@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import DataTable from 'react-data-table-component';
 import { useNavigate } from 'react-router';
 import ModalAddSupplier from './ModalAddSupplier';
+import ModalAddCash from '../../components/ui/ModalAddCash';
 
 const ServiceProvider = () => {
   const navigate = useNavigate();
@@ -65,14 +66,12 @@ const ServiceProvider = () => {
     },
     {
       name: 'Action',
-      selector: row => (<button onClick={() => navigate('/suppliers/supplierdetails')} className={`bg-[#2D9D46] hover:bg-[#217E36] text-white font-bold py-2 px-2 rounded`}>
-        <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 14">
-          <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-            <path d="M10 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-            <path d="M10 13c4.97 0 9-2.686 9-6s-4.03-6-9-6-9 2.686-9 6 4.03 6 9 6Z" />
-          </g>
-        </svg>
-      </button>),
+      selector: row => (<div className="flex">
+        <button onClick={() => navigate('/suppliers/supplierdetails')} className={`bg-yellowPrimary text-white font-bold py-2 px-2 rounded-s`}>
+          <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 14"><g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" /><path d="M10 13c4.97 0 9-2.686 9-6s-4.03-6-9-6-9 2.686-9 6 4.03 6 9 6Z" /></g></svg>
+        </button>
+        <ModalAddCash />
+      </div>),
     },
   ];
   const data = [
