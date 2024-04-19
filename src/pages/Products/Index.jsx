@@ -256,6 +256,32 @@ const Products = () => {
       "dob": "1993-08-15"
     }
   ]
+  const products = [
+    {
+      name: "Mango",
+      unit: "kg"
+    },
+    {
+      name: "Onion",
+      unit: "kg"
+    },
+    {
+      name: "Apple",
+      unit: "kg"
+    },
+    {
+      name: "Mango",
+      unit: "kg"
+    },
+    {
+      name: "Banana",
+      unit: "kg"
+    },
+    {
+      name: "Mango",
+      unit: "kg"
+    },
+  ]
 
   const filteredData = data
     .filter((row) => {
@@ -358,17 +384,34 @@ const Products = () => {
           )}
         </div>
       </div>
-      <div className="mx-10 shadow-md mt-2 rounded-xl p-2 bg-white">
-        <DataTable
+      <div className="mx-10 shadow-md mt-2 rounded-xl py-2 px-4 bg-white">
+        {/* <DataTable
           columns={columns}
           data={filteredData}
           pagination
           selectableRowsHighlight
           customStyles={customStyles}
-        />
+        /> */}
+
+        <div className="my-5 flex flex-wrap gap-3">
+          {products?.map(p => {
+            return <div class="w-[18rem] p-6 bg-white border border-gray-200 rounded-lg shadow flex items-center justify-between">
+              <div className="">
+                <a href="#">
+                  <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{p.name}</h5>
+                </a>
+                <p class="mb-3 font-semibold text-gray-600">{p.unit}</p>
+              </div>
+              <div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" value="" class="sr-only peer" />
+                  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4   rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-colorPrimary"></div>
+                </label>
+              </div>
+            </div>
+          })}
+        </div>
       </div>
-
-
     </div>
   )
 }
