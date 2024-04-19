@@ -1,7 +1,7 @@
 import { Input } from "postcss";
 import React from "react";
 
-export default function ModalAddCash() {
+export default function ModalAddProduct() {
   const [showModal, setShowModal] = React.useState(false);
   // const path = window.location.href.split("/")[3]
   // console.log(path);
