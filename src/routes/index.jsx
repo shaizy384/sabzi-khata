@@ -103,7 +103,11 @@ const Routers = () => {
                         element={<Layout><AdminRoles /></Layout>}
                     />
                     <Route
-                        path="/adminroles/edit"
+                        path="/adminroles/edit/:id"
+                        element={<Layout><EditAdminRole /></Layout>}
+                    />
+                    <Route
+                        path="/adminroles/add"
                         element={<Layout><EditAdminRole /></Layout>}
                     />
                     <Route

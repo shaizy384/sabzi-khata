@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import logo from "../../assets/images/sabzi2.png";
-// import logo from "../../assets/images/Sabzi_clean.png";
+import logo from "../../assets/images/veg-cal-logo.png";
+// import logo from "../../assets/images/sabzi2.png";
+// import logo from "../../assets/images/Sabzi_clean.png";veg-cal-logo.png
 // import logo from "../../assets/svgs/logo.svg";
 import notification from "../../assets/svgs/notification.svg";
 import { secondaryColor } from "../../constants/colors";
@@ -57,11 +58,11 @@ const SideBar = () => {
         aria-label="Sidebar"
       >
         <div className="bg-gray-900 h-full px-3 py-4 overflow-y-auto">
-          <NavLink onClick={closeSidebar} to="/" class="flex items-center justify-center pt-5">
-            <img src={logo} class="w-32  m-auto" alt="Flowbite Logo" />
+          <NavLink onClick={closeSidebar} to="/" className="flex items-center justify-center pt-5">
+            <img src={logo} className="w-32  m-auto" alt="Flowbite Logo" />
           </NavLink>
-          <hr class="h-px my-5 bg-gray-800 w-[80%] mx-auto border-0" />
-          <ul class="space-y-2 font-medium">
+          <hr className="h-px my-5 bg-gray-800 w-[80%] mx-auto border-0" />
+          <ul className="space-y-2 font-medium">
             <li>
               <NavLink onClick={closeSidebar} to="/dashboard" className={`flex items-center p-2  text-gray-500 rounded-lg hover:text-colorPrimary hover:bg-[#3B3B3B] group`}>
                 <svg
@@ -219,7 +220,7 @@ const SideBar = () => {
                     Settings
                   </span>
                 </div>
-                <svg class={`w-4 h-4 mr-2 text-gray-500 ${isSettingsOpen ? "text-colorPrimary" : "text-gray-500"} `} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 8">
+                <svg className={`w-4 h-4 mr-2 text-gray-500 ${isSettingsOpen ? "text-colorPrimary" : "text-gray-500"} `} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 8">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1" />
                 </svg>
               </button>

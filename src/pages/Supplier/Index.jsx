@@ -58,9 +58,9 @@ const ServiceProvider = () => {
       name: 'Approved/ Disapproved',
       selector: row => (
 
-        <label class="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox" value="" class="sr-only peer" />
-          <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4   rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-colorPrimary"></div>
+        <label className="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" value="" className="sr-only peer" />
+          <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4   rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-colorPrimary"></div>
         </label>
       ),
     },
@@ -68,7 +68,7 @@ const ServiceProvider = () => {
       name: 'Action',
       selector: row => (<div className="flex">
         <button onClick={() => navigate('/suppliers/supplierdetails')} className={`bg-yellowPrimary text-white font-bold py-2 px-2 rounded-s`}>
-          <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 14"><g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" /><path d="M10 13c4.97 0 9-2.686 9-6s-4.03-6-9-6-9 2.686-9 6 4.03 6 9 6Z" /></g></svg>
+          <svg className="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 14"><g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" /><path d="M10 13c4.97 0 9-2.686 9-6s-4.03-6-9-6-9 2.686-9 6 4.03 6 9 6Z" /></g></svg>
         </button>
         <ModalAddCash />
       </div>),
@@ -292,19 +292,19 @@ const ServiceProvider = () => {
     });
   return (
     <div className="py-1 rounded-lg bg-gray-50">
-      <div className='sm:mx-10 mx-5 mt-10 mb-5 flex justify-between items-center'>
+      <div className='sm:mx-10 mx-5 mt-10 mb-5 flex justify-between items-center flex-wrap gap-3'>
         <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">All Suppliers</div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 ml-auto">
           <ModalAddSupplier />
           <button onClick={() => navigate("addpurchase")} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}>
             Add Purchase
           </button>
         </div>
       </div>
-      <div className='mx-10 mt-10 flex'>
+      <div className='sm:mx-10 mx-5 mt-10 flex'>
         <div className="relative w-11/12">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none  focus:border-transparent">
-            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <svg className="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
             </svg>
           </div>
@@ -383,7 +383,7 @@ const ServiceProvider = () => {
           )}
         </div>
       </div>
-      <div className="mx-10 shadow-md mt-2 rounded-xl p-2 bg-white">
+      <div className="sm:mx-10 mx-5 shadow-md mt-2 rounded-xl p-2 bg-white">
         <DataTable
           columns={columns}
           data={filteredData}

@@ -56,16 +56,16 @@ const Products = () => {
       name: 'Approved/ Disapproved',
       selector: row => (
 
-        <label class="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox" value="" class="sr-only peer" />
-          <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4   rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-colorPrimary"></div>
+        <label className="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" value="" className="sr-only peer" />
+          <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4   rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-colorPrimary"></div>
         </label>
       ),
     },
     {
       name: 'Action',
       selector: row => (<button onClick={() => navigate('/users/userdetails')} className={`bg-[#2D9D46] hover:bg-[#217E36] text-white font-bold py-2 px-2 rounded`}>
-        <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 14">
+        <svg className="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 14">
           <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
             <path d="M10 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
             <path d="M10 13c4.97 0 9-2.686 9-6s-4.03-6-9-6-9 2.686-9 6 4.03 6 9 6Z" />
@@ -298,14 +298,14 @@ const Products = () => {
     });
   return (
     <div className="py-1 rounded-lg bg-gray-50">
-      <div className='sm:mx-10 mx-5 mt-10 mb-5 flex justify-between items-center'>
+      <div className='sm:mx-10 mx-5 mt-10 mb-5 flex justify-between items-center flex-wrap gap-3'>
         <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">All Products</div>
         <ModalAddProduct />
       </div>
-      <div className='mx-10 mt-10 flex'>
+      <div className='sm:mx-10 mx-5 mt-10 flex'>
         <div className="relative w-11/12">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none  focus:border-transparent">
-            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <svg className="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
             </svg>
           </div>
@@ -384,7 +384,7 @@ const Products = () => {
           )}
         </div>
       </div>
-      <div className="mx-10 shadow-md mt-2 rounded-xl py-2 px-4 bg-white">
+      <div className="sm:mx-10 mx-5 shadow-md mt-2 rounded-xl py-2 px-4 bg-white">
         {/* <DataTable
           columns={columns}
           data={filteredData}
@@ -395,17 +395,17 @@ const Products = () => {
 
         <div className="my-5 flex flex-wrap gap-3">
           {products?.map(p => {
-            return <div class="w-[18rem] p-6 bg-white border border-gray-200 rounded-lg shadow flex items-center justify-between">
+            return <div className="w-[18rem] p-6 bg-white border border-gray-200 rounded-lg shadow flex items-center justify-between">
               <div className="">
                 <a href="#">
-                  <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{p.name}</h5>
+                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{p.name}</h5>
                 </a>
-                <p class="mb-3 font-semibold text-gray-600">{p.unit}</p>
+                <p className="mb-3 font-semibold text-gray-600">{p.unit}</p>
               </div>
               <div>
-                <label class="relative inline-flex items-center cursor-pointer">
-                  <input type="checkbox" value="" class="sr-only peer" />
-                  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4   rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-colorPrimary"></div>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" value="" className="sr-only peer" />
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4   rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-colorPrimary"></div>
                 </label>
               </div>
             </div>

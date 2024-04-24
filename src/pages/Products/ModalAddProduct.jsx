@@ -34,13 +34,13 @@ export default function ModalAddProduct() {
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
-                  <div class="mb-6">
-                    <label for="default-input" class="block mb-2 text-lg font-bold text-gray-900">Product Name</label>
-                    <input type="text" placeholder="Enter Product Name" id="default-input" class=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" />
+                  <div className="mb-6">
+                    <label for="default-input" className="block mb-2 text-lg font-bold text-gray-900">Product Name</label>
+                    <input type="text" placeholder="Enter Product Name" id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" />
                   </div>
-                  <div class="mb-6">
-                    <label for="default-input" class="block mb-2 text-lg font-bold text-gray-900">Product Unit</label>
-                    <input type="text" placeholder="kg/pcs" id="default-input" class=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" />
+                  <div className="mb-6">
+                    <label for="default-input" className="block mb-2 text-lg font-bold text-gray-900">Product Unit</label>
+                    <input type="text" placeholder="kg/pcs" id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" />
                   </div>
                 </div>
                 {/*footer*/}

@@ -1,5 +1,6 @@
 import { Input } from "postcss";
 import React from "react";
+import money_icon from '../../assets/svgs/money.svg'
 
 export default function ModalAddCash() {
   const [showModal, setShowModal] = React.useState(false);
@@ -7,7 +8,7 @@ export default function ModalAddCash() {
   // console.log(path);
   return (
     <>
-      <button onClick={() => setShowModal(true)} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-2 rounded-e text-lg pt-1 leading-none`}>💷</button>
+      <button onClick={() => setShowModal(true)} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-2 rounded-e text-lg`}><img src={money_icon} className="w-5 h-5" alt="money" /></button>
       {showModal ? (
         <>
           <div
@@ -32,13 +33,13 @@ export default function ModalAddCash() {
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
-                  <div class="mb-6">
-                    <label for="default-input" class="block mb-2 text-lg font-bold text-gray-900">Payable Amount</label>
-                    <input type="text" placeholder="Total Payable Amount" id="default-input" class=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" value={1813} disabled />
+                  <div className="mb-6">
+                    <label for="default-input" className="block mb-2 text-lg font-bold text-gray-900">Payable Amount</label>
+                    <input type="text" placeholder="Total Payable Amount" id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" value={1813} disabled />
                   </div>
-                  <div class="mb-6">
-                    <label for="default-input" class="block mb-2 text-lg font-bold text-gray-900">Pay Amount</label>
-                    <input type="text" placeholder="Enter Pay Amount" id="default-input" class=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" />
+                  <div className="mb-6">
+                    <label for="default-input" className="block mb-2 text-lg font-bold text-gray-900">Pay Amount</label>
+                    <input type="text" placeholder="Enter Pay Amount" id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" />
                   </div>
                 </div>
                 {/*footer*/}

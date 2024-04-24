@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "sabzi-khata-418710",
+  "private_key_id": "0754a5e3d478251f6b4c005c788669561d28d9ab",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDMAlzq1tFRQbnM\nhBIvN5+xTVVLn3/fYUJCLo0fPPC2HCvY/I/gYMJiuhyg5n0CpxtozZXtRmclWakZ\nLx3AWZleJaFqoaNgTFwwvQxV7E+M89avjUu5yJCOHPpgMDA3bTDKdG1cyE5R4cto\nq2Y8bRoYJlNHWvHzvDJJwzp09nmF9NS476E/bkIa8kMHSyUz7a4jAWpK09vOGdY4\nY7AceA97r08XYpKA2y10P5JE5XCtydwjSnTiXcYohQUfNRmDhoBAx6WjBaXlKG9u\nB92EiSftR/7ZSUyf6A+quxUJBgsZ3lUbHRhkZtWsFyvh4AoR7shEwUdOE6gHCQIV\nV6G1ftj3AgMBAAECggEADUOzNcZHmUF/nNrbw9K+CjZP3N2/KP1N5G6RRmvT72ff\nyx2uhAMh+9zDszA3Bk7YWNCuUbjb2t78ZNCC3iGsHEpnNz8aF7zM/25CJn95xctA\nWaQDYimR9/3Nx2/aqZIz6n8a34c2lP/HqEO4HybSAKpB1aOYJpOzHMeHq8adGm/s\nrxKYcSgGQjnj6NIJ4SeuPX72cUt5RWqL+Vg6Y757jM+d8F93QCipzJtaq5k6XF2L\nQYcyN1dWit8ro2C/9JRttqyjmWILp/XeutQNqObbldjHPzkQ0eRK+aEMxbufTjcW\ndz15Oc58KeyoJWerwJRqAcsWLCAGDuBeOjhwb91iAQKBgQD43pjaa/3eXKcqJtYJ\nVN5StJRdH+i2Vdwu9DPXvDtPcDMX4LXrTLkV8evCSe9gRjB9BdJvAR372C6sCT3U\nBCLvguKFDiX4C4MTlnf7luCc5R4N/y4iH02qnNMMRkuPWEa/ax+3zgneuezx3WXP\ncFRPbC1N+gk9npg2ZevjTAS1QQKBgQDR2rm+zr36AjCAFQC9M+7zlKHAfjD9zJnZ\nbeLKO8uAyFEaetagkO7JtZTpWDVATXH7t2Uw6i9EbkX1gzcqZl+d8bH533o0lBq1\nks2c+Ggt2hInKYb+loq48dttl8H5QoedVy5oN7Kr8bzurR5B9n3s9I9gMcjZ6OVH\nvHpP0PnoNwKBgQDHIZ2ez+Avh2V+ldqXVuAZv0IjjX+wPd1TeLTuvz+Z3YYUagpG\nP3qtc4iYSn6OQztTHlB136f1NtKJd0+QkMq/aLQFkP+SjOuRxck1d1E8WRwGSRPJ\n29BSXu+EF88n4JOjYHzdnrBJFe3gza1EIXZkooNRrGqucnMKu9zWX6I4wQKBgHUw\nhgXOAj05N8hu8ii2dbxExkdusQEqXsgTG1EAL1bNhq0Y5/5msVKnOm9MuQAdv4do\nFPRJ8vdt9VdzXT0qSj8zl8YITIBMLNY1EumTtunUG8sO37oQa4t4VKdQ1hvSUVVG\nOD4uzHJE3tMSjhEcC5plwCNh6d32twNmd49XDhflAoGBALZfet+fKSyE/f3RFByV\n89t5LxLsz1/puxjJmah7jZLMmc11XFX2QNZgMjpmIB0gwwdaIbEVWALFEVo4uCsN\nXB4MEJjpdhMhSQQIytcfZAmEPHHsSl1nKdU1XzLlmVitIBAGtPo/cc+9WjwGwegB\nVwfH0ehDgczyzAvze84G7vLv\n-----END PRIVATE KEY-----\n",
+  "client_email": "shaizy-service-acc@sabzi-khata-418710.iam.gserviceaccount.com",
+  "client_id": "116006010058428636925",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/shaizy-service-acc%40sabzi-khata-418710.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

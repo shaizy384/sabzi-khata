@@ -1,11 +1,43 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import DataTable from 'react-data-table-component';
 import { useNavigate } from 'react-router';
 import ModalAddCustomer from './ModalAddCustomer';
 import ModalAddCash from '../../components/ui/ModalAddCash';
 
+import Tesseract from 'tesseract.js';
+// import vision from '@google-cloud/vision';
+// import * as fs from 'browserfs/dist/fs';
+import axios from 'axios';
+
 const Customers = () => {
+  const fileRef = useRef()
   const navigate = useNavigate();
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [extractedText, setExtractedText] = useState('');
+  // const CREDENTIALS = process.env.REACT_APP_G_CREDENTIALS
+  // const CREDENTIALS = JSON.parse(JSON.stringify({
+  //   "type": "service_account",
+  //   "project_id": "sabzi-khata-418710",
+  //   "private_key_id": "0754a5e3d478251f6b4c005c788669561d28d9ab",
+  //   "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDMAlzq1tFRQbnM\nhBIvN5+xTVVLn3/fYUJCLo0fPPC2HCvY/I/gYMJiuhyg5n0CpxtozZXtRmclWakZ\nLx3AWZleJaFqoaNgTFwwvQxV7E+M89avjUu5yJCOHPpgMDA3bTDKdG1cyE5R4cto\nq2Y8bRoYJlNHWvHzvDJJwzp09nmF9NS476E/bkIa8kMHSyUz7a4jAWpK09vOGdY4\nY7AceA97r08XYpKA2y10P5JE5XCtydwjSnTiXcYohQUfNRmDhoBAx6WjBaXlKG9u\nB92EiSftR/7ZSUyf6A+quxUJBgsZ3lUbHRhkZtWsFyvh4AoR7shEwUdOE6gHCQIV\nV6G1ftj3AgMBAAECggEADUOzNcZHmUF/nNrbw9K+CjZP3N2/KP1N5G6RRmvT72ff\nyx2uhAMh+9zDszA3Bk7YWNCuUbjb2t78ZNCC3iGsHEpnNz8aF7zM/25CJn95xctA\nWaQDYimR9/3Nx2/aqZIz6n8a34c2lP/HqEO4HybSAKpB1aOYJpOzHMeHq8adGm/s\nrxKYcSgGQjnj6NIJ4SeuPX72cUt5RWqL+Vg6Y757jM+d8F93QCipzJtaq5k6XF2L\nQYcyN1dWit8ro2C/9JRttqyjmWILp/XeutQNqObbldjHPzkQ0eRK+aEMxbufTjcW\ndz15Oc58KeyoJWerwJRqAcsWLCAGDuBeOjhwb91iAQKBgQD43pjaa/3eXKcqJtYJ\nVN5StJRdH+i2Vdwu9DPXvDtPcDMX4LXrTLkV8evCSe9gRjB9BdJvAR372C6sCT3U\nBCLvguKFDiX4C4MTlnf7luCc5R4N/y4iH02qnNMMRkuPWEa/ax+3zgneuezx3WXP\ncFRPbC1N+gk9npg2ZevjTAS1QQKBgQDR2rm+zr36AjCAFQC9M+7zlKHAfjD9zJnZ\nbeLKO8uAyFEaetagkO7JtZTpWDVATXH7t2Uw6i9EbkX1gzcqZl+d8bH533o0lBq1\nks2c+Ggt2hInKYb+loq48dttl8H5QoedVy5oN7Kr8bzurR5B9n3s9I9gMcjZ6OVH\nvHpP0PnoNwKBgQDHIZ2ez+Avh2V+ldqXVuAZv0IjjX+wPd1TeLTuvz+Z3YYUagpG\nP3qtc4iYSn6OQztTHlB136f1NtKJd0+QkMq/aLQFkP+SjOuRxck1d1E8WRwGSRPJ\n29BSXu+EF88n4JOjYHzdnrBJFe3gza1EIXZkooNRrGqucnMKu9zWX6I4wQKBgHUw\nhgXOAj05N8hu8ii2dbxExkdusQEqXsgTG1EAL1bNhq0Y5/5msVKnOm9MuQAdv4do\nFPRJ8vdt9VdzXT0qSj8zl8YITIBMLNY1EumTtunUG8sO37oQa4t4VKdQ1hvSUVVG\nOD4uzHJE3tMSjhEcC5plwCNh6d32twNmd49XDhflAoGBALZfet+fKSyE/f3RFByV\n89t5LxLsz1/puxjJmah7jZLMmc11XFX2QNZgMjpmIB0gwwdaIbEVWALFEVo4uCsN\nXB4MEJjpdhMhSQQIytcfZAmEPHHsSl1nKdU1XzLlmVitIBAGtPo/cc+9WjwGwegB\nVwfH0ehDgczyzAvze84G7vLv\n-----END PRIVATE KEY-----\n",
+  //   "client_email": "shaizy-service-acc@sabzi-khata-418710.iam.gserviceaccount.com",
+  //   "client_id": "116006010058428636925",
+  //   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  //   "token_uri": "https://oauth2.googleapis.com/token",
+  //   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  //   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/shaizy-service-acc%40sabzi-khata-418710.iam.gserviceaccount.com",
+  //   "universe_domain": "googleapis.com"
+  // }
+  // ))
+  // const config = {
+  //   crentials: {
+  //     private_key: CREDENTIALS.private_key,
+  //     client_email: CREDENTIALS.client_email,
+  //   }
+  // }
+  // const client = new vision.ImageAnnotatorClient(config)
+  // let result =
+  //   console.log("config: ", config);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
@@ -57,9 +89,9 @@ const Customers = () => {
     {
       name: 'Approved/ Disapproved',
       selector: row => (
-        <label class="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox" value="" class="sr-only peer" />
-          <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4   rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-colorPrimary"></div>
+        <label className="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" value="" className="sr-only peer" />
+          <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4   rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-colorPrimary"></div>
         </label>
       ),
     },
@@ -67,7 +99,7 @@ const Customers = () => {
       name: 'Action',
       selector: row => (<div className="flex">
         <button onClick={() => navigate('/customers/customerdetails')} className={`bg-yellowPrimary text-white font-bold py-2 px-2 rounded-s`}>
-          <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 14"><g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" /><path d="M10 13c4.97 0 9-2.686 9-6s-4.03-6-9-6-9 2.686-9 6 4.03 6 9 6Z" /></g></svg>
+          <svg className="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 14"><g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" /><path d="M10 13c4.97 0 9-2.686 9-6s-4.03-6-9-6-9 2.686-9 6 4.03 6 9 6Z" /></g></svg>
         </button>
         <ModalAddCash />
       </div>),
@@ -256,6 +288,96 @@ const Customers = () => {
     }
   ]
 
+  const handleFile = async (e) => {
+    console.log(e.target.name);
+    console.log("e.target.name");
+    const file = e.target.files[0];
+    console.log("file: ", file);
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    // // setSelectedImage(URL.createObjectURL(file))
+
+    // try {
+    //   const response = await axios.request({
+    //     method: 'POST',
+    //     url: 'https://image-to-text-imgocr-com.p.rapidapi.com/',
+    //     headers: {
+    //       'content-type': 'application/json',
+    //       'X-RapidAPI-Key': 'ad7e1a2d37msh48c9fbeece03444p105f07jsn216a044c2a78',
+    //       'X-RapidAPI-Host': 'image-to-text-imgocr-com.p.rapidapi.com'
+    //     },
+    //     data: {
+    //       image_url: formData
+    //     }
+    //   })
+    //   console.log("extractedText: ", response?.data, response);
+    //   // const response = await axios.post('https://imgocr.com/api', formData, {
+    //   //   headers: {
+    //   //     // Check imgocr.com documentation for any required headers (like API key)
+    //   //   },
+    //   // });
+    //   // const response = await fetch('https://image-to-text-imgocr-com.p.rapidapi.com/', {
+    //   // const response = await fetch('https://imgocr.com/api', {
+    //   //   method: 'POST',
+    //   //   body: formData,
+    //   //   mode: 'cors', // Enable CORS mode (limited effectiveness)
+    //   //   cache: 'no-cache', // Optional for better caching behavior
+    //   // });
+
+    //   // if (!response.ok) {
+    //   //   throw new Error(`API request failed with status: ${response.status}`);
+    //   // }
+
+    //   // const data = await response.json();
+    //   // console.log("extractedText", data, response);
+    //   // setOcrText(response.data.text);
+    // } catch (error) {
+    //   console.error('Error during OCR:', error);
+    // }
+
+    // const [response] = await client.textDetection(selectedImage);
+    // const fullText = response.fullTextAnnotation.text;
+    // setExtractedText(fullText);
+
+    const { data: { text } } = await Tesseract.recognize(file, 'eng');
+
+    // const tbl = parseTextToTable(text)
+    // console.log("extractedText: ", text);
+    const tArr = text.split(" ")
+    // const l = 
+    // for (let i = 0; i < tArr.length; i++) {
+    //   // const element = tArr[i];
+    //   // console.log(tArr[i]);
+    // }
+    console.log("extractedText: ", text);
+
+    // console.log("extractedText: ", text, text.split(" ")[5], text.split(" ")[0].match(/(\d+)/), text.split(" ")[5].match(/(\d+)/)[0]);
+    // console.log("extractedTable: ", tbl);
+    // console.log("tbl: ", tbl);
+    // setImageText(text);
+    // setImage(URL.createObjectURL(file));
+    // setData({ ...data, [e.target.name]: file })
+    // dispatch(uploadFile(file));
+  }
+
+  const handleOcrApi = async () => {
+    try {
+      const response = await axios.post('http://localhost:2805/api/ocr');
+
+      // if (!response.ok) {
+      //   throw new Error(`API request failed with status: ${response.status}`);
+      // }
+
+      // const data = await response.json();
+      console.log("extractedText", data, response);
+      // setOcrText(response.data.text);
+    } catch (error) {
+      console.error('Error during OCR:', error);
+    }
+  }
+
   const filteredData = data
     .filter((row) => {
       // Filter by selected order status
@@ -271,19 +393,24 @@ const Customers = () => {
     });
   return (
     <div className="py-1 rounded-lg bg-gray-50">
-      <div className='sm:mx-10 mx-5 mt-10 mb-5 flex justify-between items-center'>
+      <div className='sm:mx-10 mx-5 mt-10 mb-5 flex justify-between items-center flex-wrap gap-2'>
         <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">All Customers</div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 ml-auto">
           <ModalAddCustomer />
           <button onClick={() => navigate("addsale")} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}>
             Add Sale
           </button>
+          {/* <button onClick={() => { fileRef.current.value = null; fileRef.current.click() }} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}> */}
+          <button onClick={() => { handleOcrApi() }} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}>
+            Upload Image
+          </button>
+          <input type="file" className='sr-only' ref={fileRef} onChange={handleFile} />
         </div>
       </div>
-      <div className='mx-10 mt-10 flex'>
+      <div className='sm:mx-10 mx-5 mt-10 flex'>
         <div className="relative w-11/12">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none  focus:border-transparent">
-            <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <svg className="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
             </svg>
           </div>
@@ -362,7 +489,7 @@ const Customers = () => {
           )}
         </div>
       </div>
-      <div className="mx-10 shadow-md mt-2 rounded-xl p-2 bg-white">
+      <div className="sm:mx-10 mx-5 shadow-md mt-2 rounded-xl p-2 bg-white">
         <DataTable
           columns={columns}
           data={filteredData}

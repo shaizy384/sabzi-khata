@@ -16,9 +16,9 @@ const Input = (props) => {
         value={props.value}
         type={showPass ? 'text' : props.type}
         placeholder={props.placeholder}
-        autocomplete="email"
+        autoComplete="email"
         aria-label="Input"
-        class={`block lg:w-full w-full rounded-2xl border border-neutral-300 bg-transparent py-4 ${props.logo ? "pl-10" : "pl-5"}  text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-yellow-500 focus:outline-none`}
+        className={`block lg:w-full w-full rounded-2xl border border-neutral-300 bg-transparent py-4 ${props.logo ? "pl-10" : "pl-5"}  text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-yellow-500 focus:outline-none`}
       />
       {props.type === 'password' && <div className="absolute inset-y-1 right-4 flex justify-end">
         <button onClick={handleShowPass}>

@@ -66,8 +66,8 @@ const IncomeGraph = () => {
     <>
       <div className="flex flex-col">
         {/* <!-- Dropdown --> */}
-        <div className="mb-3 w-[fit-content]">
-          <select id="countries" class="bg-gray-50 text-gray-900 font-semibold text-xl focus-visible:outline-none block w-full p-2.5" onChange={handleChange}>
+        <div className="mt-3 mb-2 w-[fit-content]">
+          <select id="countries" className="bg-gray-50 text-gray-900 font-semibold text-xl focus-visible:outline-none block w-full p-2.5" onChange={handleChange}>
             <option value="road" selected>Daily Income</option>
             <option value="restuarant">Revinew Income</option>
           </select>

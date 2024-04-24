@@ -1,13 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import notification from "../../assets/svgs/notification.svg";
 import cross from "../../assets/svgs/cross.svg";
 import Input from '../../components/ui/Input';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 const EditAdminRole = () => {
     const navigate = useNavigate();
-    const [roles, setRoles] = useState({ user: 'User', userSettings: 'User settings' });
+    const { id } = useParams()
+    const [data, setData] = useState({ name: '', email: '' });
+    const [roles, setRoles] = useState({});
     const [dropdownVisible, setDropdownVisible] = useState(false);
+
+    useEffect(() => {
+        if (!id) return;
+        setData({ name: 'Shahzaib', email: 'new@brand.com' })
+        setRoles({ dashboard: 'dashboard', customer: 'customer' })
+    }, [id])
 
     const handleAddRole = (name, e) => {
         setRoles({ ...roles, [e.target.name]: name })
@@ -21,7 +29,7 @@ const EditAdminRole = () => {
     }
 
     const handleSubmit = () => {
-        console.log(roles);
+        console.log({ ...data, ...roles });
     }
     const handleCancel = () => {
         navigate('/adminroles');
@@ -36,8 +44,8 @@ const EditAdminRole = () => {
             </div>
             <div className="h-full mx-10 shadow my-2 rounded-2xl py-5 px-12 bg-white">
                 <div className="flex flex-wrap lg:justify-between justify-center mb-6">
-                    <Input type={'name'} value={'Shahzaib'} label={'Name'} />
-                    <Input type={'email'} value={'new@brand.com'} label={'Email'} />
+                    <Input type={'name'} value={data.name} label={'Name'} />
+                    <Input type={'email'} value={data.email} label={'Email'} />
                     <Input type={'text'} value={'290888890'} label={'Password'} />
 
                     <div className="relative mt-6 lg:w-[auto] w-full">
@@ -60,38 +68,56 @@ const EditAdminRole = () => {
                                 <ul className="py-2 text-sm text-gray-700" aria-labelledby="dropdownHoverButton">
                                     <li>
                                         <button
-                                            name="user"
-                                            onClick={(e) => handleAddRole('User', e)}
+                                            name="dashboard"
+                                            onClick={(e) => handleAddRole('dashboard', e)}
                                             className={`flex sm:w-96 w-full py-3 px-5 hover:bg-gray-100`}
                                         >
-                                            User
+                                            Dashboard
                                         </button>
                                     </li>
                                     <li>
                                         <button
-                                            name="userSettings"
-                                            onClick={(e) => handleAddRole('User settings', e)}
+                                            name="customer"
+                                            onClick={(e) => handleAddRole('customer', e)}
                                             className={`flex sm:w-96 w-full py-3 px-5 hover:bg-gray-100`}
                                         >
-                                            User settings
+                                            Customer
                                         </button>
                                     </li>
                                     <li>
                                         <button
-                                            name="provider"
-                                            onClick={(e) => handleAddRole('Provider', e)}
+                                            name="supplier"
+                                            onClick={(e) => handleAddRole('supplier', e)}
                                             className={`flex sm:w-96 w-full py-3 px-5 hover:bg-gray-100`}
                                         >
-                                            Provider
+                                            Supplier
                                         </button>
                                     </li>
                                     <li>
                                         <button
-                                            name="providerSettings"
-                                            onClick={(e) => handleAddRole('Provider settings', e)}
+                                            name="product"
+                                            onClick={(e) => handleAddRole('product', e)}
                                             className={`flex sm:w-96 w-full py-3 px-5 hover:bg-gray-100`}
                                         >
-                                            Provider settings
+                                            Products
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button
+                                            name="customer_report"
+                                            onClick={(e) => handleAddRole('customer_report', e)}
+                                            className={`flex sm:w-96 w-full py-3 px-5 hover:bg-gray-100`}
+                                        >
+                                            Customer Report                                                                                                                                 
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button
+                                            name="supplier_report"
+                                            onClick={(e) => handleAddRole('supplier_report', e)}
+                                            className={`flex sm:w-96 w-full py-3 px-5 hover:bg-gray-100`}
+                                        >
+                                            Supplier Report
                                         </button>
                                     </li>
                                 </ul>
@@ -102,7 +128,7 @@ const EditAdminRole = () => {
                             {Object.keys(roles).map((keyName, i) => {
                                 console.log("role: ", keyName, i);
                                 return <div className="flex items-baseline rounded-lg bg-colorPrimary text-white py-1.5 px-3 me-3 mt-3">
-                                    <span>{roles[keyName]}</span>
+                                    <span className='capitalize'>{roles[keyName]}</span>
                                     <img className='block cursor-pointer ms-2' width={9} src={cross} alt="" onClick={() => handleDeleteRole(keyName)} />
                                 </div>
                             })}

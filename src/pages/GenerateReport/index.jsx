@@ -302,15 +302,15 @@ const GenerateReport = () => {
         });
     return (
         <div className="py-1 rounded-lg bg-gray-50">
-            <div className='sm:mx-10 mx-5 mt-10 mb-5 flex justify-between items-center'>
+            <div className='sm:mx-10 mx-5 mt-10 mb-5 flex justify-between items-center flex-wrap gap-3'>
                 <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">{title} Report</div>
                 {/* <ModalAddSupplier /> */}
                 <button className='w-[148px] h-[37px] bg-colorPrimary text-white hover:ring-2 ring-inset hover:bg-white hover:text-colorPrimary hover:ring-colorPrimary rounded-lg text-base'>Generate Report</button>
             </div>
-            <div className='mx-10 mt-10 flex'>
+            <div className='sm:mx-10 mx-5 mt-10 flex'>
                 <div className="relative w-11/12">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none  focus:border-transparent">
-                        <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <svg className="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                         </svg>
                     </div>
@@ -389,7 +389,7 @@ const GenerateReport = () => {
                     )}
                 </div>
             </div>
-            <div className="mx-10 shadow-md mt-2 rounded-xl p-2 bg-white">
+            <div className="sm:mx-10 mx-5 shadow-md mt-2 rounded-xl p-2 bg-white">
                 <DataTable
                     columns={columns}
                     data={filteredData}

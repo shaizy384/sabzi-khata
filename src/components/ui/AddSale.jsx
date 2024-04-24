@@ -146,7 +146,7 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
     }
     return (
         <div className="py-1 rounded-lg bg-gray-50">
-            <div className='sm:mx-10 mx-5 mt-10 mb-5 flex justify-between items-center'>
+            <div className='sm:mx-10 mx-5 mt-10 mb-5 flex justify-between items-center flex-wrap gap-3'>
                 <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">Add {pageType}</div>
             </div>
             <div className="mx-10 shadow-md mt-2 rounded-xl p-2 bg-white">

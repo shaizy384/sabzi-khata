@@ -52,7 +52,7 @@ const AdminRoles = () => {
         {
             name: 'Actions',
             selector: row => (<div className='flex'>
-                <button onClick={() => navigate('/adminroles/edit')} className={`bg-cyan-500 hover:bg-cyan-600 text-white font-bold py- p-2.5 rounded-xl me-2`}>
+                <button onClick={() => navigate('/adminroles/edit/1')} className={`bg-cyan-500 hover:bg-cyan-600 text-white font-bold py- p-2.5 rounded-xl me-2`}>
                     <img src={edit} width={18.5} alt="edit" />
                 </button>
                 <button onClick={() => navigate('/ordermanagement/orderdetails')} className={`bg-rose-500 hover:bg-rose-600 text-white font-bold py- p-2.5 rounded-xl`}>
@@ -83,7 +83,7 @@ const AdminRoles = () => {
     return (
         <div className="py-1 rounded-lg bg-gray-50">
             <div className='mx-10 mt-10 mb-5'>
-                <button className={`bg-green-500 items-center justify-between flex hover:bg-green-600 text-white py-2 px-4 pr-9 ms-auto rounded`}>
+                <button onClick={() => navigate('/adminroles/add')} className={`bg-green-500 items-center justify-between flex hover:bg-green-600 text-white py-2 px-4 pr-9 ms-auto rounded`}>
                     <img className='mr-2' src={notification} width={19} alt="notification" />
                     <span className=''>Create new Admin Role</span>
                 </button>
