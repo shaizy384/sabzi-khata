@@ -9,6 +9,7 @@ module.exports = {
       colors: {
         yellowPrimary: "#F4B733",
         colorPrimary: "#2cb766",
+        hoverPrimary: "#2cb766f0",
         colorSecondary: "#F4B733",
       }
     },

@@ -1,16 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-  .group.active{
-    background-color: #3b3b3b; /* Change to your desired active background color */
-    color: #2cb766; /* Change to your desired active text color */
-  }
 
-  .group.active svg{
-    background-color: #3b3b3b; /* Change to your desired active background color */
-    color: #2cb766; /* Change to your desired active text color */
-  }
+.group.active {
+  /* background-color: #3b3b3b;
+  color: #2cb766; */
+  background-color: #2cb766;
+  color: white;
+}
 
-  .w-64 {
-    width: 16rem !important;
-  }
+.group.active svg {
+  /* background-color: #3b3b3b; */
+  /* color: #2cb766; */
+  background-color: #2cb766;
+  color: white;
+}
+
+.w-64 {
+  width: 16rem !important;
+}
