@@ -18,8 +18,10 @@ const Layout = ({ children }) => {
       <SideBar />
       <div className="sm:ml-64 bg-gray-50">
         <NavBar />
-        {children}
-        {/* <OrderManagement/> */}
+        <div className="h-screen bg-gray-50">
+          {children}
+          {/* <OrderManagement/> */}
+        </div>
       </div>
     </>
   )
