@@ -41,11 +41,11 @@ const NavBar = () => {
             <div className="flex items-center">
               <img
                 className="w-8 h-8 rounded-full"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
                 alt="user photo"
               />
               <span className="block text-sm text-gray-900 font-medium ms-2">
-                Bonnie Green
+                Shahzaib Qasim
               </span>
             </div>
             <div className="ms-4">
@@ -74,10 +74,10 @@ const NavBar = () => {
           >
             <div className="px-4 py-3" onClick={() => closeDropdown()} >
               <span className="block text-sm text-gray-900 truncate">
-                Bonnie Green
+                Shahzaib Qasim
               </span>
               <span className="block text-sm text-gray-500 truncate">
-                name@flowbite.com
+                shahzaib@gmail.com
               </span>
             </div>
             <ul className="py-2" aria-labelledby="user-menu-button">

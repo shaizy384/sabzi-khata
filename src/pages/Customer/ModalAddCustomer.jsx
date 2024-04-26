@@ -6,7 +6,7 @@ import uploadIcon from "../../assets/svgs/upload.svg";
 import { AVAILABLE, NOT_AVAILABLE, RESERVED } from "../../constants/constants";
 import Input from "../../components/ui/Input";
 
-export default function ModalAddCustomer() {
+export default function ModalAddCustomer({ id }) {
   const fileInpRef = useRef()
   const dispatch = useDispatch()
   const [data, setData] = useState([]);
@@ -62,7 +62,11 @@ export default function ModalAddCustomer() {
   }
   return (
     <>
-      <button onClick={() => setShowModal(true)} className='bg-yellowPrimary items-center justify-between flex hover:bg-opacity-90 text-white hover:ring-2 hover:ring-yellowPrimary ring-inset hover:bg-white hover:text-yellowPrimary py-2 px-5 rounded ml-auto'>Add Customer</button>
+      {!id ? <button onClick={() => setShowModal(true)} className='bg-yellowPrimary items-center justify-between flex hover:bg-opacity-90 text-white hover:ring-2 hover:ring-yellowPrimary ring-inset hover:bg-white hover:text-yellowPrimary py-2 px-5 rounded ml-auto'>Add Customer</button> :
+        <abbr title="Update Customer"><svg className='cursor-pointer' onClick={() => setShowModal(true)} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M18 17.153H2V1.99599H10V0.101362H0V19.0476H20V9.57448H18V17.153ZM6 9.47597L15.839 0L20 3.91904L9.842 13.3637H6V9.47597Z" fill="#2cb766" />
+        </svg></abbr>
+      }
       {showModal ? (
         <>
           <div
@@ -88,7 +92,7 @@ export default function ModalAddCustomer() {
 
                       </span>
                       <span>
-                        <h3 className="font-medium leading-tight">Driver’s Profile Picture</h3>
+                        <h3 className="font-medium leading-tight">Customer’s Profile Picture</h3>
                       </span>
                     </li>
                     <li onClick={() => setModalPage('details')} className={"flex items-center text-gray-400 space-x-3 rtl:space-x-reverse " + (modalPage !== 'picture' && 'text-colorPrimary cursor-pointer')}>
@@ -98,7 +102,7 @@ export default function ModalAddCustomer() {
                         </svg>
                       </span>
                       <span>
-                        <h3 className="font-medium leading-tight">Driver’s Personal Details</h3>
+                        <h3 className="font-medium leading-tight">Customer’s Personal Details</h3>
                       </span>
                     </li>
                     {/* <li className={"flex items-center text-gray-400 space-x-3 rtl:space-x-reverse " + (modalPage === 'documents' && 'text-colorPrimary')}>

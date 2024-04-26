@@ -401,10 +401,11 @@ const Customers = () => {
             Add Sale
           </button>
           {/* <button onClick={() => { fileRef.current.value = null; fileRef.current.click() }} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}> */}
-          <button onClick={() => { handleOcrApi() }} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}>
+          {/* --- Upload Image --- */}
+          {/* <button onClick={() => { handleOcrApi() }} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}>
             Upload Image
           </button>
-          <input type="file" className='sr-only' ref={fileRef} onChange={handleFile} />
+          <input type="file" className='sr-only' ref={fileRef} onChange={handleFile} /> */}
         </div>
       </div>
       <div className='sm:mx-10 mx-5 mt-10 flex'>

@@ -1,7 +1,8 @@
 import React from 'react'
 // import logo from "../../assets/svgs/logo.svg"
 // import logo from "../../assets/images/sabzi2.png"
-import logo from "../../assets/images/veg-cal-logo3.png";
+// import logo from "../../assets/images/veg-cal-logo3.png";
+import logo from "../../assets/images/veg-cal-logo4.png";
 const AuthBanner = () => {
   return (
     <>

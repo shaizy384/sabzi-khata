@@ -12,13 +12,13 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
     const navigate = useNavigate()
     const params = useParams()
     const [pageType, setPageType] = useState("");
-    console.log("params:", params, window.location.href.split("/")[3]);
     useEffect(() => {
-        window.location.href.split("/")[3] === "addsale" ?
+        window.location.href.split("/")[4] === "addsale" ?
             setPageType("Sale") :
             setPageType("Purchase")
         console.log("pageType: ", pageType);
     }, [])
+    console.log("params:", params, window.location.href.split("/")[3],pageType);
     const [searchCustomer, setSearchCustomer] = useState("");
     const [searchProduct, setSearchProduct] = useState("");
     const [showModal, setShowModal] = useState(false);
@@ -151,7 +151,7 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
             </div>
             <div className="mx-10 shadow-md mt-2 rounded-xl p-2 bg-white">
                 <div className="relative p-6 flex-auto">
-                    <label htmlFor="default-input" className="block mb-2 text-lg font-semibold text-gray-900">Select {pageType === "addsale" ? 'Customer' : 'Supplier'}</label>
+                    <label htmlFor="default-input" className="block mb-2 text-lg font-semibold text-gray-900">Select {pageType === "Sale" ? 'Customer' : 'Supplier'}</label>
                     <div className="relative mt-2 mb-6">
                         <input type="text" className="relative w-full rounded-md bg-white py-2.5 pl-2.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-colorPrimary sm:text-base sm:leading-" aria-haspopup="listbox" aria-expanded="true" placeholder="Search Customer" aria-labelledby="listbox-label" onFocus={handleBrandList} value={searchCustomer} onChange={e => setSearchCustomer(capitalizeFirstLetter(e.target.value))} />
                         <p className="text-red-600 text-sm" ref={brandErrorRef}></p>

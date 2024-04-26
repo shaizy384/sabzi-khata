@@ -3,6 +3,7 @@ import notification from "../../assets/svgs/notification.svg";
 import cross from "../../assets/svgs/cross.svg";
 import Input from '../../components/ui/Input';
 import { useNavigate, useParams } from 'react-router';
+import UpdatePassModal from './UpdatePassModal';
 
 const EditAdminRole = () => {
     const navigate = useNavigate();
@@ -37,10 +38,13 @@ const EditAdminRole = () => {
     return (
         <div className="py-1 rounded-lg bg-gray-50">
             <div className='mx-10 mt-10 mb-5'>
-                <button className={`bg-green-500 items-center justify-between flex hover:bg-green-600 text-white py-2 px-4 pr-9 ms-auto rounded`}>
-                    <img className='mr-2' src={notification} width={19} alt="notification" />
-                    <span>Create new Admin Role</span>
-                </button>
+                <div className='flex justify-end'>
+                    {<UpdatePassModal id={1} />}
+                    <button className={`bg-green-500 items-center justify-between flex hover:bg-green-600 text-white py-2 px-4 rounded`}>
+                        {/* <img className='mr-2' src={notification} width={19} alt="notification" /> */}
+                        <span>Create new Admin Role</span>
+                    </button>
+                </div>
             </div>
             <div className="h-full mx-10 shadow my-2 rounded-2xl py-5 px-12 bg-white">
                 <div className="flex flex-wrap lg:justify-between justify-center mb-6">
@@ -108,7 +112,7 @@ const EditAdminRole = () => {
                                             onClick={(e) => handleAddRole('customer_report', e)}
                                             className={`flex sm:w-96 w-full py-3 px-5 hover:bg-gray-100`}
                                         >
-                                            Customer Report                                                                                                                                 
+                                            Customer Report
                                         </button>
                                     </li>
                                     <li>

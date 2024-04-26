@@ -30,7 +30,7 @@ const ViewTransactionModal = () => {
     },
     {
       name: 'Product',
-      selector: row => row.amount,
+      selector: row => row.product,
     },
     {
       name: 'Quantity',
@@ -46,6 +46,7 @@ const ViewTransactionModal = () => {
     {
       id: 1,
       date: "2023-09-05",
+      product: "Mango",
       amount: 1500,
       quantity: 3
     },
@@ -53,6 +54,7 @@ const ViewTransactionModal = () => {
       id: 2,
       date: "2023-09-05",
       price: "$12.00",
+      product: "Onion",
       amount: 1500,
       quantity: 3
     },
@@ -60,6 +62,7 @@ const ViewTransactionModal = () => {
       id: 3,
       date: "2023-09-05",
       price: "$12.00",
+      product: "Apple",
       amount: 1500,
       quantity: 3
     },
