@@ -14,7 +14,7 @@ export default function ModalAddCash() {
           <div
             className="justify-center rounded-3xl items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
           >
-            <div className="relative w-1/2 my-6 mx-auto max-w-3xl">
+            <div className="relative md:w-1/2 w-[90%] my-6 mx-auto max-w-3xl">
               {/*content*/}
               <div className="border-0 rounded-3xl shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}

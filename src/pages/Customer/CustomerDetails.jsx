@@ -9,9 +9,9 @@ import BlockConfirmationModal from '../../components/ui/BlockConfirmationModal'
 const CustomerDetails = () => {
   return (
     <div className="py-1 rounded-lg bg-gray-50">
-      <div className='mx-10 mt-10 mb-8 flex justify-between'>
+      <div className='md:mx-10 mx-5 mt-10 mb-8 flex gap-3 justify-between md:flex-row flex-col'>
         <Breadcrumbs home="Customers" child="Customer Details" />
-        <div className='flex'>
+        <div className='flex justify-end'>
           {/* <Modal /> */}
           <BlockConfirmationModal />
           {/* <button className={`bg-red-600 items-center justify-between flex hover:bg-red-700 text-white  py-2 px-4 rounded`}>

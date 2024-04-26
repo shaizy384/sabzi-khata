@@ -5,7 +5,7 @@ import { PublicRoute } from './PublicRoutes';
 import EmailPage from '../pages/auth/emailPage/Index';
 import EmailVerification from '../pages/auth/EmailVerification/LoginPage';
 import Layout from '../components/layout';
-import Dashboard from '../pages/Dashboard';
+import Dasboard from '../pages/Dashboard';
 import OrderManagement from '../pages/OrderManagement/Index';
 import OrderDetails from '../pages/OrderManagement/OrderDetails';
 import Customers from '../pages/Customer/Index';
@@ -48,7 +48,7 @@ const Routers = () => {
                     />
                     <Route
                         path="/dashboard"
-                        element={<Layout><Dashboard /></Layout>}
+                        element={<Layout><Dasboard /></Layout>}
                     />
                     <Route
                         path="/ordermanagement"

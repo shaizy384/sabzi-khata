@@ -4,7 +4,7 @@ import ModalAddSupplier from '../../pages/Supplier/ModalAddSupplier'
 
 const PersonalDetails = () => {
   return (
-    <div className="shadow-md my-4 rounded-xl p-3 pb-4 bg-white sm:mx-10 mx-8">
+    <div className="shadow-md my-4 rounded-xl p-3 pb-4 bg-white md:mx-10 mx-5">
       <div className='flex justify-end flex-row m-5'>
         <ModalAddSupplier id={1} />
 

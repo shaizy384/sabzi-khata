@@ -12,13 +12,13 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
     const navigate = useNavigate()
     const params = useParams()
     const [pageType, setPageType] = useState("");
+    console.log("params:", params, window.location.href.split("/")[3]);
     useEffect(() => {
-        window.location.href.split("/")[4] === "addsale" ?
+        window.location.href.split("/")[3] === "addsale" ?
             setPageType("Sale") :
             setPageType("Purchase")
         console.log("pageType: ", pageType);
     }, [])
-    console.log("params:", params, window.location.href.split("/")[3],pageType);
     const [searchCustomer, setSearchCustomer] = useState("");
     const [searchProduct, setSearchProduct] = useState("");
     const [showModal, setShowModal] = useState(false);
@@ -149,7 +149,7 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
             <div className='sm:mx-10 mx-5 mt-10 mb-5 flex justify-between items-center flex-wrap gap-3'>
                 <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">Add {pageType}</div>
             </div>
-            <div className="mx-10 shadow-md mt-2 rounded-xl p-2 bg-white">
+            <div className="md:mx-10 mx-5 shadow-md mt-2 rounded-xl p-2 bg-white">
                 <div className="relative p-6 flex-auto">
                     <label htmlFor="default-input" className="block mb-2 text-lg font-semibold text-gray-900">Select {pageType === "Sale" ? 'Customer' : 'Supplier'}</label>
                     <div className="relative mt-2 mb-6">

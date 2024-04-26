@@ -113,7 +113,7 @@ const TransactionsDatatable = () => {
             return row.customer.toLowerCase().includes(searchTerm.toLowerCase());
         });
     return (
-        <div className="mx-10 shadow-md mt-2 rounded-xl p-2 bg-white">
+        <div className="md:mx-10 mx-5 shadow-md mt-2 rounded-xl p-2 bg-white">
             <DataTable
                 columns={columns}
                 data={filteredData}

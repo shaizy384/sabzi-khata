@@ -78,13 +78,13 @@ const AdminRoles = () => {
 
     return (
         <div className="py-1 rounded-lg bg-gray-50">
-            <div className='mx-10 mt-10 mb-5'>
+            <div className='md:mx-10 mx-5 mt-10 mb-5'>
                 <button onClick={() => navigate('/adminroles/add')} className={`bg-green-500 items-center justify-between flex hover:bg-green-600 text-white py-2 px-4 ms-auto rounded`}>
                     {/* <img className='mr-2' src={notification} width={19} alt="notification" /> */}
                     <span className=''>Create New Subadmin</span>
                 </button>
             </div>
-            <div className="h-full mx-10 shadow-md my-2 rounded-xl p-2 bg-white">
+            <div className="h-full md:mx-10 mx-5 shadow-md my-2 rounded-xl p-2 bg-white">
                 <DataTable
                     columns={columns}
                     data={data}
