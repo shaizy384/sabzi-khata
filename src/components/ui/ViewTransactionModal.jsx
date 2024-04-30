@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import DataTable from 'react-data-table-component';
+import { useTranslation } from 'react-i18next';
 
 const ViewTransactionModal = () => {
+  const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const customStyles = {
     rows: {
@@ -25,19 +27,19 @@ const ViewTransactionModal = () => {
   };
   const columns = [
     {
-      name: 'Date',
+      name: t('Date'),
       selector: row => row.date,
     },
     {
-      name: 'Product',
+      name: t('Product'),
       selector: row => row.product,
     },
     {
-      name: 'Quantity',
+      name: t('Quantity'),
       selector: row => row.quantity,
     },
     {
-      name: 'Amount',
+      name: t('Amount'),
       selector: row => row.amount,
     },
   ];
@@ -75,7 +77,7 @@ const ViewTransactionModal = () => {
   }
   return (
     <>
-      <button onClick={() => setShowModal(true)} className='bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white hover:ring-2 hover:ring-colorPrimary ring-inset hover:bg-white hover:text-colorPrimary py-2 px-5 rounded ml-auto'>View</button>
+      <button onClick={() => setShowModal(true)} className='bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white hover:ring-2 hover:ring-colorPrimary ring-inset hover:bg-white hover:text-colorPrimary py-2 px-5 rounded ml-auto'>{t('Details')}</button>
       {showModal ? (
         <>
           <div
@@ -88,7 +90,7 @@ const ViewTransactionModal = () => {
                 <div className="flex items-start rounded-t-3xl justify-center md:px-5 pt-5 pb-5 border-b-2">
                   <ol className="items-center w-full space-y-4 sm:flex sm:space-x-8 sm:space-y-0 rtl:space-x-reverse pt-1.5">
                     <li className="cursor-pointer flex items-center space-x-3 rtl:space-x-reverse text-colorPrimary">
-                      <h3 className="font-semibold text-xl leading-tight">Purchase list</h3>
+                      <h3 className="font-semibold text-xl leading-tight">{t('Purchase list')}</h3>
                     </li>
                   </ol>
                   <button className="p- ml-auto bg-transparent -mr[17px] border-0 text-colorPrimary float-right text-3xl leading-none font-semibold outline-none focus:outline-none" onClick={handleCancel}

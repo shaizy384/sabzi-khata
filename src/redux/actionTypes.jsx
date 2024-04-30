@@ -1,5 +1,8 @@
 export const NAVBAR_TITLE = 'NAVBAR_TITLE';
 
+// Localization
+export const SET_LANGUAGE = "SET_LANGUAGE";
+
 // AUTH
 export const SIGNUP = 'SIGNUP';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';

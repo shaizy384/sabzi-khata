@@ -5,8 +5,10 @@ import searchIcon from "../../assets/svgs/search.svg";
 import uploadIcon from "../../assets/svgs/upload.svg";
 import { AVAILABLE, NOT_AVAILABLE, RESERVED } from "../../constants/constants";
 import Input from "../../components/ui/Input";
+import { useTranslation } from "react-i18next";
 
 export default function ModalAddSupplier({ id }) {
+  const { t } = useTranslation();
   const fileInpRef = useRef()
   const dispatch = useDispatch()
   const [data, setData] = useState([]);
@@ -62,7 +64,7 @@ export default function ModalAddSupplier({ id }) {
   }
   return (
     <>
-      {!id ? <button onClick={() => setShowModal(true)} className='bg-yellowPrimary items-center justify-between flex hover:bg-opacity-90 text-white hover:ring-2 hover:ring-yellowPrimary ring-inset hover:bg-white hover:text-yellowPrimary py-2 px-5 rounded ml-auto'>Add Supplier</button> :
+      {!id ? <button onClick={() => setShowModal(true)} className='bg-yellowPrimary items-center justify-between flex hover:bg-opacity-90 text-white hover:ring-2 hover:ring-yellowPrimary ring-inset hover:bg-white hover:text-yellowPrimary py-2 px-5 rounded ml-auto'>{t('Add Supplier')}</button> :
         <abbr title="Update Profile"><svg className='cursor-pointer' onClick={() => setShowModal(true)} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" clip-rule="evenodd" d="M18 17.153H2V1.99599H10V0.101362H0V19.0476H20V9.57448H18V17.153ZM6 9.47597L15.839 0L20 3.91904L9.842 13.3637H6V9.47597Z" fill="#2cb766" />
         </svg></abbr>
@@ -78,7 +80,7 @@ export default function ModalAddSupplier({ id }) {
               <div className="border-0 rounded-3xl shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none px-8 pb-4 max-h-[92vh] overflow-hidden">
                 {/*header*/}
                 <button
-                  className="p- ml-auto bg-transparent -mr[17px] mt-[7px] border-0 text-colorPrimary float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                  className="ltr:ml-auto rtl:mr-auto bg-transparent -mr[17px] mt-[7px] border-0 text-colorPrimary float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                   onClick={handleCancel}
                 >
                   ×
@@ -93,7 +95,7 @@ export default function ModalAddSupplier({ id }) {
 
                       </span>
                       <span>
-                        <h3 className="font-medium leading-tight">Supplier's Profile Picture</h3>
+                        <h3 className="font-medium leading-tight">{t("Supplier's Profile Picture")}</h3>
                       </span>
                     </li>
                     <li onClick={() => setModalPage('details')} className={"flex items-center text-gray-400 space-x-3 rtl:space-x-reverse " + (modalPage !== 'picture' && 'text-colorPrimary cursor-pointer')}>
@@ -103,7 +105,7 @@ export default function ModalAddSupplier({ id }) {
                         </svg>
                       </span>
                       <span>
-                        <h3 className="font-medium leading-tight">Supplier’s Personal Details</h3>
+                        <h3 className="font-medium leading-tight">{t("Supplier's Personal Details ")}</h3>
                       </span>
                     </li>
                     {/* <li className={"flex items-center text-gray-400 space-x-3 rtl:space-x-reverse " + (modalPage === 'documents' && 'text-colorPrimary')}>
@@ -123,7 +125,7 @@ export default function ModalAddSupplier({ id }) {
                 <div className="relative pt-4 flex-auto">
                   {modalPage === "picture" &&
                     <div className="my-5 overflow-y-auto text-center">
-                      <h1 className="text-xl text-gray-500 mb-5">Supplier's face must be clear in photo.</h1>
+                      <h1 className="text-xl text-gray-500 mb-5">{t("Supplier's face must be clear in photo. ")}</h1>
                       <img src={uploadIcon} className="cursor-pointer mx-auto" width={190} alt="" onClick={() => fileInpRef.current.click()} />
                       <input id="file-upload" name="file-upload" type="file" accept='image/*' className="sr-only" ref={fileInpRef} onChange={handleFile} />
                     </div>}
@@ -131,7 +133,7 @@ export default function ModalAddSupplier({ id }) {
                     // <div className="my-5 overflow-x-auto flex max-h-[43v whitespace-nowrap">
                     <div className="grid grid-cols-2 gap-3 justify-between mb-6 my-5">
                       <div className="flex flex-col grow">
-                        <label className='font-medium block mb-3 text-gray-500'>Name</label>
+                        <label className='font-medium block mb-3 text-gray-500'>{t("Name")}</label>
                         <input
                           value={data?.name}
                           type='text'
@@ -141,7 +143,7 @@ export default function ModalAddSupplier({ id }) {
                         />
                       </div>
                       <div className="flex flex-col grow">
-                        <label className='font-medium block mb-3 text-gray-500'>Phone no</label>
+                        <label className='font-medium block mb-3 text-gray-500'>{t('Phone no')}</label>
                         <input
                           value={data?.phone}
                           type='text'
@@ -150,7 +152,7 @@ export default function ModalAddSupplier({ id }) {
                           onChange={handleValue} />
                       </div>
                       <div className="flex flex-col grow">
-                        <label className='font-medium block mb-3 text-gray-500'>CNIC</label>
+                        <label className='font-medium block mb-3 text-gray-500'>{t('CNIC')}</label>
                         <input
                           value={data?.cnic}
                           type='text'
@@ -159,7 +161,7 @@ export default function ModalAddSupplier({ id }) {
                           onChange={handleValue} />
                       </div>
                       <div className="flex flex-col grow">
-                        <label className='font-medium block mb-3 text-gray-500'>Address</label>
+                        <label className='font-medium block mb-3 text-gray-500'>{t('Address')}</label>
                         <input
                           value={data?.address}
                           type='text'
@@ -168,7 +170,7 @@ export default function ModalAddSupplier({ id }) {
                           onChange={handleValue} />
                       </div>
                       <div className="flex flex-col grow">
-                        <label className='font-medium block mb-3 text-gray-500'>Total Amount</label>
+                        <label className='font-medium block mb-3 text-gray-500'>{t('Total Amount')}</label>
                         <input
                           value={data?.amount}
                           type='text'
@@ -199,7 +201,7 @@ export default function ModalAddSupplier({ id }) {
                       type="button"
                       onClick={handleSubmit}
                     >
-                      {modalPage !== "details" ? "Next" : "Add Supplier"}
+                      {modalPage !== "details" ? t("Next") : t("Add Supplier")}
                     </button>
                   </div>
                 </div>

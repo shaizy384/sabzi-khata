@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import eyeOff from '../../assets/svgs/eye-off.svg';
 import eyeOn from '../../assets/svgs/eye-on.svg';
+import { useTranslation } from 'react-i18next';
 const Input = (props) => {
+  const { t } = useTranslation();
   const [showPass, setShowPass] = useState(false);
   const handleShowPass = () => {
     setShowPass(!showPass)
@@ -11,7 +13,7 @@ const Input = (props) => {
       {props.logo && <div className="absolute inset-y-1 left-3 flex justify-end">
         <img className='w-5' src={props.logo} alt="" />
       </div>}
-      {props.label && <label className='font-medium block mb-3'>{props.label}</label>}
+      {props.label && <label className='font-medium block mb-3'>{t(props.label)}</label>}
       <input
         value={props.value}
         type={showPass ? 'text' : props.type}

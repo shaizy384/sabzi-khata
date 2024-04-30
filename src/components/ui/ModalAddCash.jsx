@@ -1,9 +1,11 @@
 import { Input } from "postcss";
-import React from "react";
+import React, { useState } from "react";
 import money_icon from '../../assets/svgs/money.svg'
+import { useTranslation } from "react-i18next";
 
 export default function ModalAddCash() {
-  const [showModal, setShowModal] = React.useState(false);
+  const { t } = useTranslation();
+  const [showModal, setShowModal] = useState(false);
   // const path = window.location.href.split("/")[3]
   // console.log(path);
   return (
@@ -20,10 +22,10 @@ export default function ModalAddCash() {
                 {/*header*/}
                 <div className="flex items-start bg-colorPrimary justify-center p-5 border-b border-solid border-blueGray-200 rounded-t">
                   <h3 className="text-2xl text-white font-semibold">
-                    Payment Recovery
+                    {t('Payment Recovery')}
                   </h3>
                   <button
-                    className="p-1 ml-auto bg-transparent border-0 text-white  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                    className="p-1 ltr:ml-auto rtl:mr-auto bg-transparent border-0 text-white  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => setShowModal(false)}
                   >
                     <span className="bg-transparent text-white h-6 w-6 text-2xl block outline-none focus:outline-none">
@@ -34,23 +36,23 @@ export default function ModalAddCash() {
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <div className="mb-6">
-                    <label for="default-input" className="block mb-2 text-lg font-bold text-gray-900">Payable Amount</label>
+                    <label for="default-input" className="block mb-2 text-lg font-bold text-gray-900">{t('Payable Amount')}</label>
                     <input type="text" placeholder="Total Payable Amount" id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" value={1813} disabled />
                   </div>
                   <div className="mb-6">
-                    <label for="default-input" className="block mb-2 text-lg font-bold text-gray-900">Pay Amount</label>
-                    <input type="text" placeholder="Enter Pay Amount" id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" />
+                    <label for="default-input" className="block mb-2 text-lg font-bold text-gray-900">{t('Pay Amount')}</label>
+                    <input type="text" placeholder={t("Enter Paid Amount")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" />
                   </div>
                 </div>
+
                 {/*footer*/}
                 <div className="flex items-center justify-center border-blueGray-200 rounded-b">
-
                   <button
                     className="bg-colorPrimary w-1/ text-white active:bg-colorPrimary font-bold uppercase text-sm px-6 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-4 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
-                    Pay Amount
+                    {t('Pay Amount')}
                   </button>
                 </div>
               </div>

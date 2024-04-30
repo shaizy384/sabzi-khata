@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import DataTable from 'react-data-table-component'
+import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router'
 
 const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
+    const { t } = useTranslation();
     const dropdownBtn = useRef()
     const prodDropdown = useRef()
     const modErrorRef = useRef()
@@ -147,13 +149,13 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
     return (
         <div className="py-1 rounded-lg bg-gray-50">
             <div className='sm:mx-10 mx-5 mt-10 mb-5 flex justify-between items-center flex-wrap gap-3'>
-                <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">Add {pageType}</div>
+                <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">{t(`Add ${pageType}`)}</div>
             </div>
             <div className="md:mx-10 mx-5 shadow-md mt-2 rounded-xl p-2 bg-white">
                 <div className="relative p-6 flex-auto">
-                    <label htmlFor="default-input" className="block mb-2 text-lg font-semibold text-gray-900">Select {pageType === "Sale" ? 'Customer' : 'Supplier'}</label>
+                    <label htmlFor="default-input" className="block mb-2 text-lg font-semibold text-gray-900">{t(`Select ${pageType === 'Sale' ? 'Customer' : 'Supplier'}`)}</label>
                     <div className="relative mt-2 mb-6">
-                        <input type="text" className="relative w-full rounded-md bg-white py-2.5 pl-2.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-colorPrimary sm:text-base sm:leading-" aria-haspopup="listbox" aria-expanded="true" placeholder="Search Customer" aria-labelledby="listbox-label" onFocus={handleBrandList} value={searchCustomer} onChange={e => setSearchCustomer(capitalizeFirstLetter(e.target.value))} />
+                        <input type="text" className="relative w-full rounded-md bg-white py-2.5 ltr:pl-2.5 rtl:pr-2.5 ltr:pr-10 rtl:pl-10 ltr:text-left rtl:text-right text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-colorPrimary sm:text-base sm:leading-" aria-haspopup="listbox" aria-expanded="true" placeholder={t("Search Customer")} aria-labelledby="listbox-label" onFocus={handleBrandList} value={searchCustomer} onChange={e => setSearchCustomer(capitalizeFirstLetter(e.target.value))} />
                         <p className="text-red-600 text-sm" ref={brandErrorRef}></p>
                         {/* BrandS Dropdown */}
                         <ul className="hidden absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-ba shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3" ref={dropdownBtn}>
@@ -175,9 +177,9 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
                         </ul>
                     </div>
 
-                    <label htmlFor="default-input" className="block mb-2 text-lg font-semibold text-gray-900">Select Products</label>
+                    <label htmlFor="default-input" className="block mb-2 text-lg font-semibold text-gray-900">{t('Select Products')}</label>
                     <div className="relative mt-2 mb-6">
-                        <input type="text" className="relative w-full rounded-md bg-white py-2.5 pl-2.5 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-colorPrimary sm:text-base sm:leading-" aria-haspopup="listbox" aria-expanded="true" placeholder="Search Product" aria-labelledby="listbox-label" onFocus={handleSearchList} value={searchProduct} onChange={e => setSearchProduct(capitalizeFirstLetter(e.target.value))} />
+                        <input type="text" className="relative w-full rounded-md bg-white py-2.5 ltr:pl-2.5 rtl:pr-2.5 ltr:pr-10 rtl:pl-10 ltr:text-left rtl:text-right text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-colorPrimary sm:text-base sm:leading-" aria-haspopup="listbox" aria-expanded="true" placeholder={t("Search Products")} aria-labelledby="listbox-label" onFocus={handleSearchList} value={searchProduct} onChange={e => setSearchProduct(capitalizeFirstLetter(e.target.value))} />
                         <p className="text-red-600 text-sm" ref={brandErrorRef}></p>
                         {/* BrandS Dropdown */}
                         <ul className="hidden absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-ba shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3" ref={prodDropdown}>
@@ -215,10 +217,10 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
                     </div> */}
                     <div className="flex justify-end gap-2 mt-8">
                         <button onClick={handleSubmit} className={`bg-gray-400 items-center justify-between flex hover:bg-gray-500 text-white py-2 px-5 rounded`}>
-                            Cancel
+                            {t('Cancel')}
                         </button>
                         <button onClick={handleSubmit} className={`bg-[#2D9D46] items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded`}>
-                            Add Purchase
+                            {t('Add Purchase')}
                         </button>
                     </div>
                 </div>

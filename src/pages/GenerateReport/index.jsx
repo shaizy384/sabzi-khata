@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
 const GenerateReport = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [title, setTitle] = useState('')
     const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -36,11 +38,11 @@ const GenerateReport = () => {
     };
     const columns = [
         {
-            name: 'Account no',
+            name: t('Account no'),
             selector: row => row.id,
         },
         {
-            name: 'Picture',
+            name: t('Picture'),
             selector: row => (<img
                 className="ml-5 w-8 h-8 rounded-full"
                 src={row.picture}
@@ -48,19 +50,19 @@ const GenerateReport = () => {
             />),
         },
         {
-            name: 'Name',
+            name: t('Name'),
             selector: row => row.name,
         },
         {
-            name: 'Phone no',
+            name: t('Phone no'),
             selector: row => row.phone,
         },
         {
-            name: 'Address',
+            name: t('Address'),
             selector: row => row.address,
         },
         {
-            name: 'Total Amount',
+            name: t('Total Amount'),
             selector: row => row.total_amount,
         },
     ];
@@ -303,9 +305,9 @@ const GenerateReport = () => {
     return (
         <div className="py-1 rounded-lg bg-gray-50">
             <div className='sm:mx-10 mx-5 mt-10 mb-5 flex justify-between items-center flex-wrap gap-3'>
-                <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">{title} Report</div>
+                <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">{t(`${title} Report`)}</div>
                 {/* <ModalAddSupplier /> */}
-                <button className='w-[148px] h-[37px] bg-colorPrimary text-white hover:ring-2 ring-inset hover:bg-white hover:text-colorPrimary hover:ring-colorPrimary rounded-lg text-base'>Generate Report</button>
+                <button className='w-[148px] h-[37px] bg-colorPrimary text-white hover:ring-2 ring-inset hover:bg-white hover:text-colorPrimary hover:ring-colorPrimary rounded-lg text-base'>{t('Generate Report')}</button>
             </div>
             <div className='sm:mx-10 mx-5 mt-10 flex'>
                 <div className="relative w-11/12">
@@ -318,12 +320,12 @@ const GenerateReport = () => {
                         type="search"
                         id="rounded-email"
                         className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-10 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-colorPrimary focus:border-transparent"
-                        placeholder="Search"
+                        placeholder={t("Search")}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
 
-                <div className="relative ml-3">
+                <div className="relative ltr:ml-3 rtl:mr-3">
                     <button
                         id="dropdownHoverButton"
                         data-dropdown-toggle="dropdownHover"
@@ -340,7 +342,7 @@ const GenerateReport = () => {
                         >
                             <path d="M18.85 1.1A1.99 1.99 0 0 0 17.063 0H2.937a2 2 0 0 0-1.566 3.242L6.99 9.868 7 14a1 1 0 0 0 .4.8l4 3A1 1 0 0 0 13 17l.01-7.134 5.66-6.676a1.99 1.99 0 0 0 .18-2.09Z" />
                         </svg>
-                        Filter
+                        {t('Filter')}
                     </button>
                     {dropdownVisible && (
                         <div

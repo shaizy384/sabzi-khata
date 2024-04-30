@@ -5,6 +5,7 @@ import deservice from "../../assets/svgs/deactivate-service-provider.svg"
 import admin from "../../assets/svgs/admin.svg"
 import PersonsSvg from './PersonsSvg'
 import MoneySvg from './MoneySvg'
+import { useTranslation } from 'react-i18next'
 
 const SkeletonLoader = () => (
     <div className="flex justify-between items-center animate-pulse bg-gray-300 rounded shadow p-6 h-[151px]">
@@ -17,6 +18,7 @@ const SkeletonLoader = () => (
 );
 
 const DashboardCards = ({ customerType }) => {
+    const { t } = useTranslation();
     const [loading, setLoading] = useState(false);
     return (
         <>
@@ -35,28 +37,28 @@ const DashboardCards = ({ customerType }) => {
                         <>
                             <div className="flex justify-between rounded-xl bg-white shadow p-6 h-[129px]">
                                 <div className="flex flex-col justify-between h-full">
-                                    <h6 className="text-gray-500 text-xl">Total Amount</h6>
+                                    <h6 className="text-gray-500 text-xl">{t('Total Amount')}</h6>
                                     <h1 className="text-3xl text-black font-medium">30k</h1>
                                 </div>
                                 <MoneySvg color={"#8280FF"} type="total" />
                             </div>
                             <div className="flex justify-between rounded-xl bg-white shadow p-6 h-[129px]">
                                 <div className="flex flex-col justify-between h-full">
-                                    <h6 className="text-gray-500 text-xl">Total {customerType ? 'Customers' : 'Suppliers'}</h6>
+                                    <h6 className="text-gray-500 text-xl">{t(`Total ${customerType ? 'Customers' : 'Suppliers'}`)}</h6>
                                     <h1 className="text-3xl text-black font-medium">30k</h1>
                                 </div>
                                 <PersonsSvg color={"#FBAF43"} />
                             </div>
                             <div className="flex justify-between rounded-xl bg-white shadow p-6 h-[129px]">
                                 <div className="flex flex-col justify-between h-full">
-                                    <h6 className="text-gray-500 text-xl">Today {customerType ? 'Sale' : 'Purchase'}</h6>
+                                    <h6 className="text-gray-500 text-xl">{t(`Today ${customerType ? "Sale" : "Purchase"}`)}</h6>
                                     <h1 className="text-3xl text-black font-medium">30k</h1>
                                 </div>
                                 <MoneySvg color={"#E63E36"} type="sale" />
                             </div>
                             <div className="flex justify-between rounded-xl bg-white shadow p-6 h-[129px]">
                                 <div className="flex flex-col justify-between h-full">
-                                    <h6 className="text-gray-500 text-xl">Amount {customerType ? 'Recieved' : 'Paid'}</h6>
+                                    <h6 className="text-gray-500 text-xl">{t(`Amount ${customerType ? "Recieved" : "Paid"}`)}</h6>
                                     <h1 className="text-3xl text-black font-medium">30k</h1>
                                 </div>
                                 <MoneySvg color={"#50B948"} type={customerType ? 'recieved' : 'paid'} />

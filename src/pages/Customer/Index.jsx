@@ -8,8 +8,10 @@ import Tesseract from 'tesseract.js';
 // import vision from '@google-cloud/vision';
 // import * as fs from 'browserfs/dist/fs';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 const Customers = () => {
+  const { t } = useTranslation();
   const fileRef = useRef()
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(null);
@@ -63,7 +65,7 @@ const Customers = () => {
   };
   const columns = [
     {
-      name: 'Picture',
+      name: t('Picture'),
       selector: row => (<img
         className="ml-5 w-8 h-8 rounded-full"
         src={row.picture}
@@ -71,23 +73,23 @@ const Customers = () => {
       />),
     },
     {
-      name: 'Name',
+      name: t('Name'),
       selector: row => row.name,
     },
     {
-      name: 'Phone no',
+      name: t('Phone no'),
       selector: row => row.phone,
     },
     {
-      name: 'Address',
+      name: t('Address'),
       selector: row => row.address,
     },
     {
-      name: 'Total Amount',
+      name: t('Total Amount'),
       selector: row => row.total_amount,
     },
     {
-      name: 'Approved/ Disapproved',
+      name: t('Approved/ Disapproved'),
       selector: row => (
         <label className="relative inline-flex items-center cursor-pointer">
           <input type="checkbox" value="" className="sr-only peer" />
@@ -96,7 +98,7 @@ const Customers = () => {
       ),
     },
     {
-      name: 'Action',
+      name: t('Action'),
       selector: row => (<div className="flex">
         <button onClick={() => navigate('/customers/customerdetails')} className={`bg-yellowPrimary text-white font-bold py-2 px-2 rounded-s`}>
           <svg className="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 14"><g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" /><path d="M10 13c4.97 0 9-2.686 9-6s-4.03-6-9-6-9 2.686-9 6 4.03 6 9 6Z" /></g></svg>
@@ -394,11 +396,11 @@ const Customers = () => {
   return (
     <div className="py-1 rounded-lg bg-gray-50">
       <div className='sm:mx-10 mx-5 mt-10 mb-5 flex justify-between items-center flex-wrap gap-2'>
-        <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">All Customers</div>
-        <div className="flex gap-2 ml-auto">
+        <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">{t('All Customers')}</div>
+        <div className="flex gap-2 ltr:ml-auto rtl:mr:auto">
           <ModalAddCustomer />
           <button onClick={() => navigate("addsale")} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}>
-            Add Sale
+            {t('Add Sale')}
           </button>
           {/* <button onClick={() => { fileRef.current.value = null; fileRef.current.click() }} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}> */}
           {/* --- Upload Image --- */}
@@ -419,12 +421,12 @@ const Customers = () => {
             type="search"
             id="rounded-email"
             className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-10 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-colorPrimary focus:border-transparent"
-            placeholder="Search"
+            placeholder={t("Search")}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
-        <div className="relative ml-3">
+        <div className="relative ltr:ml-3 rtl:mr-3">
           <button
             id="dropdownHoverButton"
             data-dropdown-toggle="dropdownHover"
@@ -441,7 +443,7 @@ const Customers = () => {
             >
               <path d="M18.85 1.1A1.99 1.99 0 0 0 17.063 0H2.937a2 2 0 0 0-1.566 3.242L6.99 9.868 7 14a1 1 0 0 0 .4.8l4 3A1 1 0 0 0 13 17l.01-7.134 5.66-6.676a1.99 1.99 0 0 0 .18-2.09Z" />
             </svg>
-            Filter
+            {t('Filter')}
           </button>
           {dropdownVisible && (
             <div

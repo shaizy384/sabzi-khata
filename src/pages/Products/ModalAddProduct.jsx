@@ -1,14 +1,16 @@
 import { Input } from "postcss";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 export default function ModalAddProduct() {
+  const { t } = useTranslation();
   const [showModal, setShowModal] = React.useState(false);
   // const path = window.location.href.split("/")[3]
   // console.log(path);
   return (
     <>
-      <button onClick={() => setShowModal(true)} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}>
-        Add Product
+      <button onClick={() => setShowModal(true)} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ltr:ml-auto rtl:mr-auto`}>
+        {t('Add Product')}
       </button>
       {showModal ? (
         <>
@@ -21,10 +23,10 @@ export default function ModalAddProduct() {
                 {/*header*/}
                 <div className="flex items-start bg-colorPrimary justify-center p-5 border-b border-solid border-blueGray-200 rounded-t-3xl">
                   <h3 className="text-2xl text-white font-semibold">
-                    Add Product
+                    {t('Add Product')}
                   </h3>
                   <button
-                    className="p-1 ml-auto bg-transparent border-0 text-white  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                    className="p-1 ltr:ml-auto rtl:mr-auto bg-transparent border-0 text-white  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => setShowModal(false)}
                   >
                     <span className="bg-transparent text-white h-6 w-6 text-2xl block outline-none focus:outline-none">
@@ -35,12 +37,12 @@ export default function ModalAddProduct() {
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <div className="mb-6">
-                    <label for="default-input" className="block mb-2 text-lg font-bold text-gray-900">Product Name</label>
-                    <input type="text" placeholder="Enter Product Name" id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" />
+                    <label for="default-input" className="block mb-2 text-lg font-bold text-gray-900">{t('Product Name')}</label>
+                    <input type="text" placeholder={t("Enter Product Name")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" />
                   </div>
                   <div className="mb-6">
-                    <label for="default-input" className="block mb-2 text-lg font-bold text-gray-900">Product Unit</label>
-                    <input type="text" placeholder="kg/pcs" id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" />
+                    <label for="default-input" className="block mb-2 text-lg font-bold text-gray-900">{t('Product Unit')}</label>
+                    <input type="text" placeholder={t("kg/pcs")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" />
                   </div>
                 </div>
                 {/*footer*/}
@@ -51,7 +53,7 @@ export default function ModalAddProduct() {
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
-                    Add Product
+                    {t('Add Product')}
                   </button>
                 </div>
               </div>

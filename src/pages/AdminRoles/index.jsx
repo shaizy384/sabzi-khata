@@ -5,8 +5,10 @@ import basket from "../../assets/svgs/delete.svg";
 import edit from "../../assets/svgs/edit.svg";
 import notification from "../../assets/svgs/notification.svg";
 import { useNavigate } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 const AdminRoles = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate()
     const customStyles = {
         rows: {
@@ -30,15 +32,15 @@ const AdminRoles = () => {
     };
     const columns = [
         {
-            name: 'Sr No.',
+            name: t('Sr No.'),
             selector: row => row.srNum,
         },
         {
-            name: 'Name',
+            name: t('Name'),
             selector: row => row.name,
         },
         {
-            name: 'Email',
+            name: t('Email'),
             selector: row => row.email,
         },
         // {
@@ -46,7 +48,7 @@ const AdminRoles = () => {
         //     selector: row => row.roles,
         // },
         {
-            name: 'Actions',
+            name: t('Action'),
             selector: row => (<div className='flex'>
                 <button onClick={() => navigate('/adminroles/edit/1')} className={`bg-cyan-500 hover:bg-cyan-600 text-white font-bold py- p-2.5 rounded-xl me-2`}>
                     <img src={edit} width={18.5} alt="edit" />
@@ -81,7 +83,7 @@ const AdminRoles = () => {
             <div className='md:mx-10 mx-5 mt-10 mb-5'>
                 <button onClick={() => navigate('/adminroles/add')} className={`bg-green-500 items-center justify-between flex hover:bg-green-600 text-white py-2 px-4 ms-auto rounded`}>
                     {/* <img className='mr-2' src={notification} width={19} alt="notification" /> */}
-                    <span className=''>Create New Subadmin</span>
+                    <span className=''>{t('Create New Subadmin')}</span>
                 </button>
             </div>
             <div className="h-full md:mx-10 mx-5 shadow-md my-2 rounded-xl p-2 bg-white">

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 
 export default function UpdatePassModal({ id }) {
+  const { t } = useTranslation();
   const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState([]);
@@ -31,7 +33,7 @@ export default function UpdatePassModal({ id }) {
   return (
     <>
       <button onClick={() => setShowModal(true)} className={`bg-purple-700 items-center justify-between flex hover:bg-opacity-90 text-white  py-2 px-4 rounded mx-1`}>
-        Change Password
+        {t('Change Password')}
       </button>
       {showModal ? (
         <>
@@ -44,10 +46,10 @@ export default function UpdatePassModal({ id }) {
                 {/*header*/}
                 <div className="flex items-start rounded-t-3xl bg-colorPrimary justify-center p-5 border-b border-solid border-blueGray-200">
                   <h3 className="text-2xl text-white font-semibold">
-                    Change Password
+                    {t('Change Password')}
                   </h3>
                   <button
-                    className="p-1 ml-auto bg-transparent border-0 text-white  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                    className="p-1 ltr:ml-auto rtl:mr-auto bg-transparent border-0 text-white  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => setShowModal(false)}
                   >
                     <span className="bg-transparent text-white h-6 w-6 text-2xl block outline-none focus:outline-none leading-none">
@@ -58,8 +60,8 @@ export default function UpdatePassModal({ id }) {
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <div className="mb-3">
-                    <label htmlFor="default-input" className="block mb-2 text-lg font-bold text-gray-900">Password</label>
-                    <input type="text" name="password" placeholder="Enter New Password" id="default-input" className=" border border-gray-300 text-gray-900  rounded-lg focus:ring-yellowPrimary focus:border-yellowPrimary block w-full p-2.5" onChange={(e) => handleValue(e)} />
+                    <label htmlFor="default-input" className="block mb-2 text-lg font-bold text-gray-900">{t("Password")}</label>
+                    <input type="text" name="password" placeholder={t("Enter New Password")} id="default-input" className=" border border-gray-300 text-gray-900  rounded-lg focus:ring-yellowPrimary focus:border-yellowPrimary block w-full p-2.5" onChange={(e) => handleValue(e)} />
                   </div>
                 </div>
 
@@ -70,7 +72,7 @@ export default function UpdatePassModal({ id }) {
                     type="button"
                     onClick={() => handleSubmit()}
                   >
-                    Update Password
+                    {t('Update Password')}
                   </button>
                 </div>
               </div>

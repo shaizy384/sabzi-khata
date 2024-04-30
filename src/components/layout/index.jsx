@@ -16,7 +16,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <SideBar />
-      <div className="sm:ml-64 bg-gray-50">
+      <div className="ltr:sm:ml-64 rtl:sm:mr-64 bg-gray-50">
         <NavBar />
         <div className="h-screen bg-gray-50">
           {children}

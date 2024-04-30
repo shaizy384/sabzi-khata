@@ -4,8 +4,10 @@ import cross from "../../assets/svgs/cross.svg";
 import Input from '../../components/ui/Input';
 import { useNavigate, useParams } from 'react-router';
 import UpdatePassModal from './UpdatePassModal';
+import { useTranslation } from 'react-i18next';
 
 const EditAdminRole = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { id } = useParams()
     const [data, setData] = useState({ name: '', email: '' });
@@ -42,7 +44,7 @@ const EditAdminRole = () => {
                     {<UpdatePassModal id={1} />}
                     <button className={`bg-green-500 items-center justify-between flex hover:bg-green-600 text-white py-2 px-4 rounded`}>
                         {/* <img className='mr-2' src={notification} width={19} alt="notification" /> */}
-                        <span>Create new Admin Role</span>
+                        <span>{t("Create New Subadmin")}</span>
                     </button>
                 </div>
             </div>
@@ -53,7 +55,7 @@ const EditAdminRole = () => {
                     <Input type={'text'} value={'290888890'} label={'Password'} />
 
                     <div className="relative mt-6 lg:w-[auto] w-full">
-                        <label className='font-medium block mb-3'>Roles</label>
+                        <label className='font-medium block mb-3'>{t("Roles")}</label>
                         <button
                             id="dropdownHoverButton"
                             data-dropdown-toggle="dropdownHover"
@@ -61,7 +63,7 @@ const EditAdminRole = () => {
                             className={`lg:w-96 w-full rounded-2xl border border-neutral-300 bg-transparent py-4 px-5 shadow-sm hover:bg-slate-100 focus:ring-2 focus:outline-none focus:ring-colorPrimary focus:ring-offset-colorPrimary font-medium text-sm text-center inline-flex items-center relative`}
                             onClick={() => setDropdownVisible(!dropdownVisible)}
                         >
-                            Select
+                            {t('Select')}
                             <svg className='ms-auto' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6L8 10L12 6" stroke="#6C6975" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
                         </button>
                         {dropdownVisible && (
@@ -76,7 +78,7 @@ const EditAdminRole = () => {
                                             onClick={(e) => handleAddRole('dashboard', e)}
                                             className={`flex sm:w-96 w-full py-3 px-5 hover:bg-gray-100`}
                                         >
-                                            Dashboard
+                                            {t("Dashboard")}
                                         </button>
                                     </li>
                                     <li>
@@ -85,7 +87,7 @@ const EditAdminRole = () => {
                                             onClick={(e) => handleAddRole('customer', e)}
                                             className={`flex sm:w-96 w-full py-3 px-5 hover:bg-gray-100`}
                                         >
-                                            Customer
+                                            {t('Customer')}
                                         </button>
                                     </li>
                                     <li>
@@ -94,7 +96,7 @@ const EditAdminRole = () => {
                                             onClick={(e) => handleAddRole('supplier', e)}
                                             className={`flex sm:w-96 w-full py-3 px-5 hover:bg-gray-100`}
                                         >
-                                            Supplier
+                                            {t('Supplier')}
                                         </button>
                                     </li>
                                     <li>
@@ -103,7 +105,7 @@ const EditAdminRole = () => {
                                             onClick={(e) => handleAddRole('product', e)}
                                             className={`flex sm:w-96 w-full py-3 px-5 hover:bg-gray-100`}
                                         >
-                                            Products
+                                            {t("Products")}
                                         </button>
                                     </li>
                                     <li>
@@ -112,7 +114,7 @@ const EditAdminRole = () => {
                                             onClick={(e) => handleAddRole('customer_report', e)}
                                             className={`flex sm:w-96 w-full py-3 px-5 hover:bg-gray-100`}
                                         >
-                                            Customer Report
+                                            {t('Customer Report')}
                                         </button>
                                     </li>
                                     <li>
@@ -121,7 +123,7 @@ const EditAdminRole = () => {
                                             onClick={(e) => handleAddRole('supplier_report', e)}
                                             className={`flex sm:w-96 w-full py-3 px-5 hover:bg-gray-100`}
                                         >
-                                            Supplier Report
+                                            {t('Supplier Report')}
                                         </button>
                                     </li>
                                 </ul>
@@ -132,7 +134,7 @@ const EditAdminRole = () => {
                             {Object.keys(roles).map((keyName, i) => {
                                 console.log("role: ", keyName, i);
                                 return <div className="flex items-baseline rounded-lg bg-colorPrimary text-white py-1.5 px-3 me-3 mt-3">
-                                    <span className='capitalize'>{roles[keyName]}</span>
+                                    <span className='capitalize'>{t(roles[keyName])}</span>
                                     <img className='block cursor-pointer ms-2' width={9} src={cross} alt="" onClick={() => handleDeleteRole(keyName)} />
                                 </div>
                             })}
@@ -141,10 +143,10 @@ const EditAdminRole = () => {
                 </div>
                 <div className='flex lg:justify-start justify-center mt-10 mb-5'>
                     <button className={`bg-green-500 items-center justify-between flex hover:bg-green-600 text-white font-medium py-2 sm:px-9 px-6 rounded`} onClick={handleSubmit}>
-                        <span>Save</span>
+                        <span>{t('Save')}</span>
                     </button>
                     <button className={`bg-slate-200 items-center justify-between flex hover:bg-slate-300 text-gray-500 font-medium py-2 sm:px-9 px-6 ms-3 rounded`} onClick={handleCancel}>
-                        <span>Cancel</span>
+                        <span>{t('Cancel')}</span>
                     </button>
                 </div>
             </div>

@@ -4,7 +4,10 @@ import Input from './Input';
 import { successColor } from '../../constants/colors';
 import { useNavigate } from 'react-router';
 import ViewTransactionModal from './ViewTransactionModal';
+import { useTranslation } from 'react-i18next';
+
 const TransactionsDatatable = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [selectedFilter, setSelectedFilter] = useState('all');
     const [searchTerm, setSearchTerm] = useState('');
@@ -30,19 +33,19 @@ const TransactionsDatatable = () => {
     };
     const columns = [
         {
-            name: 'Date',
+            name: t('Date'),
             selector: row => row.date,
         },
         {
-            name: 'Amount',
+            name: t('Amount'),
             selector: row => row.amount,
         },
         {
-            name: 'Transactions',
+            name: t('Transactions'),
             selector: row => row.transactions,
         },
         {
-            name: 'Details',
+            name: t('Details'),
             selector: row => (<ViewTransactionModal />),
             // selector: row => (<button onClick={() => navigate('/ordermanagement/orderdetails')} className={`bg-[#2D9D46] hover:bg-[#217E36] text-white font-bold py-2 px-4 rounded`}>
             //     view

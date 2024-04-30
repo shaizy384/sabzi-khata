@@ -2,7 +2,10 @@ import React, { useState } from 'react'
 import DataTable from 'react-data-table-component';
 import { useNavigate } from 'react-router';
 import ModalAddProduct from './ModalAddProduct';
+import { useTranslation } from 'react-i18next';
+
 const Products = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState('all');
@@ -29,7 +32,7 @@ const Products = () => {
   };
   const columns = [
     {
-      name: 'Picture',
+      name: t('Picture'),
       selector: row => (<img
         className="ml-5 w-8 h-8 rounded-full"
         src={row.picture}
@@ -37,25 +40,24 @@ const Products = () => {
       />),
     },
     {
-      name: 'Name',
+      name: t('Name'),
       selector: row => row.name,
     },
     {
-      name: 'Phone no',
+      name: t('Phone no'),
       selector: row => row.phone,
     },
     {
-      name: 'Address',
+      name: t('Address'),
       selector: row => row.address,
     },
     {
-      name: 'Total Amount',
+      name: t('Total Amount'),
       selector: row => row.total_amount,
     },
     {
-      name: 'Approved/ Disapproved',
+      name: t('Approved/ Disapproved'),
       selector: row => (
-
         <label className="relative inline-flex items-center cursor-pointer">
           <input type="checkbox" value="" className="sr-only peer" />
           <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4   rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-colorPrimary"></div>
@@ -63,7 +65,7 @@ const Products = () => {
       ),
     },
     {
-      name: 'Action',
+      name: t('Action'),
       selector: row => (<button onClick={() => navigate('/users/userdetails')} className={`bg-[#2D9D46] hover:bg-[#217E36] text-white font-bold py-2 px-2 rounded`}>
         <svg className="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 14">
           <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -299,7 +301,7 @@ const Products = () => {
   return (
     <div className="py-1 rounded-lg bg-gray-50">
       <div className='sm:mx-10 mx-5 mt-10 mb-5 flex justify-between items-center flex-wrap gap-3'>
-        <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">All Products</div>
+        <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">{t('All Products')}</div>
         <ModalAddProduct />
       </div>
       <div className='sm:mx-10 mx-5 mt-10 flex'>
@@ -313,7 +315,7 @@ const Products = () => {
             type="search"
             id="rounded-email"
             className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-10 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-colorPrimary focus:border-transparent"
-            placeholder="Search"
+            placeholder={t("Search")}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
@@ -335,7 +337,7 @@ const Products = () => {
             >
               <path d="M18.85 1.1A1.99 1.99 0 0 0 17.063 0H2.937a2 2 0 0 0-1.566 3.242L6.99 9.868 7 14a1 1 0 0 0 .4.8l4 3A1 1 0 0 0 13 17l.01-7.134 5.66-6.676a1.99 1.99 0 0 0 .18-2.09Z" />
             </svg>
-            Filter
+            {t('Filter')}
           </button>
           {dropdownVisible && (
             <div
@@ -400,7 +402,7 @@ const Products = () => {
                 <a href="#">
                   <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{p.name}</h5>
                 </a>
-                <p className="mb-3 font-semibold text-gray-600">{p.unit}</p>
+                <p className="mb-3 font-semibold text-gray-600">{t(p.unit)}</p>
               </div>
               <div>
                 <label className="relative inline-flex items-center cursor-pointer">
