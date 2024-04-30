@@ -26,7 +26,7 @@ export default function Modal() {
                     className="p-1 ml-auto bg-transparent border-0 text-white  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => setShowModal(false)}
                   >
-                    <span className="bg-transparent text-white h-6 w-6 text-2xl block outline-none focus:outline-none">
+                    <span className="bg-transparent text-white h-6 w-6 text-2xl block outline-none focus:outline-none leading-none">
                       ×
                     </span>
                   </button>
