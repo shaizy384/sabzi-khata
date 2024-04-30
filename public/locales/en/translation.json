@@ -85,5 +85,19 @@
     "Save": "Save",
     "Change Password": "Change Password",
     "Update Password": "Update Password",
-    "Enter New Password": "Enter New Password"
+    "Enter New Password": "Enter New Password",
+    "Pay With Card": "Pay With Card",
+    "or": "or",
+    "Cash Payment": "Cash Payment",
+    "Due Amount:": "Due Amount:",
+    "Card Holder Name": "Card Holder Name",
+    "CVV Code": "CVV Code",
+    "Expiry Date": "Expiry Date",
+    "Card Number": "Card Number",
+    "Enter Card Holder Name": "Enter Card Holder Name",
+    "Enter CVV Code": "Enter CVV Code",
+    "Enter Expiry Date": "Enter Expiry Date",
+    "Enter Card Number": "Enter Card Number",
+    "Back": "Back",
+    "Pay": "Pay"
 }

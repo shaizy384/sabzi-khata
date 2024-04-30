@@ -66,40 +66,40 @@ export default function ModalAddCash() {
 
                   {!type ?
                     <div className="flex flex-col gap-2 w-[75%] text-center mx-auto my-3 mt-4">
-                      <button className="bg-gray-200 hover:bg-gray-300 w-full text-gray-600 font-medium px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150" type="button" onClick={() => setType("card")}>Pay With Card</button>
-                      <p>or</p>
-                      <button className="bg-colorPrimary w-full text-white font-medium px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150" type="button" onClick={() => setType("cash")}>Cash Payment</button>
+                      <button className="bg-gray-200 hover:bg-gray-300 w-full text-gray-600 font-medium px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150" type="button" onClick={() => setType("card")}>{t('Pay With Card')}</button>
+                      <p>{t('or')}</p>
+                      <button className="bg-colorPrimary w-full text-white font-medium px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150" type="button" onClick={() => setType("cash")}>{t('Cash Payment')}</button>
                     </div>
                     : <>
                       {type === 'card' ? <>
                         <p className='text-center flex items-baseline justify-center gap-1 mb-2'>
-                          <span className='text-sm'>Due Amount:</span><br />
+                          <span className='text-sm'>{t('Due Amount:')}</span><br />
                           <span className='text-2xl text-red-500'>2000</span>
                         </p>
                         <div className="mb-6">
                           <label for="default-input" className="block mb-2 text-lg font-semibold text-gray-900">{t('Card Number')}</label>
-                          <input type="text" placeholder={t("Enter Paid Amount")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:ring-2 focus:border-colorPrimary block w-full p-2.5 outline-none" />
+                          <input type="text" placeholder={t("Enter Card Number")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:ring-2 focus:border-colorPrimary block w-full p-2.5 outline-none" />
                         </div>
                         <div className="mb-6">
                           <label for="default-input" className="block mb-2 text-lg font-semibold text-gray-900">{t('Card Holder Name')}</label>
-                          <input type="text" placeholder={t("Enter Paid Amount")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:ring-2 focus:border-colorPrimary block w-full p-2.5 outline-none" />
+                          <input type="text" placeholder={t("Enter Card Holder Name")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:ring-2 focus:border-colorPrimary block w-full p-2.5 outline-none" />
                         </div>
                         <div className="mb-6">
                           <label for="default-input" className="block mb-2 text-lg font-semibold text-gray-900">{t('CVV Code')}</label>
-                          <input type="text" placeholder={t("Enter Paid Amount")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:ring-2 focus:border-colorPrimary block w-full p-2.5 outline-none" />
+                          <input type="text" placeholder={t("Enter CVV Code")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:ring-2 focus:border-colorPrimary block w-full p-2.5 outline-none" />
                         </div>
                         <div className="mb-6">
                           <label for="default-input" className="block mb-2 text-lg font-semibold text-gray-900">{t('Expiry Date')}</label>
-                          <input type="text" placeholder={t("Enter Paid Amount")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:ring-2 focus:border-colorPrimary block w-full p-2.5 outline-none" />
+                          <input type="text" placeholder={t("Enter Expiry Date")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:ring-2 focus:border-colorPrimary block w-full p-2.5 outline-none" />
                         </div>
                         <div className="mb-3 flex gap-3 lg:w-96 mx-auto">
-                          <button className="bg-gray-200 hover:bg-gray-300 w-full text-gray-600 font-medium px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150" type="button" onClick={() => setType(null)}>Back</button>
+                          <button className="bg-gray-200 hover:bg-gray-300 w-full text-gray-600 font-medium px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150" type="button" onClick={() => setType(null)}>{t("Back")}</button>
                           <button
                             className="bg-colorPrimary w-full text-white font-medium px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
                             type="button"
                             onClick={() => handleSubmit()}
                           >
-                            Pay
+                            {t("Pay")}
                           </button>
                         </div>
                       </> : <>
@@ -144,13 +144,13 @@ export default function ModalAddCash() {
                           />
                         </div> */}
                         <div className="mb-4 flex gap-3 lg:w-96 mx-auto">
-                          <button className="bg-gray-200 hover:bg-gray-300 w-full text-gray-600 font-medium px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150" type="button" onClick={() => setType(null)}>Back</button>
+                          <button className="bg-gray-200 hover:bg-gray-300 w-full text-gray-600 font-medium px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150" type="button" onClick={() => setType(null)}>{t('Back')}</button>
                           <button
                             className="bg-colorPrimary w-full text-white font-medium px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
                             type="button"
                             onClick={() => handleSubmit()}
                           >
-                            Apply
+                            {t('Pay')}
                           </button>
                         </div>
                       </>}
