@@ -1,10 +1,27 @@
 import { Input } from "postcss";
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { addProduct } from "../../redux/products/action";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 export default function ModalAddProduct() {
   const { t } = useTranslation();
-  const [showModal, setShowModal] = React.useState(false);
+  const [data, setData] = useState({});
+  const dispatch = useDispatch()
+  const [showModal, setShowModal] = useState(false);
+  const handleValue = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = () => {
+    if (data?.name && data?.unit) {
+      console.log(data);
+      dispatch(addProduct(data))
+    } else {
+      toast.error("All fields are reqiured")
+    }
+  }
   // const path = window.location.href.split("/")[3]
   // console.log(path);
   return (
@@ -38,11 +55,11 @@ export default function ModalAddProduct() {
                 <div className="relative p-6 flex-auto">
                   <div className="mb-6">
                     <label for="default-input" className="block mb-2 text-lg font-bold text-gray-900">{t('Product Name')}</label>
-                    <input type="text" placeholder={t("Enter Product Name")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" />
+                    <input type="text" name='name' value={data?.name} onChange={handleValue} placeholder={t("Enter Product Name")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" />
                   </div>
                   <div className="mb-6">
                     <label for="default-input" className="block mb-2 text-lg font-bold text-gray-900">{t('Product Unit')}</label>
-                    <input type="text" placeholder={t("kg/pcs")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" />
+                    <input type="text" name='unit' value={data?.unit} onChange={handleValue} placeholder={t("kg/pcs")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" />
                   </div>
                 </div>
                 {/*footer*/}
@@ -51,7 +68,7 @@ export default function ModalAddProduct() {
                   <button
                     className="bg-colorPrimary w-1/ text-white active:bg-colorPrimary font-bold uppercase text-sm px-6 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-4 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={handleSubmit}
                   >
                     {t('Add Product')}
                   </button>

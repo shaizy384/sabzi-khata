@@ -1,12 +1,14 @@
 import React from 'react'
 import DisabledInput from './DisabledInput'
 import ModalAddSupplier from '../../pages/Supplier/ModalAddSupplier'
+import ModalAddCustomer from '../../pages/Customer/ModalAddCustomer'
 
-const PersonalDetails = () => {
+const PersonalDetails = ({ person, type }) => {
   return (
     <div className="shadow-md my-4 rounded-xl p-3 pb-4 bg-white md:mx-10 mx-5">
       <div className='flex justify-end flex-row m-5'>
-        <ModalAddSupplier id={1} />
+        {type === 'customer' && <ModalAddCustomer id={person?.id} customer={person} type={type} />}
+        {type === 'supplier' && <ModalAddSupplier id={person?.id} supplier={person} type={type} />}
 
         {/* <span className="me-3 font-semibold  text-gray-800 ">Approved / Disapproved</span>
         <label className="relative inline-flex items-center cursor-pointer">
@@ -18,16 +20,16 @@ const PersonalDetails = () => {
         <div className='xl:w-1/5 mt-5'>
           <img
             className="ml-5 w-32 h-32 rounded-full"
-            src='https://dummyimage.com/200x200/000/fff&text=Person+1'
-            alt="user photo"
+            src={person?.profile_image}
+            alt="profile image"
           />
         </div>
         <div className='xl:w-4/5 mt-5 flex flex-wrap ga sm:justify-between justify-center'>
-          <DisabledInput value={'Brandone Louis'} label={'Full Name'} />
-          <DisabledInput value={'abcd@gmail.com'} label={'Email'} />
-          <DisabledInput value={'+44 619 3456 7890'} label={'Phone'} />
-          <DisabledInput value={'1982'} label={'Date Of Birth'} />
-          <DisabledInput value={'Male'} label={'Gender'} />
+          <DisabledInput value={person?.id} label={'Acc No:'} />
+          <DisabledInput value={person?.name} label={'Full Name'} />
+          <DisabledInput value={person?.phone} label={'Email'} />
+          <DisabledInput value={person?.address} label={'Phone'} />
+          {/* <DisabledInput value={'Male'} label={'Gender'} /> */}
         </div>
       </div>
     </div>

@@ -7,11 +7,14 @@ import notification from "../../assets/svgs/notification.svg";
 import { secondaryColor } from "../../constants/colors";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 const SideBar = () => {
   const { t } = useTranslation();
   const [isSettingsOpen, setSettingsOpen] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const userData = useSelector((state) => state.userReducer.getUser.data);
+  const userLoading = useSelector((state) => state.userReducer.getUser.loading);
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
@@ -66,7 +69,8 @@ const SideBar = () => {
           </NavLink>
           <hr className="h-px my-6 bg-colorPrimary w-[80%] mx-auto border-0 opacity-50" />
           <ul className="space-y-2 font-medium">
-            <li>
+            {userLoading && <p className="text-gray-500 text-center">Loading...</p>}
+            {userData?.dashboard === 1 && <li>
               <NavLink onClick={closeSidebar} to="/dashboard" className={`flex items-center p-2  text-gray-500 rounded-lg hover:text-white hover:bg-colorPrimary group`}>
                 <svg
                   className={`flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-white`}
@@ -79,7 +83,7 @@ const SideBar = () => {
                 </svg>
                 <span className="ms-3 ">{t("Dashboard")}</span>
               </NavLink>
-            </li>
+            </li>}
             {/* <li>
               <NavLink onClick={closeSidebar} to="/ordermanagement" className={`flex items-center p-2  text-gray-500 rounded-lg hover:text-white hover:bg-colorPrimary group`}>
                 <svg
@@ -97,7 +101,7 @@ const SideBar = () => {
                 </span>
               </NavLink>
             </li> */}
-            <li>
+            {userData?.customer === 1 && <li>
               <NavLink onClick={closeSidebar} to='/customers' className={`flex items-center p-2  text-gray-500 rounded-lg hover:text-white hover:bg-colorPrimary group`}>
                 <svg
                   className={`flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-white`}
@@ -113,8 +117,8 @@ const SideBar = () => {
                   {t("Customer")}
                 </span>
               </NavLink>
-            </li>
-            <li>
+            </li>}
+            {userData?.supplier === 1 && <li>
               <NavLink onClick={closeSidebar} to='/suppliers' className={`flex items-center p-2  text-gray-500 rounded-lg hover:text-white hover:bg-colorPrimary group`}>
                 <svg
                   className={`flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-white`}
@@ -129,8 +133,8 @@ const SideBar = () => {
                   {t("Supplier")}
                 </span>
               </NavLink>
-            </li>
-            <li>
+            </li>}
+            {userData?.product === 1 && <li>
               <NavLink onClick={closeSidebar} to='/products' className={`flex items-center p-2  text-gray-500 rounded-lg hover:text-white hover:bg-colorPrimary group`}>
                 <svg
                   className={`flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-white`}
@@ -145,7 +149,7 @@ const SideBar = () => {
                   {t("Products")}
                 </span>
               </NavLink>
-            </li>
+            </li>}
             {/* <li>
               <NavLink onClick={closeSidebar} to='/addsale' className={`flex items-center p-2  text-gray-500 rounded-lg hover:text-white hover:bg-colorPrimary group`}>
                 <svg
@@ -191,7 +195,7 @@ const SideBar = () => {
                 </span>
               </NavLink>
             </li> */}
-            <li>
+            {userData?.admin_roles === 1 && <li>
               <NavLink onClick={closeSidebar} to='/adminroles' className={`flex items-center p-2  text-gray-500 rounded-lg hover:text-white hover:bg-colorPrimary group`}>
                 <svg className={`flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-white`} width="18" height="18" viewBox="0 0 18 18" fill="currentColor" xmlns="http://white.w3.org/2000/svg">
                   <g clip-path="url(#clip0_1455_16722)">
@@ -209,7 +213,7 @@ const SideBar = () => {
                   {t("Admin Roles")}
                 </span>
               </NavLink>
-            </li>
+            </li>}
             {/* <li>
               <button onClick={toggleSettings} className={`flex items-center justify-between w-full p-2  ${isSettingsOpen ? "text-colorPrimary" : "text-gray-500"} rounded-lg hover:text-white hover:bg-colorPrimary group`}>
                 <div className="flex">
@@ -262,7 +266,7 @@ const SideBar = () => {
                 </span>
               </NavLink>
             </li> */}
-            <li>
+            {userData?.supplier_report === 1 && <li>
               <NavLink onClick={closeSidebar} to='/supplierreport' className={`flex items-center p-2  text-gray-500 rounded-lg hover:text-white hover:bg-colorPrimary group`}>
                 <svg
                   className={`flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-white`}
@@ -277,8 +281,8 @@ const SideBar = () => {
                   {t("Supplier Report")}
                 </span>
               </NavLink>
-            </li>
-            <li>
+            </li>}
+            {userData?.customer_report === 1 && <li>
               <NavLink onClick={closeSidebar} to='/customerreport' className={`flex items-center p-2  text-gray-500 rounded-lg hover:text-white hover:bg-colorPrimary group`}>
                 <svg
                   className={`flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-white`}
@@ -293,7 +297,7 @@ const SideBar = () => {
                   {t("Customer Report")}
                 </span>
               </NavLink>
-            </li>
+            </li>}
           </ul>
         </div>
       </aside>

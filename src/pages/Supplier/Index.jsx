@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component';
 import { useNavigate } from 'react-router';
 import ModalAddSupplier from './ModalAddSupplier';
 import ModalAddCash from '../../components/ui/ModalAddCash';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSuppliers } from '../../redux/suppliers/action';
 
 const ServiceProvider = () => {
   const { t } = useTranslation();
@@ -11,6 +13,15 @@ const ServiceProvider = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const dispatch = useDispatch()
+  const suppliers = useSelector((state) => state.suppliersReducer.getSuppliers?.data);
+  useEffect(() => {
+    if (!suppliers) {
+      dispatch(getSuppliers())
+    }
+  }, [suppliers])
+
+  console.log("suppliers: ", suppliers);
   const customStyles = {
     rows: {
       style: {
@@ -36,7 +47,7 @@ const ServiceProvider = () => {
       name: t('Picture'),
       selector: row => (<img
         className="ml-5 w-8 h-8 rounded-full"
-        src={row.picture}
+        src={row.profile_image}
         alt="user photo"
       />),
     },
@@ -54,24 +65,21 @@ const ServiceProvider = () => {
     },
     {
       name: t('Total Amount'),
-      selector: row => row.total_amount,
+      selector: row => row.amount,
     },
     {
       name: t('Approved/ Disapproved'),
       selector: row => (
-        <label className="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox" value="" className="sr-only peer" />
-          <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4   rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-colorPrimary"></div>
-        </label>
+        row?.status === 1 && <div className='text-[#0DA06A] bg-[#F0FFFA] py-2 px-5 rounded-full'>{"Active"}</div> || row?.status === 0 && <div className='text-sm text-[#E63E36] bg-[#e63e361a] py-1 px-3 rounded-full'>{"Blocked"}</div>
       ),
     },
     {
       name: t('Action'),
       selector: row => (<div className="flex">
-        <button onClick={() => navigate('/suppliers/supplierdetails')} className={`bg-yellowPrimary text-white font-bold py-2 px-2 rounded-s`}>
+        <button onClick={() => navigate(`/suppliers/supplierdetails/${row?.id}`)} className={`bg-yellowPrimary text-white font-bold py-2 px-2 rounded-s`}>
           <svg className="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 14"><g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" /><path d="M10 13c4.97 0 9-2.686 9-6s-4.03-6-9-6-9 2.686-9 6 4.03 6 9 6Z" /></g></svg>
         </button>
-        <ModalAddCash />
+        <ModalAddCash supplier_id={row.id} amount={row.amount} />
       </div>),
     },
   ];
@@ -278,19 +286,17 @@ const ServiceProvider = () => {
     }
   ]
 
-  const filteredData = data
-    .filter((row) => {
-      // Filter by selected order status
-      if (selectedFilter === 'all') {
-        return true;
-      } else {
-        return row.orderstatus === (selectedFilter === 'male' ? 1 : 'female');
-      }
-    })
-    .filter((row) => {
-      // Filter by search term in customer names
-      return row.name.toLowerCase().includes(searchTerm.toLowerCase());
-    });
+  const filteredData = suppliers?.filter((row) => {
+    // Filter by selected order status
+    if (selectedFilter === 'all') {
+      return true;
+    } else {
+      return row.status === (selectedFilter === 1 ? 1 : 0);
+    }
+  })?.filter((row) => {
+    // Filter by search term in customer names
+    return row.name.toLowerCase().includes(searchTerm.toLowerCase());
+  });
   return (
     <div className="py-1 rounded-lg bg-gray-50">
       <div className='sm:mx-10 mx-5 mt-10 mb-5 flex justify-between items-center flex-wrap gap-3'>
@@ -340,7 +346,7 @@ const ServiceProvider = () => {
           {dropdownVisible && (
             <div
               id="dropdownHover"
-              className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-auto absolute mt-2"
+              className="w-full z-10 bg-white divide-y divide-gray-100 rounded-lg shadow absolute mt-2"
             >
               <ul className="py-2  text-sm text-gray-700" aria-labelledby="dropdownHoverButton">
                 <li>
@@ -349,8 +355,7 @@ const ServiceProvider = () => {
                       setSelectedFilter('all');
                       setDropdownVisible(false);
                     }}
-                    className={` w-full block px-4 py-2 hover:bg-gray-100 ${selectedFilter === 'all' ? 'bg-colorPrimary text-white' : ''
-                      }`}
+                    className={` w-full block px-4 py-2 ${selectedFilter === 'all' ? 'bg-colorPrimary text-white' : 'hover:bg-gray-100'}`}
                   >
                     All
                   </button>
@@ -358,25 +363,23 @@ const ServiceProvider = () => {
                 <li>
                   <button
                     onClick={() => {
-                      setSelectedFilter('male');
+                      setSelectedFilter(1);
                       setDropdownVisible(false);
                     }}
-                    className={` w-full block px-4 py-2 hover:bg-gray-100 ${selectedFilter === 'male' ? 'bg-colorPrimary text-white' : ''
-                      }`}
+                    className={` w-full block px-4 py-2 ${selectedFilter === 1 ? 'bg-colorPrimary text-white' : 'hover:bg-gray-100'}`}
                   >
-                    Male
+                    Active
                   </button>
                 </li>
                 <li>
                   <button
                     onClick={() => {
-                      setSelectedFilter('female');
+                      setSelectedFilter(0);
                       setDropdownVisible(false);
                     }}
-                    className={`w-full block px-4 py-2 hover:bg-gray-100 ${selectedFilter === 'female' ? 'bg-colorPrimary text-white' : ''
-                      }`}
+                    className={`w-full block px-4 py-2 ${selectedFilter === 0 ? 'bg-colorPrimary text-white' : 'hover:bg-gray-100'}`}
                   >
-                    Female
+                    Blocked
                   </button>
                 </li>
               </ul>

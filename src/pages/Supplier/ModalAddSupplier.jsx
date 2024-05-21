@@ -6,13 +6,16 @@ import uploadIcon from "../../assets/svgs/upload.svg";
 import { AVAILABLE, NOT_AVAILABLE, RESERVED } from "../../constants/constants";
 import Input from "../../components/ui/Input";
 import { useTranslation } from "react-i18next";
+import { addSupplier, updateSupplier } from "../../redux/suppliers/action";
+import { toast } from "react-toastify";
 
-export default function ModalAddSupplier({ id }) {
+export default function ModalAddSupplier({ id, supplier }) {
   const { t } = useTranslation();
   const fileInpRef = useRef()
   const dispatch = useDispatch()
   const [data, setData] = useState([]);
   const [modalPage, setModalPage] = useState("picture");
+  const [imageUrl, setImageUrl] = useState(null);
   const [search, setSearch] = useState("")
   const [showModal, setShowModal] = useState(false);
   const handleSearch = (e) => { setSearch(e.target.value) }
@@ -20,19 +23,13 @@ export default function ModalAddSupplier({ id }) {
     setData({ ...data, [e.target.name]: e.target.value })
   }
 
-  // useEffect(() => {
-  //   if (rider_id && vehicle_id) {
-  //     setData({
-  //       // ...data,
-  //       rider_id: rider_id,
-  //       vehicle_id: vehicle_id,
-  //       vehicle_status: REJECTED,
-  //     })
-  //   }
-  // }, [rider_id])
-
-  // const handleNext = () => {
-  // }
+  console.log(".............data: ", data);
+  useEffect(() => {
+    if (supplier?.id) {
+      setData({ ...supplier })
+      setImageUrl(supplier?.profile_image)
+    }
+  }, [supplier])
 
   const handleCancel = () => {
     setShowModal(false);
@@ -43,18 +40,39 @@ export default function ModalAddSupplier({ id }) {
 
   const handleFile = (e) => {
     console.log(e.target.files[0])
-    setData({ ...data, image: e.target.files[0] })
+    const file = e.target.files[0];
+
+    // let fd = new FormData()
+    // fd.append("images", file);
+    setData({ ...data, profile_image: file })
+
+    // to show profile_image
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImageUrl(reader.result);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
   }
 
   const handleSubmit = () => {
-    if (modalPage === "picture" && data?.image) {
+    if (modalPage === "picture" && data?.profile_image) {
       setModalPage("details")
     }
-    else if (modalPage === "details" && data?.name && data?.phone && data?.cnic && data?.address) {
-      // setModalPage("documents")
-      console.log(data);
+    else if (modalPage === "details" && data?.name && data?.phone && data?.cnic && data?.address && data?.amount) {
+      if (id) {
+        console.log(data);
+        dispatch(updateSupplier(data))
+
+      } else if (!id) {
+        console.log(data);
+        dispatch(addSupplier(data))
+      }
+    } else {
+      toast.error("All fields are reqiured")
     }
-    // else if (modalPage === "documents" && data?.image) {
+    // else if (modalPage === "documents" && data?.profile_image) {
     //   console.log(data);
     //   // handleCancel()  // to close and remove all modal data
     // }
@@ -98,7 +116,7 @@ export default function ModalAddSupplier({ id }) {
                         <h3 className="font-medium leading-tight">{t("Supplier's Profile Picture")}</h3>
                       </span>
                     </li>
-                    <li onClick={() => setModalPage('details')} className={"flex items-center text-gray-400 space-x-3 rtl:space-x-reverse " + (modalPage !== 'picture' && 'text-colorPrimary cursor-pointer')}>
+                    <li className={"flex items-center space-x-3 rtl:space-x-reverse " + (modalPage !== 'picture' ? 'text-colorPrimary' : 'text-gray-400')}>
                       <span className="hidden md:flex items-center justify-center w-9 h-9 shrink-0">
                         <svg width="75" height="56" viewBox="0 0 75 56" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M70 0H4.66667C3.42899 0 2.242 0.491665 1.36683 1.36683C0.491665 2.242 0 3.42899 0 4.66667V51.3333C0 52.571 0.491665 53.758 1.36683 54.6332C2.242 55.5083 3.42899 56 4.66667 56H70C71.2377 56 72.4247 55.5083 73.2998 54.6332C74.175 53.758 74.6667 52.571 74.6667 51.3333V4.66667C74.6667 3.42899 74.175 2.242 73.2998 1.36683C72.4247 0.491665 71.2377 0 70 0ZM39.6667 37.3333H16.3333C15.7145 37.3333 15.121 37.0875 14.6834 36.6499C14.2458 36.2123 14 35.6188 14 35C14 34.3812 14.2458 33.7877 14.6834 33.3501C15.121 32.9125 15.7145 32.6667 16.3333 32.6667H39.6667C40.2855 32.6667 40.879 32.9125 41.3166 33.3501C41.7542 33.7877 42 34.3812 42 35C42 35.6188 41.7542 36.2123 41.3166 36.6499C40.879 37.0875 40.2855 37.3333 39.6667 37.3333ZM58.3333 28H16.3333C15.7145 28 15.121 27.7542 14.6834 27.3166C14.2458 26.879 14 26.2855 14 25.6667C14 25.0478 14.2458 24.4543 14.6834 24.0167C15.121 23.5792 15.7145 23.3333 16.3333 23.3333H58.3333C58.9522 23.3333 59.5457 23.5792 59.9832 24.0167C60.4208 24.4543 60.6667 25.0478 60.6667 25.6667C60.6667 26.2855 60.4208 26.879 59.9832 27.3166C59.5457 27.7542 58.9522 28 58.3333 28ZM58.3333 18.6667H16.3333C15.7145 18.6667 15.121 18.4208 14.6834 17.9832C14.2458 17.5457 14 16.9522 14 16.3333C14 15.7145 14.2458 15.121 14.6834 14.6834C15.121 14.2458 15.7145 14 16.3333 14H58.3333C58.9522 14 59.5457 14.2458 59.9832 14.6834C60.4208 15.121 60.6667 15.7145 60.6667 16.3333C60.6667 16.9522 60.4208 17.5457 59.9832 17.9832C59.5457 18.4208 58.9522 18.6667 58.3333 18.6667Z" fill="currentColor" />
@@ -126,7 +144,17 @@ export default function ModalAddSupplier({ id }) {
                   {modalPage === "picture" &&
                     <div className="my-5 overflow-y-auto text-center">
                       <h1 className="text-xl text-gray-500 mb-5">{t("Supplier's face must be clear in photo. ")}</h1>
-                      <img src={uploadIcon} className="cursor-pointer mx-auto" width={190} alt="" onClick={() => fileInpRef.current.click()} />
+                      {!imageUrl ?
+                        <img src={uploadIcon} className="cursor-pointer mx-auto" width={190} alt="" onClick={() => fileInpRef.current.click()} />
+                        :
+                        <img
+                          src={imageUrl}
+                          alt="Uploaded"
+                          className="cursor-pointer mx-auto my-2"
+                          onClick={() => fileInpRef.current.click()}
+                          style={{ maxWidth: '190px', maxHeight: '200px' }}
+                        />
+                      }
                       <input id="file-upload" name="file-upload" type="file" accept='image/*' className="sr-only" ref={fileInpRef} onChange={handleFile} />
                     </div>}
                   {modalPage === "details" &&
@@ -201,7 +229,7 @@ export default function ModalAddSupplier({ id }) {
                       type="button"
                       onClick={handleSubmit}
                     >
-                      {modalPage !== "details" ? t("Next") : t("Add Supplier")}
+                      {modalPage !== "details" ? t("Next") : t(`${id ? 'Update' : 'Add'} Supplier`)}
                     </button>
                   </div>
                 </div>

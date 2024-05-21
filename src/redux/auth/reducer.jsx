@@ -3,18 +3,18 @@ import {
 } from '../actionTypes'
 
 const initial_state = {
-    token: localStorage.getItem('cAuthToken'),
+    token: localStorage.getItem('authToken'),
     isAuthenticated:
-        localStorage.getItem('cAuthToken') && localStorage.getItem('cAuthToken') !== undefined
+        localStorage.getItem('authToken') && localStorage.getItem('authToken') !== undefined
             ? true
             : false,
     message: null,
     error: null,
     loading: false,
+    data: null,
 }
 
-const companyAuthReducer = (state = initial_state, { type, payload }) => {
-
+const authReducer = (state = initial_state, { type, payload }) => {
     switch (type) {
         case SIGNUP:
             return {
@@ -23,16 +23,19 @@ const companyAuthReducer = (state = initial_state, { type, payload }) => {
             }
 
         case SIGNUP_SUCCESS:
-            localStorage.setItem('cAuthToken', payload.token);
+            localStorage.setItem('authToken', `Bearer ${payload.token}`);
+            console.log("SIGNUP_SUCCESS SIGNUP_SUCCESS", payload);
             return {
                 ...state,
                 loading: false,
                 message: payload?.message,
+                data: payload?.data,
                 isAuthenticated: true,
                 error: null
             }
 
         case SIGNUP_FAILURE:
+            console.log("SIGNUP_FAILURE SIGNUP_FAILURE");
             return {
                 ...state,
                 loading: false,
@@ -46,16 +49,19 @@ const companyAuthReducer = (state = initial_state, { type, payload }) => {
             }
 
         case LOGIN_SUCCESS:
-            localStorage.setItem('cAuthToken', payload.token);
+            console.log("LOGIN_SUCCESS LOGIN_SUCCESS", payload);
+            localStorage.setItem('authToken', `Bearer ${payload.token}`);
             return {
                 ...state,
                 loading: false,
                 message: payload?.message,
+                data: payload.data,
                 isAuthenticated: true,
                 error: null
             }
 
         case LOGIN_FAILURE:
+            console.log("LOGIN_FAILURE LOGIN_FAILURE");
             return {
                 ...state,
                 loading: false,
@@ -63,7 +69,7 @@ const companyAuthReducer = (state = initial_state, { type, payload }) => {
             };
 
         case LOGOUT:
-            localStorage.removeItem('cAuthToken');
+            localStorage.removeItem('authToken');
             return {
                 ...state,
                 isAuthenticated: false,
@@ -73,4 +79,4 @@ const companyAuthReducer = (state = initial_state, { type, payload }) => {
     }
 
 }
-export default companyAuthReducer
+export default authReducer

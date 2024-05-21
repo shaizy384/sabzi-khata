@@ -7,7 +7,8 @@ import { Navigate } from 'react-router'
 import { useSelector } from 'react-redux'
 
 const Layout = ({ children }) => {
-  const auth = useSelector(state => state.navbarTitleReducer.auth)
+  const auth = useSelector((state) => state.authReducer.isAuthenticated);
+  // const auth = useSelector(state => state.navbarTitleReducer.auth)
   // const auth = false
   // if (!localStorage.getItem("AUTH_USER"))
   if (!auth) {

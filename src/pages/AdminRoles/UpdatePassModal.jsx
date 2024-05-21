@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
+import { updateSubAdmin } from "../../redux/subadmin/action";
 
-export default function UpdatePassModal({ id }) {
+export default function UpdatePassModal({ id, subAdmin }) {
   const { t } = useTranslation();
   const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
   const handleValue = (e) => {
     setData({
       ...data,
@@ -16,16 +17,14 @@ export default function UpdatePassModal({ id }) {
 
   useEffect(() => {
     if (id) {
-      setData({
-        ...data,
-        "id": id
-      })
+      setData(subAdmin)
     }
   }, [id])
 
   const handleSubmit = () => {
-    if (id) {
+    if (id && data?.password) {
       // dispatch(updatePassword(data))
+      dispatch(updateSubAdmin({ ...data, password_confirmation: data?.password }))
       console.log(data);
       setShowModal(false)
     }

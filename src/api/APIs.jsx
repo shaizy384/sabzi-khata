@@ -1,14 +1,15 @@
 import axios from "axios";
 export const callApi = async (url, requestType, body, auth) => {
-  let host = 'https://sanaidee.com/api/';
-  let companytoken = localStorage.getItem("cAuthToken");
-  let token = companytoken ? companytoken : localStorage.getItem("authToken");
-  console.log("tokens: ", companytoken, token);
+  // let host = 'https://sanaidee.com/api/';
+  let host = 'http://127.0.0.1:8000/api';
+  // let companytoken = localStorage.getItem("cAuthToken");
+  let token = localStorage.getItem("authToken");
+  console.log("tokens: ", token);
   if (requestType === "GET") {
     try {
       if (auth) {
         const data = await axios.get(host + url,
-          { headers: { 'x-auth-token': token } })
+          { headers: { 'Authorization': token } })
         return data;
       }
       const data = await axios.get(host + url);
@@ -20,7 +21,7 @@ export const callApi = async (url, requestType, body, auth) => {
     if (auth) {
       try {
         const data = await axios.post(host + url, body,
-          { headers: { 'x-auth-token': token } })
+          { headers: { 'Authorization': token,'Content-Type': 'multipart/form-data',        } })
         return data;
       } catch (error) {
         if (error.response) {
@@ -41,7 +42,7 @@ export const callApi = async (url, requestType, body, auth) => {
   } else if (requestType === "DELETE") {
     try {
       const data = await axios.delete(host + url,
-        { headers: { 'x-auth-token': token } })
+        { headers: { 'Authorization': token } })
       return data;
     } catch (error) {
       if (error.response) {

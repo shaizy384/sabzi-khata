@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 const DisabledInput = ({ value, label, innerLabel, unitLabel }) => {
   const { t } = useTranslation();
   return (
-    <div className='flex flex-col sm:w-[48%] my-5 mx-2 '>
+    <div className='flex flex-col w-full md:w-[48%] my-5 mx-1'>
       <span className='font-semibold'>{t(label)}</span>
       <div className="relative mt-2">
         {innerLabel &&

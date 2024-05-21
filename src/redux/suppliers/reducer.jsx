@@ -15,115 +15,278 @@ import {
   BLOCK_SUPPLIER_SUCCESS,
   BLOCK_SUPPLIER_FAILURE,
   SUPPLIER_PERSONAL_DETAILS,
-  ORDER_DETAILS
+  ORDER_DETAILS,
+  ADD_SUPPLIER,
+  ADD_SUPPLIER_SUCCESS,
+  ADD_SUPPLIER_FAILURE,
+  UPDATE_SUPPLIER,
+  UPDATE_SUPPLIER_SUCCESS,
+  UPDATE_SUPPLIER_FAILURE,
+  SET_SUPPLIER_STATUS,
+  SET_SUPPLIER_STATUS_SUCCESS,
+  SET_SUPPLIER_STATUS_FAILURE,
+  GET_PURCHASE,
+  GET_PURCHASE_SUCCESS,
+  GET_PURCHASE_FAILURE,
+  ADD_PURCHASE,
+  ADD_PURCHASE_SUCCESS,
+  ADD_PURCHASE_FAILURE
 } from "../actionTypes";
+import { addSupplier, setSupplierStatus, updateSupplier } from "./action";
 const initial_state = {
   getSuppliers: {
     data: null,
     loading: false,
     error: null,
   },
-  getSupplierDetails: {
+  addSupplier: {
     data: null,
     loading: false,
     error: null,
   },
-  setSupplierBlock: {
+  updateSupplier: {
     data: null,
     loading: false,
     error: null,
   },
-  supplierPersonalDetails: {
+  setSupplierStatus: {
     data: null,
     loading: false,
     error: null,
   },
-  orderDetails: {
+
+  getPurchases: {
     data: null,
     loading: false,
     error: null,
   },
+  addPurchase: {
+    data: null,
+    loading: false,
+    error: null,
+  },
+  // getSupplierDetails: {
+  //   data: null,
+  //   loading: false,
+  //   error: null,
+  // },
+  // setSupplierBlock: {
+  //   data: null,
+  //   loading: false,
+  //   error: null,
+  // },
+  // supplierPersonalDetails: {
+  //   data: null,
+  //   loading: false,
+  //   error: null,
+  // },
+  // orderDetails: {
+  //   data: null,
+  //   loading: false,
+  //   error: null,
+  // },
 };
 
 const suppliersReducer = (state = initial_state, { type, payload }) => {
   switch (type) {
-    case SUPPLIER_PERSONAL_DETAILS:
-      return {
-        ...state,
-        userPersonalDetails: {
-          loading: false,
-          data: payload,
-        }
-      };
+    // case SUPPLIER_PERSONAL_DETAILS:
+    //   return {
+    //     ...state,
+    //     userPersonalDetails: {
+    //       loading: false,
+    //       data: payload,
+    //     }
+    //   };
 
     case GET_SUPPLIERS:
       return {
         ...state,
-        getUsers: {
+        getSuppliers: {
           loading: true,
         }
       };
     case GET_SUPPLIERS_SUCCESS:
       return {
         ...state,
-        getUsers: {
+        getSuppliers: {
           loading: false,
-          data: payload.data,
+          data: payload.data ? payload.data : [],
         }
       };
     case GET_SUPPLIERS_FAILURE:
       return {
         ...state,
-        getUsers: {
+        getSuppliers: {
           loading: false,
           error: payload,
         }
       };
 
-    case GET_SUPPLIER_DETAILS:
+    case ADD_SUPPLIER:
       return {
         ...state,
-        getUserDetails: {
+        addSupplier: {
           loading: true,
         }
       };
-    case GET_SUPPLIER_DETAILS_SUCCESS:
+    case ADD_SUPPLIER_SUCCESS:
       return {
         ...state,
-        getUserDetails: {
+        addSupplier: {
           loading: false,
           data: payload.data,
         }
       };
-
-    case GET_SUPPLIER_DETAILS_FAILURE:
+    case ADD_SUPPLIER_FAILURE:
       return {
         ...state,
-        getUserDetails: {
+        addSupplier: {
           loading: false,
           error: payload,
         }
       };
 
-    case BLOCK_SUPPLIER:
+    case UPDATE_SUPPLIER:
       return {
         ...state,
-        setUserBlock: {
+        updateSupplier: {
           loading: true,
         }
       };
-    case BLOCK_SUPPLIER_SUCCESS:
+    case UPDATE_SUPPLIER_SUCCESS:
       return {
         ...state,
-        setUserBlock: {
+        updateSupplier: {
           loading: false,
           data: payload.data,
         }
       };
-    case BLOCK_SUPPLIER_FAILURE:
+    case UPDATE_SUPPLIER_FAILURE:
       return {
         ...state,
-        setUserBlock: {
+        updateSupplier: {
+          loading: false,
+          error: payload,
+        }
+      };
+
+    case SET_SUPPLIER_STATUS:
+      return {
+        ...state,
+        setSupplierStatus: {
+          loading: true,
+        }
+      };
+    case SET_SUPPLIER_STATUS_SUCCESS:
+      return {
+        ...state,
+        setSupplierStatus: {
+          loading: false,
+          data: payload.data,
+        }
+      };
+    case SET_SUPPLIER_STATUS_FAILURE:
+      return {
+        ...state,
+        setSupplierStatus: {
+          loading: false,
+          error: payload,
+        }
+      };
+
+    // case GET_SUPPLIER_DETAILS:
+    //   return {
+    //     ...state,
+    //     getUserDetails: {
+    //       loading: true,
+    //     }
+    //   };
+    // case GET_SUPPLIER_DETAILS_SUCCESS:
+    //   return {
+    //     ...state,
+    //     getUserDetails: {
+    //       loading: false,
+    //       data: payload.data,
+    //     }
+    //   };
+
+    // case GET_SUPPLIER_DETAILS_FAILURE:
+    //   return {
+    //     ...state,
+    //     getUserDetails: {
+    //       loading: false,
+    //       error: payload,
+    //     }
+    //   };
+
+    // case BLOCK_SUPPLIER:
+    //   return {
+    //     ...state,
+    //     setUserBlock: {
+    //       loading: true,
+    //     }
+    //   };
+    // case BLOCK_SUPPLIER_SUCCESS:
+    //   return {
+    //     ...state,
+    //     setUserBlock: {
+    //       loading: false,
+    //       data: payload.data,
+    //     }
+    //   };
+    // case BLOCK_SUPPLIER_FAILURE:
+    //   return {
+    //     ...state,
+    //     setUserBlock: {
+    //       loading: false,
+    //       error: payload,
+    //     }
+    //   };
+
+
+    case GET_PURCHASE:
+      return {
+        ...state,
+        getPurchases: {
+          loading: true,
+        }
+      };
+    case GET_PURCHASE_SUCCESS:
+      return {
+        ...state,
+        getPurchases: {
+          loading: false,
+          data: payload.data ? payload.data : [],
+        }
+      };
+    case GET_PURCHASE_FAILURE:
+      return {
+        ...state,
+        getPurchases: {
+          loading: false,
+          error: payload,
+        }
+      };
+
+    case ADD_PURCHASE:
+      return {
+        ...state,
+        addPurchase: {
+          loading: true,
+        }
+      };
+    case ADD_PURCHASE_SUCCESS:
+      return {
+        ...state,
+        addPurchase: {
+          loading: false,
+          data: payload.data,
+        }
+      };
+    case ADD_PURCHASE_FAILURE:
+      return {
+        ...state,
+        addPurchase: {
           loading: false,
           error: payload,
         }

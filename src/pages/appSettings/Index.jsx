@@ -1,5 +1,4 @@
 import React from 'react'
-import Modal from '../Supplier/Modal'
 import Breadcrumbs from '../../components/ui/Breadcrumbs'
 import SettingsForm from './SettingsForm'
 import notification from "../../assets/svgs/notification.svg";

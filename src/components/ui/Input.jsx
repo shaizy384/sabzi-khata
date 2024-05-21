@@ -2,11 +2,19 @@ import React, { useState } from 'react'
 import eyeOff from '../../assets/svgs/eye-off.svg';
 import eyeOn from '../../assets/svgs/eye-on.svg';
 import { useTranslation } from 'react-i18next';
+
 const Input = (props) => {
   const { t } = useTranslation();
   const [showPass, setShowPass] = useState(false);
   const handleShowPass = () => {
     setShowPass(!showPass)
+  }
+  const handleChange = (e) => {
+      console.log(e.target.value, e.target.name);
+      if (props?.onChange) {
+      props.onChange(e.target.value, e.target.name);
+      console.log(e.target.value, e.target.name);
+    }
   }
   return (
     <div className="relative mt-6 lg:w-[auto] w-full">
@@ -17,10 +25,12 @@ const Input = (props) => {
       <input
         value={props.value}
         type={showPass ? 'text' : props.type}
+        name={props?.name ? props?.name : props?.type}
         placeholder={props.placeholder}
         autoComplete="email"
         aria-label="Input"
-        className={`block lg:w-96 w-full rounded-2xl border border-neutral-300 bg-transparent py-4 ${props.logo ? "pl-10" : "pl-5"}  text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-yellow-500 focus:outline-none`}
+        onChange={handleChange}
+        className={`block lg:w-96 w-full rounded-2xl border border-neutral-300 bg-transparent py-4 ${props.logo ? "pl-10" : "pl-5"}  text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-colorPrimary focus:outline-none`}
       />
       {props.type === 'password' && <div className="absolute inset-y-1 right-4 flex justify-end">
         <button onClick={handleShowPass}>

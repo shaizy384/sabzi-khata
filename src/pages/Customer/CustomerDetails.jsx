@@ -1,19 +1,32 @@
-import React from 'react'
-import deUser from "../../assets/svgs/deactivate-user.svg"
-import UserCard from '../../components/ui/UserCard'
-import Datatable from '../../components/ui/TransactionsDatatable'
+import React, { useEffect } from 'react'
+import TransactionsDatatable from '../../components/ui/TransactionsDatatable'
 import Breadcrumbs from '../../components/ui/Breadcrumbs'
-import Modal from './Modal'
 import PersonalDetails from '../../components/ui/PersonalDetails'
 import BlockConfirmationModal from '../../components/ui/BlockConfirmationModal'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCustomers } from '../../redux/customers/action'
+import { useParams } from 'react-router'
+
 const CustomerDetails = () => {
+  const { id } = useParams()
+  const dispatch = useDispatch()
+  const customers = useSelector((state) => state.customersReducer.getCustomers?.data);
+  let customer = customers?.filter(c => c?.id == id)
+  if (customer?.length > 0) customer = customer[0];
+  console.log(customer);
+  useEffect(() => {
+    if (!customers) {
+      dispatch(getCustomers())
+    }
+  }, [customers])
+
   return (
     <div className="py-1 rounded-lg bg-gray-50">
       <div className='md:mx-10 mx-5 mt-10 mb-8 flex gap-3 justify-between md:flex-row flex-col'>
         <Breadcrumbs home="Customers" child="Customer Details" />
         <div className='flex justify-end'>
           {/* <Modal /> */}
-          <BlockConfirmationModal />
+          <BlockConfirmationModal id={customer?.id} person={customer} type='customer' />
           {/* <button className={`bg-red-600 items-center justify-between flex hover:bg-red-700 text-white  py-2 px-4 rounded`}>
             <svg className='mr-2' width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M18.364 5.63604C19.9926 7.26472 21 9.51472 21 12C21 16.9706 16.9706 21 12 21C9.51472 21 7.26472 19.9926 5.63604 18.364M18.364 5.63604C16.7353 4.00736 14.4853 3 12 3C7.02944 3 3 7.02944 3 12C3 14.4853 4.00736 16.7353 5.63604 18.364M18.364 5.63604L5.63604 18.364" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
             Block
@@ -42,8 +55,8 @@ const CustomerDetails = () => {
           <DisabledInput value={'Male'} label={'Gender'} />
         </div>
       </div> */}
-      <PersonalDetails />
-      <Datatable />
+      <PersonalDetails person={customer} type='customer' />
+      <TransactionsDatatable />
     </div>
   )
 }

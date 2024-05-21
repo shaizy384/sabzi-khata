@@ -3,7 +3,7 @@ import money_icon from '../../assets/svgs/money.svg'
 import { useTranslation } from "react-i18next";
 import Input from "./Input";
 
-export default function ModalAddCash() {
+export default function ModalAddCash({ customer_id, supplier_id, amount }) {
   const priceRef = useRef()
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
@@ -19,8 +19,8 @@ export default function ModalAddCash() {
   // const path = window.location.href.split("/")[3]
   // console.log(path);
 
-  const handleChange = (value, name) => {
-    setData({ ...data, [name]: value })
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value })
     console.log(data);
     // emailRef.current.innerText = ""
     // passwordRef.current.innerText = ""
@@ -74,7 +74,7 @@ export default function ModalAddCash() {
                       {type === 'card' ? <>
                         <p className='text-center flex items-baseline justify-center gap-1 mb-2'>
                           <span className='text-sm'>{t('Due Amount:')}</span><br />
-                          <span className='text-2xl text-red-500'>2000</span>
+                          <span className='text-2xl text-red-500'>{amount}</span>
                         </p>
                         <div className="mb-6">
                           <label for="default-input" className="block mb-2 text-lg font-semibold text-gray-900">{t('Card Number')}</label>
@@ -105,11 +105,11 @@ export default function ModalAddCash() {
                       </> : <>
                         <div className="mb-6">
                           <label for="default-input" className="block mb-2 text-lg font-semibold text-gray-900">{t('Payable Amount')}</label>
-                          <input type="text" placeholder="Total Payable Amount" id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:ring-2 focus:border-colorPrimary block w-full p-2.5 outline-none" value={1813} disabled />
+                          <input type="text" placeholder="Total Payable Amount" id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:ring-2 focus:border-colorPrimary block w-full p-2.5 outline-none" value={amount} disabled />
                         </div>
                         <div className="mb-6">
                           <label for="default-input" className="block mb-2 text-lg font-semibold text-gray-900">{t('Pay Amount')}</label>
-                          <input type="text" placeholder={t("Enter Paid Amount")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:ring-2 focus:border-colorPrimary block w-full p-2.5 outline-none" />
+                          <input type="text" name="amount_added" onChange={handleChange} placeholder={t("Enter Paid Amount")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:ring-2 focus:border-colorPrimary block w-full p-2.5 outline-none" />
                         </div>
                         {/* <div className='flex flex-wrap justify-center mb-6'>
                           <Input

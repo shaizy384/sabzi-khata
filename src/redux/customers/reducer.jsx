@@ -15,8 +15,24 @@ import {
   BLOCK_CUSTOMER_SUCCESS,
   BLOCK_CUSTOMER_FAILURE,
   CUSTOMER_PERSONAL_DETAILS,
-  ORDER_DETAILS
+  ORDER_DETAILS,
+  ADD_CUSTOMER,
+  ADD_CUSTOMER_SUCCESS,
+  ADD_CUSTOMER_FAILURE,
+  UPDATE_CUSTOMER,
+  UPDATE_CUSTOMER_SUCCESS,
+  UPDATE_CUSTOMER_FAILURE,
+  SET_CUSTOMER_STATUS,
+  SET_CUSTOMER_STATUS_SUCCESS,
+  SET_CUSTOMER_STATUS_FAILURE,
+  GET_SALES,
+  GET_SALES_SUCCESS,
+  GET_SALES_FAILURE,
+  ADD_SALE,
+  ADD_SALE_SUCCESS,
+  ADD_SALE_FAILURE
 } from "../actionTypes";
+import { addCustomer, setCustomerStatus } from "./action";
 
 const initial_state = {
   getCustomers: {
@@ -24,36 +40,62 @@ const initial_state = {
     loading: false,
     error: null,
   },
-  getCustomerDetails: {
+  addCustomer: {
     data: null,
     loading: false,
     error: null,
   },
-  getCustomerWarnings: {
+  updateCustomer: {
     data: null,
     loading: false,
     error: null,
   },
-  setCustomerBlock: {
+  setCustomerStatus: {
     data: null,
     loading: false,
     error: null,
   },
-  setCustomerWarning: {
+
+  getSales: {
     data: null,
     loading: false,
     error: null,
   },
-  customerPersonalDetails: {
+  addSale: {
     data: null,
     loading: false,
     error: null,
   },
-  orderDetails: {
-    data: null,
-    loading: false,
-    error: null,
-  },
+  // getCustomerDetails: {
+  //   data: null,
+  //   loading: false,
+  //   error: null,
+  // },
+  // getCustomerWarnings: {
+  //   data: null,
+  //   loading: false,
+  //   error: null,
+  // },
+  // setCustomerBlock: {
+  //   data: null,
+  //   loading: false,
+  //   error: null,
+  // },
+  // setCustomerWarning: {
+  //   data: null,
+  //   loading: false,
+  //   error: null,
+  // },
+  // customerPersonalDetails: {
+  //   data: null,
+  //   loading: false,
+  //   error: null,
+  // },
+  // orderDetails: {
+  //   data: null,
+  //   loading: false,
+  //   error: null,
+  // },
 };
 
 const customersReducer = (state = initial_state, { type, payload }) => {
@@ -77,136 +119,259 @@ const customersReducer = (state = initial_state, { type, payload }) => {
     case GET_CUSTOMERS:
       return {
         ...state,
-        getUsers: {
+        getCustomers: {
           loading: true,
         }
       };
     case GET_CUSTOMERS_SUCCESS:
+      console.log("payload ",payload);
       return {
         ...state,
-        getUsers: {
+        getCustomers: {
           loading: false,
-          data: payload.data,
+          data: payload.data ? payload.data : [],
         }
       };
-
     case GET_CUSTOMERS_FAILURE:
       return {
         ...state,
-        getUsers: {
+        getCustomers: {
           loading: false,
           error: payload,
         }
-
       };
-    case GET_CUSTOMER_DETAILS:
+
+    case ADD_CUSTOMER:
       return {
         ...state,
-        getUserDetails: {
+        addCustomer: {
           loading: true,
         }
-
       };
-    case GET_CUSTOMER_DETAILS_SUCCESS:
+    case ADD_CUSTOMER_SUCCESS:
       return {
         ...state,
-        getUserDetails: {
+        addCustomer: {
           loading: false,
           data: payload.data,
         }
-
       };
-
-    case GET_CUSTOMER_DETAILS_FAILURE:
+    case ADD_CUSTOMER_FAILURE:
       return {
         ...state,
-        getUserDetails: {
+        addCustomer: {
           loading: false,
           error: payload,
         }
-
       };
-    case GET_CUSTOMER_WARNINGS:
+
+    case UPDATE_CUSTOMER:
       return {
         ...state,
-        getUserWarnings: {
+        updateCustomer: {
           loading: true,
         }
-
       };
-    case GET_CUSTOMER_WARNINGS_SUCCESS:
+    case UPDATE_CUSTOMER_SUCCESS:
       return {
         ...state,
-        getUserWarnings: {
+        updateCustomer: {
           loading: false,
           data: payload.data,
         }
-
       };
-
-    case GET_CUSTOMER_WARNINGS_FAILURE:
+    case UPDATE_CUSTOMER_FAILURE:
       return {
         ...state,
-        getUserWarnings: {
+        updateCustomer: {
           loading: false,
           error: payload,
         }
-
       };
-    case SET_CUSTOMER_WARNINGS:
+
+    case SET_CUSTOMER_STATUS:
       return {
         ...state,
-        setUserWarning: {
+        setCustomerStatus: {
           loading: true,
         }
-
       };
-    case SET_CUSTOMER_WARNINGS_SUCCESS:
+    case SET_CUSTOMER_STATUS_SUCCESS:
       return {
         ...state,
-        setUserWarning: {
+        setCustomerStatus: {
           loading: false,
           data: payload.data,
         }
-
       };
-
-    case SET_CUSTOMER_WARNINGS_FAILURE:
+    case SET_CUSTOMER_STATUS_FAILURE:
       return {
         ...state,
-        setUserWarning: {
+        setCustomerStatus: {
           loading: false,
           error: payload,
         }
-
       };
-    case BLOCK_CUSTOMER:
+
+      
+
+
+    case GET_SALES:
       return {
         ...state,
-        setUserBlock: {
+        getSales: {
           loading: true,
         }
-
       };
-    case BLOCK_CUSTOMER_SUCCESS:
+    case GET_SALES_SUCCESS:
       return {
         ...state,
-        setUserBlock: {
+        getSales: {
+          loading: false,
+          data: payload.data ? payload.data : [],
+        }
+      };
+    case GET_SALES_FAILURE:
+      return {
+        ...state,
+        getSales: {
+          loading: false,
+          error: payload,
+        }
+      };
+
+    case ADD_SALE:
+      return {
+        ...state,
+        addSale: {
+          loading: true,
+        }
+      };
+    case ADD_SALE_SUCCESS:
+      return {
+        ...state,
+        addSale: {
           loading: false,
           data: payload.data,
         }
-
       };
-
-    case BLOCK_CUSTOMER_FAILURE:
+    case ADD_SALE_FAILURE:
       return {
         ...state,
-        setUserBlock: {
+        addSale: {
           loading: false,
           error: payload,
         }
-
       };
+
+    // case GET_CUSTOMER_DETAILS:
+    //   return {
+    //     ...state,
+    //     getUserDetails: {
+    //       loading: true,
+    //     }
+
+    //   };
+    // case GET_CUSTOMER_DETAILS_SUCCESS:
+    //   return {
+    //     ...state,
+    //     getUserDetails: {
+    //       loading: false,
+    //       data: payload.data,
+    //     }
+
+    //   };
+
+    // case GET_CUSTOMER_DETAILS_FAILURE:
+    //   return {
+    //     ...state,
+    //     getUserDetails: {
+    //       loading: false,
+    //       error: payload,
+    //     }
+
+    //   };
+    // case GET_CUSTOMER_WARNINGS:
+    //   return {
+    //     ...state,
+    //     getUserWarnings: {
+    //       loading: true,
+    //     }
+
+    //   };
+    // case GET_CUSTOMER_WARNINGS_SUCCESS:
+    //   return {
+    //     ...state,
+    //     getUserWarnings: {
+    //       loading: false,
+    //       data: payload.data,
+    //     }
+
+    //   };
+
+    // case GET_CUSTOMER_WARNINGS_FAILURE:
+    //   return {
+    //     ...state,
+    //     getUserWarnings: {
+    //       loading: false,
+    //       error: payload,
+    //     }
+
+    //   };
+    // case SET_CUSTOMER_WARNINGS:
+    //   return {
+    //     ...state,
+    //     setUserWarning: {
+    //       loading: true,
+    //     }
+
+    //   };
+    // case SET_CUSTOMER_WARNINGS_SUCCESS:
+    //   return {
+    //     ...state,
+    //     setUserWarning: {
+    //       loading: false,
+    //       data: payload.data,
+    //     }
+
+    //   };
+
+    // case SET_CUSTOMER_WARNINGS_FAILURE:
+    //   return {
+    //     ...state,
+    //     setUserWarning: {
+    //       loading: false,
+    //       error: payload,
+    //     }
+
+    //   };
+    // case BLOCK_CUSTOMER:
+    //   return {
+    //     ...state,
+    //     setUserBlock: {
+    //       loading: true,
+    //     }
+
+    //   };
+    // case BLOCK_CUSTOMER_SUCCESS:
+    //   return {
+    //     ...state,
+    //     setUserBlock: {
+    //       loading: false,
+    //       data: payload.data,
+    //     }
+
+    //   };
+
+    // case BLOCK_CUSTOMER_FAILURE:
+    //   return {
+    //     ...state,
+    //     setUserBlock: {
+    //       loading: false,
+    //       error: payload,
+    //     }
+      // };
+      
     default:
       return { ...state };
   }

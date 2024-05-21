@@ -5,23 +5,24 @@ import { callApi } from "../../api/APIs";
 
 function* watcherSignup(data) {
     let toastId = toast.loading("Loading...")
-    let url = '/v2/company/auth/Company_auth_controller/signUp';
+    let url = '/auth/register';
+    // const Data = yield call(callApi, url, 'POST', data.payload);
     const Data = yield call(callApi, url, 'POST', data.payload);
-    if (Data.status === 200) {
+    if (Data.status === 200 || Data.status === 201) {
         toast.update(toastId, { render: Data.data.message, type: 'success', isLoading: false, autoClose: 1000 })
         yield put({ type: SIGNUP_SUCCESS, payload: Data.data });
     }
     else {
-        toast.update(toastId, { render: Data.data.message, type: 'error', isLoading: false, closeButton: true })
+        toast.update(toastId, { render: Data.data.message, type: 'error', isLoading: false, autoClose: 1000 })
         yield put({ type: SIGNUP_FAILURE, payload: Data.data.error })
         // toast.error(Data.data.message)
     }
 }
 
 function* watcherLogin(data) {
-    let url = '/v2/company/auth/Company_auth_controller/login';
+    let url = '/auth/login';
     const Data = yield call(callApi, url, 'POST', data.payload);
-    if (Data.status === 200) {
+    if (Data.status === 200 || Data.status === 201) {
         yield put({ type: LOGIN_SUCCESS, payload: Data.data });
     }
     else {

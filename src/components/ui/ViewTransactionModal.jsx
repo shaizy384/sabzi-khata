@@ -1,10 +1,19 @@
 import React, { useState } from 'react'
 import DataTable from 'react-data-table-component';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
-const ViewTransactionModal = () => {
+const ViewTransactionModal = ({ sales, date }) => {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
+  const filterSales = sales?.filter(sale => sale.created_at.slice(0, 10) === date)
+  console.log("filterSales filterSales: ", filterSales);
+  const productsData = useSelector((state) => state.productsReducer.getProducts?.data);
+  const filterProduct = (id) => {
+    const product = productsData?.filter(p => p.id == id);
+    console.log("product product: ", product);
+    if (product?.length > 0) { return product[0]?.name; }
+  }
   const customStyles = {
     rows: {
       style: {
@@ -28,11 +37,11 @@ const ViewTransactionModal = () => {
   const columns = [
     {
       name: t('Date'),
-      selector: row => row.date,
+      selector: row => row.created_at.slice(0, 10),
     },
     {
       name: t('Product'),
-      selector: row => row.product,
+      selector: row => filterProduct(row.product_id),
     },
     {
       name: t('Quantity'),
@@ -40,7 +49,7 @@ const ViewTransactionModal = () => {
     },
     {
       name: t('Amount'),
-      selector: row => row.amount,
+      selector: row => row.price,
     },
   ];
 
@@ -102,7 +111,7 @@ const ViewTransactionModal = () => {
                   <div className="mt-2 bg-white">
                     <DataTable
                       columns={columns}
-                      data={data}
+                      data={filterSales}
                       pagination
                       selectableRowsHighlight
                       customStyles={customStyles}

@@ -5,34 +5,75 @@ import Input from '../../components/ui/Input';
 import { useNavigate, useParams } from 'react-router';
 import UpdatePassModal from './UpdatePassModal';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { addSubAdmin, getSubAdmins, updateSubAdmin } from '../../redux/subadmin/action';
 
 const EditAdminRole = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { id } = useParams()
-    const [data, setData] = useState({ name: '', email: '' });
+    const dispatch = useDispatch()
+    const [data, setData] = useState({ dashboard: 0, product: 0, customer: 0, customer_report: 0, supplier: 0, supplier_report: 0, admin_roles: 0 });
     const [roles, setRoles] = useState({});
     const [dropdownVisible, setDropdownVisible] = useState(false);
+    const rolesDefined = ['dashboard', 'product', 'customer', 'customer_report', 'supplier', 'supplier_report']
+    const subAdmins = useSelector((state) => state.subAdminsReducer.getSubAdmins?.data);
+    useEffect(() => {
+        if (!subAdmins) {
+            dispatch(getSubAdmins())
+        }
+    }, [subAdmins])
+    let subAdmin = subAdmins?.filter(s => s?.id == id);
+    if (subAdmins?.length > 0) {
+        subAdmin = subAdmin[0]
+    }
+
+    console.log("subAdmins: ", subAdmins, subAdmin, id);
 
     useEffect(() => {
         if (!id) return;
-        setData({ name: 'Shahzaib', email: 'new@brand.com' })
-        setRoles({ dashboard: 'dashboard', customer: 'customer' })
+        setData({ ...subAdmin })
+        const newState = {};
+        rolesDefined.forEach(key => {
+            if (subAdmin[key]) {
+                if (subAdmin[key] === 1) {
+                    newState[key] = key;
+                }
+            }
+        });
+        setRoles(newState)
+        // setData({ name: 'Shahzaib', email: 'new@brand.com' })
+        // setRoles({ dashboard: 'dashboard', customer: 'customer' })
     }, [id])
 
     const handleAddRole = (name, e) => {
-        setRoles({ ...roles, [e.target.name]: name })
+        setData({ ...data, [name]: 1 })
+        setRoles({ ...roles, [name]: name })
+        console.log("roles roles: ", data, roles);
         setDropdownVisible(false);
     }
 
     const handleDeleteRole = (key) => {
         const newRoles = { ...roles };
         delete newRoles[key]
+        delete data[key]
         setRoles(newRoles)
+        console.log("deleted: ", roles, data);
+    }
+
+    const handleOnChange = (value, name) => {
+        setData({ ...data, [name]: value })
+        // setData({ ...data, [e.target.name]: e.target.value })
+        console.log("handleOnChange", data);
     }
 
     const handleSubmit = () => {
-        console.log({ ...data, ...roles });
+        console.log("data: ", { ...data });
+        console.log("roles: ", { ...roles });
+
+        // !id && dispatch(addSubAdmin(data))
+        !id && dispatch(addSubAdmin({ ...data, password_confirmation: data?.password }))
+        id && dispatch(updateSubAdmin(data))
     }
     const handleCancel = () => {
         navigate('/adminroles');
@@ -41,7 +82,7 @@ const EditAdminRole = () => {
         <div className="py-1 rounded-lg bg-gray-50">
             <div className='mx-10 mt-10 mb-5'>
                 <div className='flex justify-end'>
-                    {<UpdatePassModal id={1} />}
+                    {<UpdatePassModal id={1} subAdmin={subAdmin} />}
                     <button className={`bg-green-500 items-center justify-between flex hover:bg-green-600 text-white py-2 px-4 rounded`}>
                         {/* <img className='mr-2' src={notification} width={19} alt="notification" /> */}
                         <span>{t("Create New Subadmin")}</span>
@@ -50,9 +91,9 @@ const EditAdminRole = () => {
             </div>
             <div className="h-full mx-10 shadow my-2 rounded-2xl py-5 px-12 bg-white">
                 <div className="flex flex-wrap lg:justify-between justify-center mb-6">
-                    <Input type={'name'} value={data.name} label={'Name'} />
-                    <Input type={'email'} value={data.email} label={'Email'} />
-                    <Input type={'text'} value={'290888890'} label={'Password'} />
+                    <Input type={'name'} value={data.name} label={'Name'} onChange={handleOnChange} />
+                    <Input type={'email'} value={data.email} label={'Email'} onChange={handleOnChange} />
+                    {!id && <Input type={'password'} value={data?.password} label={'Password'} onChange={handleOnChange} />}
 
                     <div className="relative mt-6 lg:w-[auto] w-full">
                         <label className='font-medium block mb-3'>{t("Roles")}</label>
@@ -72,7 +113,18 @@ const EditAdminRole = () => {
                                 className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-auto absolute mt-2"
                             >
                                 <ul className="py-2 text-sm text-gray-700" aria-labelledby="dropdownHoverButton">
-                                    <li>
+                                    {rolesDefined.map((role) => {
+                                        return <li>
+                                            <button
+                                                name="dashboard"
+                                                onClick={(e) => handleAddRole(role, e)}
+                                                className={`flex sm:w-96 w-full py-3 px-5 hover:bg-gray-100 capitalize`}
+                                            >
+                                                {t(`${role.replace(/_/g, ' ')}`)}
+                                            </button>
+                                        </li>
+                                    })}
+                                    {/* <li>
                                         <button
                                             name="dashboard"
                                             onClick={(e) => handleAddRole('dashboard', e)}
@@ -125,16 +177,16 @@ const EditAdminRole = () => {
                                         >
                                             {t('Supplier Report')}
                                         </button>
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </div>
                         )}
 
-                        <div className="flex lg:w-96 w-full">
+                        <div className="flex flex-wrap lg:w-96 w-full">
                             {Object.keys(roles).map((keyName, i) => {
-                                console.log("role: ", keyName, i);
+                                console.log("role: ", keyName, i, ":", data[keyName]);
                                 return <div className="flex items-baseline rounded-lg bg-colorPrimary text-white py-1.5 px-3 me-3 mt-3">
-                                    <span className='capitalize'>{t(roles[keyName])}</span>
+                                    <span className='capitalize'>{t(roles[keyName].replace(/_/g, ' '))}</span>
                                     <img className='block cursor-pointer ms-2' width={9} src={cross} alt="" onClick={() => handleDeleteRole(keyName)} />
                                 </div>
                             })}

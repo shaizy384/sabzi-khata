@@ -21,7 +21,20 @@ import Signup from '../pages/auth/Signup';
 import Products from '../pages/Products/Index';
 import AddSale from '../components/ui/AddSale';
 import GenerateReport from '../pages/GenerateReport';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from '../redux/user/action';
+
 const Routers = () => {
+    const dispatch = useDispatch();
+    const data = useSelector((state) => state.userReducer.getUser.data);
+    const isAuthorized = useSelector((state) => state.authReducer.isAuthenticated);
+    console.log("isAuthorized isAuthorized: ", isAuthorized, " :", data);
+    useEffect(() => {
+        if (data === null && isAuthorized) {
+            dispatch(getUser());
+        }
+    }, [data, isAuthorized]);
     return (
         <>
             <BrowserRouter>
@@ -63,7 +76,7 @@ const Routers = () => {
                         element={<Layout><Customers /></Layout>}
                     />
                     <Route
-                        path="/customers/customerdetails"
+                        path="/customers/customerdetails/:id"
                         element={<Layout><CustomerDetails /></Layout>}
                     />
                     <Route
@@ -83,7 +96,7 @@ const Routers = () => {
                         element={<Layout><ServiceProvider /></Layout>}
                     />
                     <Route
-                        path="/suppliers/supplierdetails"
+                        path="/suppliers/supplierdetails/:id"
                         element={<Layout><SupplierDetails /></Layout>}
                     />
                     {/* <Route

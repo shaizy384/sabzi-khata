@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setLanguage } from '../../redux/localization/action';
 import i18n from '../../i18n';
 import { useTranslation } from 'react-i18next';
+import { logout } from '../../redux/auth/action';
 
 const NavBar = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const userData = useSelector((state) => state.userReducer.getUser.data);
   const language = useSelector((state) => state.localizationReducer.language);
   const path = window.location.pathname.split('/').slice(1)[0]
   const navTitle = (path === "dashboard" && t("Dashboard")) || (path === "suppliers" && "Supplier") || (path === "products" && "Products") || (path === "customers" && "Customer") || (path === "adminroles" && "Admin Roles") || (path === "supplierreport" && "Supplier Report") || (path === "customerreport" && "Customer Report") || (path === "notifications" && "Notifications")
@@ -48,6 +50,10 @@ const NavBar = () => {
       document.documentElement.setAttribute('dir', 'ltr') :
       document.documentElement.setAttribute('dir', 'rtl')
   }
+
+  const handleLogout = () => {
+    dispatch(logout())
+  }
   return (
     <nav className=" shadow-sm flex flex-wrap items-center justify-between p-4 bg-white w-full">
       <h6 className='font-medium text-lg'>{t(navTitle)}</h6>
@@ -68,8 +74,8 @@ const NavBar = () => {
                 src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
                 alt="user photo"
               />
-              <span className="block text-sm text-gray-900 font-medium ms-2">
-                Shahzaib Qasim
+              <span className="block text-sm text-gray-900 font-medium ms-2 capitalize">
+                {userData ? userData?.name : "Loading..."}
               </span>
             </div>
             <div className="ms-4">
@@ -97,11 +103,11 @@ const NavBar = () => {
             ref={dropdownRef}
           >
             <div className="px-4 py-3" onClick={() => closeDropdown()} >
-              <span className="block text-sm text-gray-900 truncate">
-                Shahzaib Qasim
+              <span className="block text-sm text-gray-900 truncate capitalize">
+                {userData?.name}
               </span>
               <span className="block text-sm text-gray-500 truncate">
-                shahzaib@gmail.com
+                {userData?.email}
               </span>
             </div>
             <ul className="py-2" aria-labelledby="user-menu-button">
@@ -129,7 +135,7 @@ const NavBar = () => {
                       <span>{t("English")}</span>
                     </div>
                   </li>
-                  <li>
+                  {/* <li>
                     <div
                       onClick={() => handleChange("ur+en")}
                       className={`flex gap-2 items-center px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer ${language === 'ur+en' ? "text-colorPrimary font-medium ltr:pl-2.5 rtl:pr-2.5" : " text-gray-700 ltr:pl-8 rtl:pr-8"}`}
@@ -139,7 +145,7 @@ const NavBar = () => {
                       </div>}
                       <span>{t("Urdu + English")}</span>
                     </div>
-                  </li>
+                  </li> */}
                   <li>
                     <div
                       onClick={() => handleChange("ur")}
@@ -155,8 +161,8 @@ const NavBar = () => {
               </li>}
               <li>
                 <div
-                  onClick={() => closeDropdown()}
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={handleLogout}
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                 >
                   {t("Sign out")}
                 </div>

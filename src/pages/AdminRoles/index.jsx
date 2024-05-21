@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import DataTable from 'react-data-table-component';
 import Breadcrumbs from '../../components/ui/Breadcrumbs';
 import basket from "../../assets/svgs/delete.svg";
@@ -6,10 +6,21 @@ import edit from "../../assets/svgs/edit.svg";
 import notification from "../../assets/svgs/notification.svg";
 import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteSubAdmin, getSubAdmins } from '../../redux/subadmin/action';
 
 const AdminRoles = () => {
     const { t } = useTranslation();
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const subAdmins = useSelector((state) => state.subAdminsReducer.getSubAdmins?.data);
+    useEffect(() => {
+        if (!subAdmins) {
+            dispatch(getSubAdmins())
+        }
+    }, [subAdmins])
+
+    console.log("subAdmins: ", subAdmins);
     const customStyles = {
         rows: {
             style: {
@@ -33,7 +44,7 @@ const AdminRoles = () => {
     const columns = [
         {
             name: t('Sr No.'),
-            selector: row => row.srNum,
+            selector: row => row.id,
         },
         {
             name: t('Name'),
@@ -43,17 +54,13 @@ const AdminRoles = () => {
             name: t('Email'),
             selector: row => row.email,
         },
-        // {
-        //     name: 'Roles',
-        //     selector: row => row.roles,
-        // },
         {
             name: t('Action'),
             selector: row => (<div className='flex'>
-                <button onClick={() => navigate('/adminroles/edit/1')} className={`bg-cyan-500 hover:bg-cyan-600 text-white font-bold py- p-2.5 rounded-xl me-2`}>
+                <button onClick={() => navigate(`/adminroles/edit/${row.id}`)} className={`bg-cyan-500 hover:bg-cyan-600 text-white font-bold py- p-2.5 rounded-xl me-2`}>
                     <img src={edit} width={18.5} alt="edit" />
                 </button>
-                <button onClick={() => navigate('/ordermanagement/orderdetails')} className={`bg-rose-500 hover:bg-rose-600 text-white font-bold py- p-2.5 rounded-xl`}>
+                <button onClick={() => dispatch(deleteSubAdmin(row?.id))} className={`bg-rose-500 hover:bg-rose-600 text-white font-bold py- p-2.5 rounded-xl`}>
                     <img src={basket} width={18.5} alt="basket" />
                 </button>
             </div>),
@@ -89,7 +96,7 @@ const AdminRoles = () => {
             <div className="h-full md:mx-10 mx-5 shadow-md my-2 rounded-xl p-2 bg-white">
                 <DataTable
                     columns={columns}
-                    data={data}
+                    data={subAdmins ? subAdmins : []}
                     selectableRowsHighlight
                     customStyles={customStyles}
                 />

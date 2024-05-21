@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component';
 import { useNavigate } from 'react-router';
 import ModalAddProduct from './ModalAddProduct';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProducts, setProductStatus } from '../../redux/products/action';
 
 const Products = () => {
   const { t } = useTranslation();
@@ -10,72 +12,22 @@ const Products = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
-  const customStyles = {
-    rows: {
-      style: {
-        minHeight: '72px', // override the row height
-      },
-    },
-    headCells: {
-      style: {
-        fontWeight: 'bold',
-        paddingLeft: '8px', // override the cell padding for head cells
-        paddingRight: '8px',
-      },
-    },
-    cells: {
-      style: {
-        paddingLeft: '8px', // override the cell padding for data cells
-        paddingRight: '8px',
-      },
-    },
-  };
-  const columns = [
-    {
-      name: t('Picture'),
-      selector: row => (<img
-        className="ml-5 w-8 h-8 rounded-full"
-        src={row.picture}
-        alt="user photo"
-      />),
-    },
-    {
-      name: t('Name'),
-      selector: row => row.name,
-    },
-    {
-      name: t('Phone no'),
-      selector: row => row.phone,
-    },
-    {
-      name: t('Address'),
-      selector: row => row.address,
-    },
-    {
-      name: t('Total Amount'),
-      selector: row => row.total_amount,
-    },
-    {
-      name: t('Approved/ Disapproved'),
-      selector: row => (
-        <label className="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox" value="" className="sr-only peer" />
-          <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4   rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-colorPrimary"></div>
-        </label>
-      ),
-    },
-    {
-      name: t('Action'),
-      selector: row => (<button onClick={() => navigate('/users/userdetails')} className={`bg-[#2D9D46] hover:bg-[#217E36] text-white font-bold py-2 px-2 rounded`}>
-        <svg className="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 14">
-          <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-            <path d="M10 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-            <path d="M10 13c4.97 0 9-2.686 9-6s-4.03-6-9-6-9 2.686-9 6 4.03 6 9 6Z" />
-          </g>
-        </svg>
-      </button>),
-    },
-  ];
+
+  const dispatch = useDispatch()
+  const productsData = useSelector((state) => state.productsReducer.getProducts?.data);
+  useEffect(() => {
+    if (!productsData) {
+      dispatch(getProducts())
+    }
+  }, [productsData])
+
+  console.log("products: ", productsData);
+
+  const handleDisable = (id) => {
+    console.log(id);
+    dispatch(setProductStatus(id))
+
+  }
   const data = [
     {
       "picture": "https://dummyimage.com/200x200/000/fff&text=Person+1",
@@ -285,16 +237,16 @@ const Products = () => {
     },
   ]
 
-  const filteredData = data
-    .filter((row) => {
+  const filteredData = productsData
+    ?.filter((row) => {
       // Filter by selected order status
       if (selectedFilter === 'all') {
         return true;
       } else {
-        return row.orderstatus === (selectedFilter === 'male' ? 1 : 'female');
+        return row.status === (selectedFilter === 1 ? 1 : 0);
       }
     })
-    .filter((row) => {
+    ?.filter((row) => {
       // Filter by search term in customer names
       return row.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
@@ -342,7 +294,7 @@ const Products = () => {
           {dropdownVisible && (
             <div
               id="dropdownHover"
-              className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-auto absolute mt-2"
+              className="w-full z-10 bg-white divide-y divide-gray-100 rounded-lg shadow absolute mt-2"
             >
               <ul className="py-2  text-sm text-gray-700" aria-labelledby="dropdownHoverButton">
                 <li>
@@ -351,8 +303,7 @@ const Products = () => {
                       setSelectedFilter('all');
                       setDropdownVisible(false);
                     }}
-                    className={` w-full block px-4 py-2 hover:bg-gray-100 ${selectedFilter === 'all' ? 'bg-colorPrimary text-white' : ''
-                      }`}
+                    className={` w-full block px-4 py-2 ${selectedFilter === 'all' ? 'bg-colorPrimary text-white' : ' hover:bg-gray-100'}`}
                   >
                     All
                   </button>
@@ -360,25 +311,23 @@ const Products = () => {
                 <li>
                   <button
                     onClick={() => {
-                      setSelectedFilter('male');
+                      setSelectedFilter(1);
                       setDropdownVisible(false);
                     }}
-                    className={` w-full block px-4 py-2 hover:bg-gray-100 ${selectedFilter === 'male' ? 'bg-colorPrimary text-white' : ''
-                      }`}
+                    className={` w-full block px-4 py-2 ${selectedFilter === 1 ? 'bg-colorPrimary text-white' : 'hover:bg-gray-100'}`}
                   >
-                    Male
+                    Active
                   </button>
                 </li>
                 <li>
                   <button
                     onClick={() => {
-                      setSelectedFilter('female');
+                      setSelectedFilter(0);
                       setDropdownVisible(false);
                     }}
-                    className={`w-full block px-4 py-2 hover:bg-gray-100 ${selectedFilter === 'female' ? 'bg-colorPrimary text-white' : ''
-                      }`}
+                    className={`w-full block px-4 py-2 ${selectedFilter === 0 ? 'bg-colorPrimary text-white' : 'hover:bg-gray-100'}`}
                   >
-                    Female
+                    Disabled
                   </button>
                 </li>
               </ul>
@@ -396,22 +345,25 @@ const Products = () => {
         /> */}
 
         <div className="my-5 flex flex-wrap gap-3">
-          {products?.map(p => {
-            return <div className="w-[18rem] p-6 bg-white border border-gray-200 rounded-lg shadow flex items-center justify-between">
-              <div className="">
-                <a href="#">
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{p.name}</h5>
-                </a>
-                <p className="mb-3 font-semibold text-gray-600">{t(p.unit)}</p>
+          {filteredData?.length > 0 ?
+            filteredData?.map(p => {
+              return <div className="w-[18rem] p-6 bg-white border border-gray-200 rounded-lg shadow flex items-center justify-between">
+                <div className="">
+                  <a href="#">
+                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{p.name}</h5>
+                  </a>
+                  <p className="mb-3 font-semibold text-gray-600">{t(p.unit)}</p>
+                </div>
+                <div>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" checked={p.status === 1} onChange={() => handleDisable(p.id)} value="" className="sr-only peer" />
+                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4   rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-colorPrimary"></div>
+                  </label>
+                </div>
               </div>
-              <div>
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input type="checkbox" value="" className="sr-only peer" />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4   rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-colorPrimary"></div>
-                </label>
-              </div>
-            </div>
-          })}
+            }) :
+            <div className='text-sm mx-auto text-gray-700'>No products Found!</div>
+          }
         </div>
       </div>
     </div>

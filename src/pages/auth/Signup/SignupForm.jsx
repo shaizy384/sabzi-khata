@@ -6,10 +6,13 @@ import lock from "../../../assets/svgs/lock.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import blackLogo from "../../../assets/images/veg-cal-logo2.png"
+// import blackLogo from "../../../assets/images/veg-cal-logo4.png"
 // import blackLogo from "../../../assets/images/Sabzi-png.png"
 import { login } from "../../../redux/navbarTitle/action";
+import { toast } from "react-toastify";
+import { signupUser } from "../../../redux/auth/action";
 
-const SignupForm = ({ data, setData, formType, setFormType }) => {
+const SignupForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const allInpRef = useRef('')
@@ -20,32 +23,54 @@ const SignupForm = ({ data, setData, formType, setFormType }) => {
   const [cPassword, setCPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+  const [data, setData] = useState({ name: "", email: "", password: "", password_confirmation: "" });
+  const adminData = useSelector((state) => state.authReducer);
+  console.log("adminData: ", adminData);
   // const loading = useSelector((state) => state.authReducer.loading);
   const loading = false;
 
-  const handleChange = (value, name) => {
+  const handleOnChange = (value, name) => {
     setData({ ...data, [name]: value })
+    // setData({ ...data, [e.target.name]: e.target.value })
     console.log(data);
-    cPasswordRef.current.innerText = ""
-    passwordRef.current.innerText = ""
-    emailRef.current.innerText = ""
-    numRef.current.innerText = ""
-  };
+  }
 
-  const handleCPassword = (value) => {
-    setCPassword(value);
-    cPasswordRef.current.innerText = ""
-    passwordRef.current.innerText = ""
-    emailRef.current.innerText = ""
-    numRef.current.innerText = ""
-  };
+  // const handleChange = (value, name) => {
+  //   setData({ ...data, [name]: value })
+  //   console.log(data);
+  //   cPasswordRef.current.innerText = ""
+  //   passwordRef.current.innerText = ""
+  //   emailRef.current.innerText = ""
+  //   numRef.current.innerText = ""
+  // };
+
+  // const handleCPassword = (value) => {
+  //   setCPassword(value);
+  //   cPasswordRef.current.innerText = ""
+  //   passwordRef.current.innerText = ""
+  //   emailRef.current.innerText = ""
+  //   numRef.current.innerText = ""
+  // };
 
   const handleRememberMeChange = () => {
     setRememberMe(!rememberMe);
   };
-  const handleSubmit = async (e) => {
-    dispatch(login())
-    navigate("/dashboard")
+  const handleSubmit = async () => {
+    if (!data.name || !data?.email || !data?.password || !data?.password_confirmation) {
+      toast.error("All fields are reqiured")
+    } else if (!emailPattern.test(data?.email)) {
+      toast.error("Email is invalid")
+    } else if (data?.password.length < 8) {
+      toast.error("Password must contains atleast 8 characters")
+    } else if (data?.password !== data?.password_confirmation) {
+      toast.error("Confirm password doesn't match the original password")
+    } else if (data.name && data?.email && data?.password && data?.password_confirmation) {
+      console.log(data);
+      dispatch(signupUser(data))
+      // navigate("/dashboard")
+    }
+    // dispatch(login())
+    // navigate("/dashboard")
     // emailRef.current.style.color = "red"    //change email error color to red
     // passwordRef.current.style.color = "red"    //change password error color to red
     // cPasswordRef.current.style.color = "red"    //change password error color to red
@@ -89,17 +114,17 @@ const SignupForm = ({ data, setData, formType, setFormType }) => {
             </h3>
             <p className="text-red-500 -mb-5 mt-2 hidden" ref={allInpRef}>All fields are required*</p>
             <Input
-              type={"phone"}
-              placeholder={"Phone no"}
-              value={data?.phone}
-              onChange={handleChange}
+              type={"name"}
+              placeholder={"Full Name"}
+              value={data?.name}
+              onChange={handleOnChange}
             />
             <p className="text-dangers" ref={numRef}></p>
             <Input
               type={"email"}
               placeholder={"Email address"}
               value={data?.email}
-              onChange={handleChange}
+              onChange={handleOnChange}
             />
             <p className="text-dangers" ref={emailRef}></p>
             <Input
@@ -107,16 +132,16 @@ const SignupForm = ({ data, setData, formType, setFormType }) => {
               logo={lock}
               placeholder={"Password"}
               value={data?.password}
-              onChange={handleChange}
+              onChange={handleOnChange}
             />
             <p className="text-danger" ref={passwordRef}></p>
             <Input
               type={"password"}
-              name={"cPassword"}
+              name={"password_confirmation"}
               logo={lock}
               placeholder={"Confirm Password"}
-              value={cPassword}
-              onChange={handleCPassword}
+              value={data?.password_confirmation}
+              onChange={handleOnChange}
             />
             <p className="text-danger" ref={cPasswordRef}></p>
             <div className="flex justify-between">
@@ -141,7 +166,7 @@ const SignupForm = ({ data, setData, formType, setFormType }) => {
             </div>
 
             <button
-              className={`h-12 font-bold mt-3 cursor-pointer group relative flex gap-1.5 items-center justify-center ${loading ? "py-2" : "py-4"} bg-colorPrimary sm:w-96 w-full bg-opacity-80 text-white rounded-xl hover:bg-hoverPrimary hover:shadow-lg transition `}
+              className={`h-12 font-bold mt-3 cursor-pointer group relative flex gap-1.5 items-center justify-center ${loading ? "py-2" : "py-4"} bg-colorPrimary md:w-96 w-full bg-opacity-80 text-white rounded-xl hover:bg-hoverPrimary hover:shadow-lg transition `}
               onClick={() => handleSubmit(data?.email, data?.password)}
             >
               {
