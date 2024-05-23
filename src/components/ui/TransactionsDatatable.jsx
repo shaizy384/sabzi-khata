@@ -26,11 +26,11 @@ const TransactionsDatatable = () => {
             dispatch(getSales())
         }
     }, [sales])
-    console.log("sales: ", sales);
+    console.log("sales: ", sales, pageType !== "suppliers" ? sales : purchases);
     console.log("purchases: ", purchases);
 
-    const summarizeDataByDate = (sales) => {
-        const sale = pageType !== "suppliers" ? sales : purchases?.reduce((acc, current) => {
+    const summarizeDataByDate = (data) => {
+        const sale = data?.reduce((acc, current) => {
             const date = current.created_at.slice(0, 10);
 
             if (!acc[date]) {
@@ -38,14 +38,14 @@ const TransactionsDatatable = () => {
             }
 
             acc[date].transactions += 1;
-            acc[date].totalAmount += current.price;
+            acc[date].totalAmount += parseInt(current.price);
 
             return acc;
         }, {});
 
         return sale ? Object?.values(sale) : [];
     };
-    const summarizedSales = summarizeDataByDate(sales);
+    const summarizedSales = summarizeDataByDate(pageType !== "suppliers" ? sales : purchases);
     console.log("result result result: ", summarizedSales);
 
 
@@ -84,7 +84,7 @@ const TransactionsDatatable = () => {
         },
         {
             name: t('Details'),
-            selector: row => (<ViewTransactionModal date={row.date} sales={sales} />),
+            selector: row => (<ViewTransactionModal date={row.date} sales={pageType !== "suppliers" ? sales : purchases} title={pageType !== "suppliers" ? "Sales" : "Purchase"} />),
             // selector: row => (<button onClick={() => navigate('/ordermanagement/orderdetails')} className={`bg-[#2D9D46] hover:bg-[#217E36] text-white font-bold py-2 px-4 rounded`}>
             //     view
             // </button>),

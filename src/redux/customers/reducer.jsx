@@ -30,11 +30,25 @@ import {
   GET_SALES_FAILURE,
   ADD_SALE,
   ADD_SALE_SUCCESS,
-  ADD_SALE_FAILURE
+  ADD_SALE_FAILURE,
+  GET_CUSTOMER_TRANSACTIONS,
+  GET_CUSTOMER_TRANSACTIONS_SUCCESS,
+  GET_CUSTOMER_TRANSACTIONS_FAILURE,
+  ADD_CUSTOMER_TRANSACTION,
+  ADD_CUSTOMER_TRANSACTION_SUCCESS,
+  ADD_CUSTOMER_TRANSACTION_FAILURE,
+  GET_CUSTOMER_STATS,
+  GET_CUSTOMER_STATS_SUCCESS,
+  GET_CUSTOMER_STATS_FAILURE
 } from "../actionTypes";
 import { addCustomer, setCustomerStatus } from "./action";
 
 const initial_state = {
+  getCustomerStats: {
+    data: null,
+    loading: false,
+    error: null,
+  },
   getCustomers: {
     data: null,
     loading: false,
@@ -62,6 +76,17 @@ const initial_state = {
     error: null,
   },
   addSale: {
+    data: null,
+    loading: false,
+    error: null,
+  },
+
+  getCustomerTransactions: {
+    data: null,
+    loading: false,
+    error: null,
+  },
+  addTransaction: {
     data: null,
     loading: false,
     error: null,
@@ -116,6 +141,32 @@ const customersReducer = (state = initial_state, { type, payload }) => {
           loading: false,
         },
       }
+
+    case GET_CUSTOMER_STATS:
+      return {
+        ...state,
+        getCustomerStats: {
+          loading: true,
+        }
+      };
+    case GET_CUSTOMER_STATS_SUCCESS:
+      console.log("payload ", payload);
+      return {
+        ...state,
+        getCustomerStats: {
+          loading: false,
+          data: payload.data ? payload.data : [],
+        }
+      };
+    case GET_CUSTOMER_STATS_FAILURE:
+      return {
+        ...state,
+        getCustomerStats: {
+          loading: false,
+          error: payload,
+        }
+      };
+
     case GET_CUSTOMERS:
       return {
         ...state,
@@ -124,7 +175,7 @@ const customersReducer = (state = initial_state, { type, payload }) => {
         }
       };
     case GET_CUSTOMERS_SUCCESS:
-      console.log("payload ",payload);
+      console.log("payload ", payload);
       return {
         ...state,
         getCustomers: {
@@ -213,7 +264,7 @@ const customersReducer = (state = initial_state, { type, payload }) => {
         }
       };
 
-      
+
 
 
     case GET_SALES:
@@ -259,6 +310,54 @@ const customersReducer = (state = initial_state, { type, payload }) => {
       return {
         ...state,
         addSale: {
+          loading: false,
+          error: payload,
+        }
+      };
+
+    case GET_CUSTOMER_TRANSACTIONS:
+      return {
+        ...state,
+        getCustomerTransactions: {
+          loading: true,
+        }
+      };
+    case GET_CUSTOMER_TRANSACTIONS_SUCCESS:
+      return {
+        ...state,
+        getCustomerTransactions: {
+          loading: false,
+          data: payload.data ? payload.data : [],
+        }
+      };
+    case GET_CUSTOMER_TRANSACTIONS_FAILURE:
+      return {
+        ...state,
+        getCustomerTransactions: {
+          loading: false,
+          error: payload,
+        }
+      };
+
+    case ADD_CUSTOMER_TRANSACTION:
+      return {
+        ...state,
+        addTransaction: {
+          loading: true,
+        }
+      };
+    case ADD_CUSTOMER_TRANSACTION_SUCCESS:
+      return {
+        ...state,
+        addTransaction: {
+          loading: false,
+          data: payload.data,
+        }
+      };
+    case ADD_CUSTOMER_TRANSACTION_FAILURE:
+      return {
+        ...state,
+        addTransaction: {
           loading: false,
           error: payload,
         }
@@ -370,8 +469,8 @@ const customersReducer = (state = initial_state, { type, payload }) => {
     //       loading: false,
     //       error: payload,
     //     }
-      // };
-      
+    // };
+
     default:
       return { ...state };
   }

@@ -30,7 +30,16 @@ import {
   GET_PURCHASE_FAILURE,
   ADD_PURCHASE,
   ADD_PURCHASE_SUCCESS,
-  ADD_PURCHASE_FAILURE
+  ADD_PURCHASE_FAILURE,
+  ADD_SUPPLIER_TRANSACTION,
+  ADD_SUPPLIER_TRANSACTION_SUCCESS,
+  ADD_SUPPLIER_TRANSACTION_FAILURE,
+  GET_SUPPLIER_TRANSACTIONS,
+  GET_SUPPLIER_TRANSACTIONS_SUCCESS,
+  GET_SUPPLIER_TRANSACTIONS_FAILURE,
+  GET_SUPPLIER_STATS,
+  GET_SUPPLIER_STATS_SUCCESS,
+  GET_SUPPLIER_STATS_FAILURE
 } from "../actionTypes";
 import { addSupplier, setSupplierStatus, updateSupplier } from "./action";
 const initial_state = {
@@ -65,11 +74,23 @@ const initial_state = {
     loading: false,
     error: null,
   },
-  // getSupplierDetails: {
-  //   data: null,
-  //   loading: false,
-  //   error: null,
-  // },
+
+  getSupplierTransactions: {
+    data: null,
+    loading: false,
+    error: null,
+  },
+  addSupplierTransaction: {
+    data: null,
+    loading: false,
+    error: null,
+  },
+
+  getSupplierStats: {
+    data: null,
+    loading: false,
+    error: null,
+  },
   // setSupplierBlock: {
   //   data: null,
   //   loading: false,
@@ -97,6 +118,31 @@ const suppliersReducer = (state = initial_state, { type, payload }) => {
     //       data: payload,
     //     }
     //   };
+
+    case GET_SUPPLIER_STATS:
+      return {
+        ...state,
+        getSupplierStats: {
+          loading: true,
+        }
+      };
+    case GET_SUPPLIER_STATS_SUCCESS:
+      console.log("payload ", payload);
+      return {
+        ...state,
+        getSupplierStats: {
+          loading: false,
+          data: payload.data ? payload.data : [],
+        }
+      };
+    case GET_SUPPLIER_STATS_FAILURE:
+      return {
+        ...state,
+        getSupplierStats: {
+          loading: false,
+          error: payload,
+        }
+      };
 
     case GET_SUPPLIERS:
       return {
@@ -189,6 +235,56 @@ const suppliersReducer = (state = initial_state, { type, payload }) => {
       return {
         ...state,
         setSupplierStatus: {
+          loading: false,
+          error: payload,
+        }
+      };
+
+
+    case GET_SUPPLIER_TRANSACTIONS:
+      return {
+        ...state,
+        getSupplierTransactions: {
+          loading: true,
+        }
+      };
+    case GET_SUPPLIER_TRANSACTIONS_SUCCESS:
+      console.log("GET_SUPPLIER_TRANSACTIONS_SUCCESS: ", payload);
+      return {
+        ...state,
+        getSupplierTransactions: {
+          loading: false,
+          data: payload.data ? payload.data : [],
+        }
+      };
+    case GET_SUPPLIER_TRANSACTIONS_FAILURE:
+      return {
+        ...state,
+        getSupplierTransactions: {
+          loading: false,
+          error: payload,
+        }
+      };
+
+    case ADD_SUPPLIER_TRANSACTION:
+      return {
+        ...state,
+        addSupplierTransaction: {
+          loading: true,
+        }
+      };
+    case ADD_SUPPLIER_TRANSACTION_SUCCESS:
+      return {
+        ...state,
+        addSupplierTransaction: {
+          loading: false,
+          data: payload.data,
+        }
+      };
+    case ADD_SUPPLIER_TRANSACTION_FAILURE:
+      return {
+        ...state,
+        addSupplierTransaction: {
           loading: false,
           error: payload,
         }

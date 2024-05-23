@@ -1,4 +1,10 @@
-import { BLOCK_CUSTOMER, GET_CUSTOMERS, GET_CUSTOMER_DETAILS, GET_CUSTOMER_WARNINGS, ORDER_DETAILS, SET_CUSTOMER_WARNINGS, CUSTOMER_PERSONAL_DETAILS, ADD_CUSTOMER, UPDATE_CUSTOMER, SET_CUSTOMER_STATUS, GET_SALES, ADD_SALE } from "../actionTypes"
+import { BLOCK_CUSTOMER, GET_CUSTOMERS, GET_CUSTOMER_DETAILS, GET_CUSTOMER_WARNINGS, ORDER_DETAILS, SET_CUSTOMER_WARNINGS, CUSTOMER_PERSONAL_DETAILS, ADD_CUSTOMER, UPDATE_CUSTOMER, SET_CUSTOMER_STATUS, GET_SALES, ADD_SALE, ADD_CUSTOMER_TRANSACTION, GET_CUSTOMER_TRANSACTIONS, GET_CUSTOMER_STATS } from "../actionTypes"
+
+export const getCustomerStats = () => {
+    return ({
+        type: GET_CUSTOMER_STATS
+    })
+}
 
 export const getCustomers = () => {
     return ({
@@ -33,6 +39,17 @@ export const getSales = () => {
 export const addSale = (data) => {
     return ({
         type: ADD_SALE,
+        payload: data
+    })
+}
+export const getCustomerTransactions = () => {
+    return ({
+        type: GET_CUSTOMER_TRANSACTIONS
+    })
+}
+export const addCustomerTransaction = (data) => {
+    return ({
+        type: ADD_CUSTOMER_TRANSACTION,
         payload: data
     })
 }

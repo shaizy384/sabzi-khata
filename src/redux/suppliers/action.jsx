@@ -1,4 +1,10 @@
-import { GET_SUPPLIERS, GET_SUPPLIER_DETAILS, BLOCK_SUPPLIER, ADD_CUSTOMER, ADD_SUPPLIER, UPDATE_SUPPLIER, SET_SUPPLIER_STATUS, GET_SALES, ADD_SALE, GET_PURCHASE, ADD_PURCHASE } from "../actionTypes"
+import { GET_SUPPLIERS, GET_SUPPLIER_DETAILS, BLOCK_SUPPLIER, ADD_CUSTOMER, ADD_SUPPLIER, UPDATE_SUPPLIER, SET_SUPPLIER_STATUS, GET_SALES, ADD_SALE, GET_PURCHASE, ADD_PURCHASE, GET_SUPPLIER_TRANSACTIONS, ADD_SUPPLIER_TRANSACTION, GET_SUPPLIER_STATS } from "../actionTypes"
+
+export const getSupplierStats = () => {
+    return ({
+        type: GET_SUPPLIER_STATS
+    })
+}
 
 export const getSuppliers = () => {
     return ({
@@ -33,6 +39,18 @@ export const getPurchases = () => {
 export const addPurchase = (data) => {
     return ({
         type: ADD_PURCHASE,
+        payload: data
+    })
+}
+export const getSupplierTransactions = (data) => {
+    return ({
+        type: GET_SUPPLIER_TRANSACTIONS,
+        payload: data
+    })
+}
+export const addSupplierTransaction = (data) => {
+    return ({
+        type: ADD_SUPPLIER_TRANSACTION,
         payload: data
     })
 }

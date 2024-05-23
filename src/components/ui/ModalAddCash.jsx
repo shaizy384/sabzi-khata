@@ -1,13 +1,17 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import money_icon from '../../assets/svgs/money.svg'
 import { useTranslation } from "react-i18next";
 import Input from "./Input";
+import { addSale, addCustomerTransaction, updateCustomer } from "../../redux/customers/action";
+import { useDispatch } from "react-redux";
+import { addPurchase, addSupplierTransaction, updateSupplier } from "../../redux/suppliers/action";
 
-export default function ModalAddCash({ customer_id, supplier_id, amount }) {
+export default function ModalAddCash({ isCustomer, person }) {
   const priceRef = useRef()
   const { t } = useTranslation();
+  const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false);
-  const [data, setData] = useState({ bank: "", title: "", number: "", amount: "" });
+  const [data, setData] = useState({ amount_added: "", total_amount: "", remaining_amount: "", amount_type: 'debit' });
   const [type, setType] = useState(null);
   const handleValue = (e) => {
     priceRef.current.style.display = "none"
@@ -18,16 +22,31 @@ export default function ModalAddCash({ customer_id, supplier_id, amount }) {
   }
   // const path = window.location.href.split("/")[3]
   // console.log(path);
+  useEffect(() => {
+    if (person?.amount) {
+      setData({ ...data, remaining_amount: person?.amount })
+    }
+  }, [person])
 
   const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value })
+    setData({ ...data, [e.target.name]: e.target.value, total_amount: parseInt(data.remaining_amount) - parseInt(e.target.value) })
     console.log(data);
     // emailRef.current.innerText = ""
     // passwordRef.current.innerText = ""
   };
 
   const handleSubmit = () => {
-    console.log(data);
+    // console.log("person cash flow: ", { ...person, amount: data?.total_amount });
+    if (isCustomer) {
+      console.log("customer cash flow: ", { ...person, amount: data?.total_amount }, data);
+      dispatch(updateCustomer({ ...person, amount: data?.total_amount }))
+      dispatch(addCustomerTransaction({ ...data, customer_id: person?.id }))
+    } else {
+      console.log("supplier cash flow: ", { ...person, amount: data?.total_amount }, data);
+      dispatch(updateSupplier({ ...person, amount: data?.total_amount }))
+      dispatch(addSupplierTransaction({ ...data, supplier_id: person?.id }))
+    }
+    // console.log(data);
     // if (order_id && data?.price && data?.price > 0) {
     //   console.log(data);
     //   // dispatch(acceptOrder(data))
@@ -56,7 +75,7 @@ export default function ModalAddCash({ customer_id, supplier_id, amount }) {
                     className="p-1 ltr:ml-auto rtl:mr-auto bg-transparent border-0 text-white  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => setShowModal(false)}
                   >
-                    <span className="bg-transparent text-white h-6 w-6 text-2xl block outline-none focus:outline-none leading-none leading-none">
+                    <span className="bg-transparent text-white h-6 w-6 text-2xl block outline-none focus:outline-none leading-none">
                       ×
                     </span>
                   </button>
@@ -74,7 +93,7 @@ export default function ModalAddCash({ customer_id, supplier_id, amount }) {
                       {type === 'card' ? <>
                         <p className='text-center flex items-baseline justify-center gap-1 mb-2'>
                           <span className='text-sm'>{t('Due Amount:')}</span><br />
-                          <span className='text-2xl text-red-500'>{amount}</span>
+                          <span className='text-2xl text-red-500'>{person?.amount}</span>
                         </p>
                         <div className="mb-6">
                           <label for="default-input" className="block mb-2 text-lg font-semibold text-gray-900">{t('Card Number')}</label>
@@ -105,11 +124,11 @@ export default function ModalAddCash({ customer_id, supplier_id, amount }) {
                       </> : <>
                         <div className="mb-6">
                           <label for="default-input" className="block mb-2 text-lg font-semibold text-gray-900">{t('Payable Amount')}</label>
-                          <input type="text" placeholder="Total Payable Amount" id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:ring-2 focus:border-colorPrimary block w-full p-2.5 outline-none" value={amount} disabled />
+                          <input type="text" placeholder="Total Payable Amount" id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:ring-2 focus:border-colorPrimary block w-full p-2.5 outline-none" value={person?.amount} disabled />
                         </div>
                         <div className="mb-6">
                           <label for="default-input" className="block mb-2 text-lg font-semibold text-gray-900">{t('Pay Amount')}</label>
-                          <input type="text" name="amount_added" onChange={handleChange} placeholder={t("Enter Paid Amount")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:ring-2 focus:border-colorPrimary block w-full p-2.5 outline-none" />
+                          <input type="text" name="amount_added" value={data?.amount_added} onChange={handleChange} placeholder={t("Enter Paid Amount")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:ring-2 focus:border-colorPrimary block w-full p-2.5 outline-none" />
                         </div>
                         {/* <div className='flex flex-wrap justify-center mb-6'>
                           <Input

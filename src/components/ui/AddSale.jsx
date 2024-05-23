@@ -3,9 +3,9 @@ import DataTable from 'react-data-table-component'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router'
-import { addSale, getCustomers } from '../../redux/customers/action'
+import { addCustomerTransaction, addSale, getCustomers, updateCustomer } from '../../redux/customers/action'
 import { getProducts } from '../../redux/products/action'
-import { addPurchase, getSuppliers } from '../../redux/suppliers/action'
+import { addPurchase, addSupplierTransaction, getSuppliers, updateSupplier } from '../../redux/suppliers/action'
 import { toast } from 'react-toastify'
 
 const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
@@ -28,7 +28,7 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
     const [searchCustomer, setSearchCustomer] = useState("");
     const [searchProduct, setSearchProduct] = useState("");
     const [showModal, setShowModal] = useState(false);
-    const [data, setData] = useState({ customer: {}, products: [] });
+    const [data, setData] = useState({ person: {}, products: [] });
     console.log(data);
     // const brands = useSelector(state => state.vehicleTypesReducer.getVehicleBrands.data)
     const productsData = useSelector((state) => state.productsReducer.getProducts?.data);
@@ -51,7 +51,7 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
         }
     }, [productsData])
     //   const customers = [{ id: 1, cust_name: "Ali" }]
-    const products = [{ id: 1, name: "Mango" }]
+    // const products = [{ id: 1, name: "Mango" }]
     // const models = []
     // const models = useSelector(state => state.vehicleTypesReducer.getVehicleModels.data)
     const filteredCustomers = pageType === 'Sale' ? customers : suppliers?.filter(customer => customer?.name?.toLowerCase()?.includes(searchCustomer?.toLowerCase()))
@@ -91,7 +91,7 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
         },
         {
             name: 'kg/pcs',
-            selector: row => <div className='flex items-center gap-1'><span>kg/pcs</span><input type="number" onChange={(e) => handleInputChange(row.product_id, e.target.value, "quantity")} className='block w-full rounded border border-neutral-300 bg-transparent py-2 px-2 text-base/6 text-neutral-950 ring-4 ring-transparent transition focus:border-colorPrimary focus:outline-none' /></div>,
+            selector: row => <div><div className='flex items-center gap-1'><span>kg/pcs</span><input type="number" onChange={(e) => handleInputChange(row.product_id, e.target.value, "quantity")} className='block w-full rounded border border-neutral-300 bg-transparent py-2 px-2 text-base/6 text-neutral-950 ring-4 ring-transparent transition focus:border-colorPrimary focus:outline-none' /></div></div>,
         },
         {
             name: 'Price',
@@ -112,35 +112,48 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
         }));
     }
 
-    const handleValue = (e) => {
-        setData({
-            ...data,
-            [e.target.name]: capitalizeFirstLetter(e.target.value)
-        })
-    }
+    // const handleValue = (e) => {
+    //     setData({
+    //         ...data,
+    //         [e.target.name]: capitalizeFirstLetter(e.target.value)
+    //     })
+    // }
 
-    useEffect(() => {
-        if (model_id) {
-            setData({
-                model_id, model_name, brand_id_fk, brand_name,
-            })
-            setSearchCustomer(brand_name)
-        }
-    }, [model_id])
+    // useEffect(() => {
+    //     if (model_id) {
+    //         setData({
+    //             model_id, model_name, brand_id_fk, brand_name,
+    //         })
+    //         setSearchCustomer(brand_name)
+    //     }
+    // }, [model_id])
 
-    const handleCloseModel = () => {
-        setShowModal(false)
-        if (!model_id) {
-            setData({ brand_id_fk: "", brand_name: "", model_name: "" })
-            setSearchCustomer("")
-        }
-    }
-
+    // const handleCloseModel = () => {
+    //     setShowModal(false)
+    //     if (!model_id) {
+    //         setData({ brand_id_fk: "", brand_name: "", model_name: "" })
+    //         setSearchCustomer("")
+    //     }
+    // }
+    // { amount_added: "", total_amount: "", remaining_amount: "", amount_type: 'debit' }
+    let total_amount = 0;
     const handleSubmit = () => {
         if (data.products.length > 0) {
             for (const item of data.products) {
-                pageType === 'Sale' && dispatch(addSale(item));
-                pageType === 'Purchase' && dispatch(addPurchase(item));
+                total_amount = parseInt(data?.person?.amount) + parseInt(item.price)
+                if (pageType === 'Sale') {
+                    dispatch(addSale(item))
+                    dispatch(updateCustomer({ ...data?.person, amount: total_amount }))
+                    dispatch(addCustomerTransaction({ amount_type: 'credit', amount_added: item?.price, remaining_amount: data?.person?.amount, total_amount, customer_id: data?.person?.id }))
+                    setData({ person: {}, products: [] })
+                    setSearchCustomer("")
+                } else if (pageType === 'Purchase') {
+                    dispatch(addPurchase(item))
+                    dispatch(updateSupplier({ ...data?.person, amount: total_amount }))
+                    dispatch(addSupplierTransaction({ amount_type: 'credit', amount_added: item?.price, remaining_amount: data?.person?.amount, total_amount, supplier_id: data?.person?.id }))
+                    setData({ person: {}, products: [] })
+                    setSearchCustomer("")
+                };
             }
             console.log(data);
         } else {
@@ -153,11 +166,12 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
         // }
         // }
     }
-    const handleCustomerItem = (customer) => {
-        const { id, name } = customer
+    const handleCustomerItem = (person) => {
+        const { id, name } = person
+        console.log(person);
         dropdownBtn.current.style.display = "none"
         setSearchCustomer(name)
-        setData({ ...data, customer: { customer_id: id, name } })
+        setData({ ...data, person })
     }
     const handleProductItem = (product) => {
         const { id, name } = product
@@ -173,7 +187,9 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
             ...prevItems,
             products: [
                 ...prevItems.products,
-                { product_id: id, name, customer_id: data?.customer?.customer_id }
+                pageType === 'Sale' ?
+                    { product_id: id, name, customer_id: data?.person?.id } :
+                    { product_id: id, name, supplier_id: data?.person?.id }
             ]
         }));
         // setData({ ...data, products: [...data?.products, { product_id: id, name, customer_id: data?.customer?.customer_id }] })
@@ -217,7 +233,7 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
                                         <div className="flex items-center">
                                             <span className="font-normal ml-3 block truncate">{customer?.name}</span>
                                         </div>
-                                        {data.id && name === data.name && <span className="text-colorPrimary absolute inset-y-0 right-0 flex items-center pr-4">
+                                        {data?.person?.id && name === data.person.name && <span className="text-colorPrimary absolute inset-y-0 right-0 flex items-center pr-4">
                                             <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                 <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
                                             </svg>
@@ -228,10 +244,10 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
                         </ul>
                     </div>
 
-                    <div className={`${!data?.customer?.customer_id && 'opacity-50'}`}>
+                    <div className={`${!data?.person?.id && 'opacity-50'}`}>
                         <label htmlFor="default-input" className="block mb-2 text-lg font-semibold text-gray-900">{t('Select Products')}</label>
                         <div className="relative mt-2 mb-6">
-                            <input type="text" disabled={!data?.customer?.customer_id} className="relative w-full rounded-md bg-white py-2.5 ltr:pl-2.5 rtl:pr-2.5 ltr:pr-10 rtl:pl-10 ltr:text-left rtl:text-right text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-colorPrimary sm:text-base sm:leading-" aria-haspopup="listbox" aria-expanded="true" placeholder={t("Search Products")} aria-labelledby="listbox-label" onFocus={handleSearchList} onChange={e => setSearchProduct(capitalizeFirstLetter(e.target.value))} />
+                            <input type="text" disabled={!data?.person?.id} className="relative w-full rounded-md bg-white py-2.5 ltr:pl-2.5 rtl:pr-2.5 ltr:pr-10 rtl:pl-10 ltr:text-left rtl:text-right text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-colorPrimary sm:text-base sm:leading-" aria-haspopup="listbox" aria-expanded="true" placeholder={t("Search Products")} aria-labelledby="listbox-label" onFocus={handleSearchList} onChange={e => setSearchProduct(capitalizeFirstLetter(e.target.value))} />
                             <p className="text-red-600 text-sm" ref={brandErrorRef}></p>
                             {/* BrandS Dropdown */}
                             <ul className="hidden absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-ba shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3" ref={prodDropdown}>
@@ -253,14 +269,14 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
                             </ul>
                         </div>
 
-                        {data?.products?.length > 0 && <DataTable
+                        {data?.products?.length > 0 && <div className='[&_div]:[&_div]:min-w-[122px]'><DataTable
                             columns={columns}
                             data={data.products}
                             pagination={false}
                             selectableRowsHighlight
                             customStyles={customStyles}
                             noTableHead={true}
-                        />}
+                        /></div>}
                     </div>
 
                     {/* <div className="mb-6">
@@ -269,7 +285,7 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
                         <p className="text-red-600 text-sm" ref={modErrorRef}></p>
                     </div> */}
                     <div className="flex justify-end gap-2 mt-8">
-                        <button className={`bg-gray-400 items-center justify-between flex hover:bg-gray-500 text-white py-2 px-5 rounded`}>
+                        <button onClick={() => navigate(-1)} className={`bg-gray-400 items-center justify-between flex hover:bg-gray-500 text-white py-2 px-5 rounded`}>
                             {t('Cancel')}
                         </button>
                         <button onClick={handleSubmit} className={`bg-[#2D9D46] items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded`}>

@@ -1,18 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProducts } from '../../redux/products/action';
 
-const ViewTransactionModal = ({ sales, date }) => {
+const ViewTransactionModal = ({ sales, date, title }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const filterSales = sales?.filter(sale => sale.created_at.slice(0, 10) === date)
   console.log("filterSales filterSales: ", filterSales);
   const productsData = useSelector((state) => state.productsReducer.getProducts?.data);
+  useEffect(() => {
+    if (!productsData) {
+      dispatch(getProducts())
+    }
+  }, [productsData])
   const filterProduct = (id) => {
     const product = productsData?.filter(p => p.id == id);
-    console.log("product product: ", product);
-    if (product?.length > 0) { return product[0]?.name; }
+    console.log("product product: ", product, productsData);
+    if (product?.length > 0) { return product[0]?.name; };
   }
   const customStyles = {
     rows: {
@@ -99,7 +106,7 @@ const ViewTransactionModal = ({ sales, date }) => {
                 <div className="flex items-start rounded-t-3xl justify-center md:px-5 pt-5 pb-5 border-b-2">
                   <ol className="items-center w-full space-y-4 sm:flex sm:space-x-8 sm:space-y-0 rtl:space-x-reverse pt-1.5">
                     <li className="cursor-pointer flex items-center space-x-3 rtl:space-x-reverse text-colorPrimary">
-                      <h3 className="font-semibold text-xl leading-tight">{t('Purchase list')}</h3>
+                      <h3 className="font-semibold text-xl leading-tight">{t(`${title} list`)}</h3>
                     </li>
                   </ol>
                   <button className="p- ml-auto bg-transparent -mr[17px] border-0 text-colorPrimary float-right text-3xl leading-none font-semibold outline-none focus:outline-none" onClick={handleCancel}
@@ -107,7 +114,7 @@ const ViewTransactionModal = ({ sales, date }) => {
                 </div>
 
                 {/*body*/}
-                <div className="relative pt-4 flex-auto">
+                <div className="relative my-6 mx-3 flex-auto overflow-auto">
                   <div className="mt-2 bg-white">
                     <DataTable
                       columns={columns}

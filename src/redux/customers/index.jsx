@@ -1,7 +1,18 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import { callApi } from "../../api/APIs";
 import { toast } from 'react-toastify';
-import { ADD_CUSTOMER, ADD_CUSTOMER_FAILURE, ADD_CUSTOMER_SUCCESS, ADD_SALE, ADD_SALE_FAILURE, ADD_SALE_SUCCESS, BLOCK_CUSTOMER, BLOCK_CUSTOMER_FAILURE, BLOCK_CUSTOMER_SUCCESS, GET_CUSTOMERS, GET_CUSTOMERS_FAILURE, GET_CUSTOMERS_SUCCESS, GET_CUSTOMER_DETAILS, GET_CUSTOMER_DETAILS_FAILURE, GET_CUSTOMER_DETAILS_SUCCESS, GET_CUSTOMER_WARNINGS, GET_CUSTOMER_WARNINGS_FAILURE, GET_CUSTOMER_WARNINGS_SUCCESS, GET_SALES, GET_SALES_FAILURE, GET_SALES_SUCCESS, GET_SUPPLIERS, SET_CUSTOMER_STATUS, SET_CUSTOMER_STATUS_FAILURE, SET_CUSTOMER_STATUS_SUCCESS, SET_CUSTOMER_WARNINGS, SET_CUSTOMER_WARNINGS_FAILURE, SET_CUSTOMER_WARNINGS_SUCCESS, UPDATE_CUSTOMER, UPDATE_CUSTOMER_FAILURE, UPDATE_CUSTOMER_SUCCESS } from "../actionTypes";
+import { ADD_CUSTOMER, ADD_CUSTOMER_FAILURE, ADD_CUSTOMER_SUCCESS, ADD_SALE, ADD_SALE_FAILURE, ADD_SALE_SUCCESS, ADD_CUSTOMER_TRANSACTION, ADD_CUSTOMER_TRANSACTION_FAILURE, ADD_CUSTOMER_TRANSACTION_SUCCESS, BLOCK_CUSTOMER, BLOCK_CUSTOMER_FAILURE, BLOCK_CUSTOMER_SUCCESS, GET_CUSTOMERS, GET_CUSTOMERS_FAILURE, GET_CUSTOMERS_SUCCESS, GET_CUSTOMER_DETAILS, GET_CUSTOMER_DETAILS_FAILURE, GET_CUSTOMER_DETAILS_SUCCESS, GET_CUSTOMER_WARNINGS, GET_CUSTOMER_WARNINGS_FAILURE, GET_CUSTOMER_WARNINGS_SUCCESS, GET_SALES, GET_SALES_FAILURE, GET_SALES_SUCCESS, GET_SUPPLIERS, GET_CUSTOMER_TRANSACTIONS, GET_CUSTOMER_TRANSACTIONS_FAILURE, GET_CUSTOMER_TRANSACTIONS_SUCCESS, SET_CUSTOMER_STATUS, SET_CUSTOMER_STATUS_FAILURE, SET_CUSTOMER_STATUS_SUCCESS, SET_CUSTOMER_WARNINGS, SET_CUSTOMER_WARNINGS_FAILURE, SET_CUSTOMER_WARNINGS_SUCCESS, UPDATE_CUSTOMER, UPDATE_CUSTOMER_FAILURE, UPDATE_CUSTOMER_SUCCESS, GET_CUSTOMER_STATS_SUCCESS, GET_CUSTOMER_STATS_FAILURE, GET_CUSTOMER_STATS } from "../actionTypes";
+
+function* watcherGetCustomerStats() {
+    let url = '/customers-stats';
+    const Data = yield call(callApi, url, 'GET', '', true);
+    if (Data.status === 200 || Data.status === 201) {
+        yield put({ type: GET_CUSTOMER_STATS_SUCCESS, payload: Data.data });
+    }
+    else {
+        yield put({ type: GET_CUSTOMER_STATS_FAILURE, payload: Data.data.error })
+    }
+}
 
 function* watcherGetCustomers() {
     let url = '/get-customers';
@@ -75,6 +86,29 @@ function* watcherAddSale(data) {
     }
 }
 
+function* watcherGetTransactions() {
+    let url = '/get-customer-transaction';
+    const Data = yield call(callApi, url, 'GET', '', true);
+    if (Data.status === 200 || Data.status === 201) {
+        yield put({ type: GET_CUSTOMER_TRANSACTIONS_SUCCESS, payload: Data.data });
+    }
+    else {
+        yield put({ type: GET_CUSTOMER_TRANSACTIONS_FAILURE, payload: Data.data.error })
+    }
+}
+
+function* watcherAddTransaction(data) {
+    let url = '/add-customer-transaction';
+    const Data = yield call(callApi, url, 'POST', data.payload, true);
+    if (Data.status === 200 || Data.status === 201) {
+        yield put({ type: ADD_CUSTOMER_TRANSACTION_SUCCESS, payload: Data.data });
+        yield put({ type: GET_CUSTOMER_TRANSACTIONS });
+    }
+    else {
+        yield put({ type: ADD_CUSTOMER_TRANSACTION_FAILURE, payload: Data.data.error })
+    }
+}
+
 // function* watcherGetCustomerDetails(data) {
 //     let url = `/admin/Customer_controller/getCustomerDetail?Customer_id=${data.payload}`;
 //     const Data = yield call(callApi, url, 'GET', '', true);
@@ -122,6 +156,7 @@ function* watcherAddSale(data) {
 //     }
 // }
 export default function* watchCustomers() {
+    yield takeLatest(GET_CUSTOMER_STATS, watcherGetCustomerStats)
     yield takeLatest(GET_CUSTOMERS, watcherGetCustomers)
     yield takeLatest(ADD_CUSTOMER, watcherAddCustomer)
     yield takeLatest(UPDATE_CUSTOMER, watcherUpdateCustomer)
@@ -129,6 +164,8 @@ export default function* watchCustomers() {
 
     yield takeLatest(GET_SALES, watcherGetSales)
     yield takeLatest(ADD_SALE, watcherAddSale)
+    yield takeLatest(GET_CUSTOMER_TRANSACTIONS, watcherGetTransactions)
+    yield takeLatest(ADD_CUSTOMER_TRANSACTION, watcherAddTransaction)
 
     // yield takeLatest(GET_CUSTOMER_DETAILS, watcherGetCustomerDetails)
     // yield takeLatest(GET_CUSTOMER_WARNINGS, watcherGetCustomerWarnings)
