@@ -99,5 +99,13 @@
     "Enter Expiry Date": "Enter Expiry Date",
     "Enter Card Number": "Enter Card Number",
     "Back": "Back",
-    "Pay": "Pay"
+    "Pay": "Pay",
+    "Fresh Sale":"Fresh Sale",
+    "Remaining Amount":"Remaining Amount",
+    "Press": "Press",
+    "to": "to",
+    "Block": "Block",
+    "Blocked": "Blocked",
+    "Active": "Active",
+    "Activate": "Activate"
 }

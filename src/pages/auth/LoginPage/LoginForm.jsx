@@ -54,7 +54,7 @@ const LoginForm = () => {
           </h3>
           <Input type={'email'} logo={email} placeholder={'Email address'} onChange={handleOnChange} />
           <Input type={'password'} logo={lock} placeholder={'Password'} onChange={handleOnChange} />
-          <div className="flex justify-between">
+          {/* <div className="flex justify-between">
             <div className="">
               <label className="mt-3 px-2 flex flex-wrap text-black items-center justify-center">
                 <input className="transition-all duration-500 ease-in-out w-5 " type="checkbox" />
@@ -66,7 +66,7 @@ const LoginForm = () => {
                 Update password
               </Link>
             </div>
-          </div>
+          </div> */}
           <button className="font-bold mt-6 cursor-pointer group relative flex gap-1.5 justify-center py-4 bg-colorPrimary md:w-96 w-full bg-opacity-80 text-white rounded-xl  hover:bg-hoverPrimary hover:shadow-lg transition " onClick={handleSubmit}>
             Sign In
           </button>

@@ -1,8 +1,6 @@
 import React from 'react'
 import SideBar from './SideBar'
 import NavBar from './NavBar'
-import Dasboard from '../../pages/Dashboard'
-import OrderManagement from '../../pages/OrderManagement/Index'
 import { Navigate } from 'react-router'
 import { useSelector } from 'react-redux'
 
@@ -21,7 +19,6 @@ const Layout = ({ children }) => {
         <NavBar />
         <div className="h-screen bg-gray-50">
           {children}
-          {/* <OrderManagement/> */}
         </div>
       </div>
     </>

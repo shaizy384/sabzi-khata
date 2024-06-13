@@ -2,18 +2,24 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { updateSubAdmin } from "../../redux/subadmin/action";
+import Input from "../../components/ui/Input";
 
 export default function UpdatePassModal({ id, subAdmin }) {
   const { t } = useTranslation();
   const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState({});
-  const handleValue = (e) => {
-    setData({
-      ...data,
-      [e.target.name]: e.target.value
-    })
+  const handleOnChange = (value, name) => {
+    setData({ ...data, [name]: value })
+    // setData({ ...data, [e.target.name]: e.target.value })
+    console.log("handleOnChange", data);
   }
+  // const handleValue = (e) => {
+  //   setData({
+  //     ...data,
+  //     [e.target.name]: e.target.value
+  //   })
+  // }
 
   useEffect(() => {
     if (id) {
@@ -51,7 +57,7 @@ export default function UpdatePassModal({ id, subAdmin }) {
                     className="p-1 ltr:ml-auto rtl:mr-auto bg-transparent border-0 text-white  float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => setShowModal(false)}
                   >
-                    <span className="bg-transparent text-white h-6 w-6 text-2xl block outline-none focus:outline-none leading-none leading-none">
+                    <span className="bg-transparent text-white h-6 w-6 text-2xl block outline-none focus:outline-none leading-none">
                       ×
                     </span>
                   </button>
@@ -59,8 +65,8 @@ export default function UpdatePassModal({ id, subAdmin }) {
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <div className="mb-3">
-                    <label htmlFor="default-input" className="block mb-2 text-lg font-bold text-gray-900">{t("Password")}</label>
-                    <input type="text" name="password" placeholder={t("Enter New Password")} id="default-input" className=" border border-gray-300 text-gray-900  rounded-lg focus:ring-yellowPrimary focus:border-yellowPrimary block w-full p-2.5" onChange={(e) => handleValue(e)} />
+                    <label className='font-semibold text-lg font-bol block mr-auto -mb-3 w-auto'>{t('Password')}</label>
+                    <Input type={'password'} value={data?.password} onChange={handleOnChange} />
                   </div>
                 </div>
 

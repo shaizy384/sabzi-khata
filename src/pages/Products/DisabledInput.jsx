@@ -15,7 +15,7 @@ const DisabledInput = ({ value, label, innerLabel, unitLabel }) => {
           type='text'
           value={value}
           disabled
-          className={`block w-full rounded-2xl border border-neutral-300 bg-transparent ${innerLabel ? 'pt-7' : ' py-4'} py-4 pl-5 text-base/6 text-gray-400 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-yellow-500 focus:outline-none`}
+          className={`block w-full rounded-2xl border border-neutral-300 bg-transparent ${innerLabel ? 'pt-7' : ' py-4'} py-4 pl-5 text-base/6 text-gray-400 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-green-500 focus:outline-none`}
         />
       </div>
     </div>

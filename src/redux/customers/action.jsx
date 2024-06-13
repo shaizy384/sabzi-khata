@@ -31,9 +31,10 @@ export const setCustomerStatus = (data) => {
 }
 
 
-export const getSales = () => {
+export const getSales = (data) => {
     return ({
-        type: GET_SALES
+        type: GET_SALES,
+        payload: data
     })
 }
 export const addSale = (data) => {

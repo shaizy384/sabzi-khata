@@ -15,9 +15,19 @@ export default function ModalAddProduct() {
   }
 
   const handleSubmit = () => {
-    if (data?.name && data?.unit) {
+    if (data?.unit.length > 5) {
+      toast.error("Unit letter cannot be more than 5")
+
+    }
+    else if (data?.name.length > 10) {
+      toast.error("Name letters cannot be more than 10")
+
+    }
+    else if (data?.name && data?.unit) {
       console.log(data);
       dispatch(addProduct(data))
+      setData({})
+      setShowModal(false)
     } else {
       toast.error("All fields are reqiured")
     }
@@ -59,7 +69,7 @@ export default function ModalAddProduct() {
                   </div>
                   <div className="mb-6">
                     <label for="default-input" className="block mb-2 text-lg font-bold text-gray-900">{t('Product Unit')}</label>
-                    <input type="text" name='unit' value={data?.unit} onChange={handleValue} placeholder={t("kg/pcs")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" />
+                    <input type="number" name='unit' value={data?.unit} onChange={handleValue} placeholder={t("kg/pcs")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5" />
                   </div>
                 </div>
                 {/*footer*/}

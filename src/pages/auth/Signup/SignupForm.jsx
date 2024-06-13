@@ -144,7 +144,7 @@ const SignupForm = () => {
               onChange={handleOnChange}
             />
             <p className="text-danger" ref={cPasswordRef}></p>
-            <div className="flex justify-between">
+            {/* <div className="flex justify-between">
               <div className="">
                 <label className="mt-3 gap-1 flex flex-wrap text-black items-center justify-center">
                   <input
@@ -163,7 +163,7 @@ const SignupForm = () => {
                   Forgot password
                 </Link>
               </div>
-            </div>
+            </div> */}
 
             <button
               className={`h-12 font-bold mt-3 cursor-pointer group relative flex gap-1.5 items-center justify-center ${loading ? "py-2" : "py-4"} bg-colorPrimary md:w-96 w-full bg-opacity-80 text-white rounded-xl hover:bg-hoverPrimary hover:shadow-lg transition `}

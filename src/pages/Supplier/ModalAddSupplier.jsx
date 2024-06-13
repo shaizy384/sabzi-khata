@@ -33,7 +33,8 @@ export default function ModalAddSupplier({ id, supplier }) {
 
   const handleCancel = () => {
     setShowModal(false);
-    setData(([]))
+    !supplier?.id && setData({})
+    !supplier?.id && setImageUrl(null)
     setModalPage("picture")
     setSearch("")
   }
@@ -60,14 +61,27 @@ export default function ModalAddSupplier({ id, supplier }) {
     if (modalPage === "picture" && data?.profile_image) {
       setModalPage("details")
     }
+    else if (data?.amount < 1) {
+      toast.error("Amount cannot be 0")
+    }
+    else if (data?.phone.length !== 11) {
+      toast.error("Phone number must contains 11 numbers")
+    }
+    else if (data?.name?.length > 20) {
+      toast.error("Name should be less than 20 characters")
+    }
+    else if (data?.cnic.length !== 13) {
+      toast.error("Cnic must contains 13 numbers")
+    }
     else if (modalPage === "details" && data?.name && data?.phone && data?.cnic && data?.address && data?.amount) {
       if (id) {
         console.log(data);
         dispatch(updateSupplier(data))
-
+        handleCancel()
       } else if (!id) {
         console.log(data);
         dispatch(addSupplier(data))
+        handleCancel()
       }
     } else {
       toast.error("All fields are reqiured")
@@ -166,7 +180,7 @@ export default function ModalAddSupplier({ id, supplier }) {
                           value={data?.name}
                           type='text'
                           name='name'
-                          className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-yellow-500 focus:outline-none`}
+                          className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-green-500 focus:outline-none`}
                           onChange={handleValue}
                         />
                       </div>
@@ -176,7 +190,7 @@ export default function ModalAddSupplier({ id, supplier }) {
                           value={data?.phone}
                           type='text'
                           name='phone'
-                          className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-yellow-500 focus:outline-none`}
+                          className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-green-500 focus:outline-none`}
                           onChange={handleValue} />
                       </div>
                       <div className="flex flex-col grow">
@@ -185,7 +199,7 @@ export default function ModalAddSupplier({ id, supplier }) {
                           value={data?.cnic}
                           type='text'
                           name='cnic'
-                          className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-yellow-500 focus:outline-none`}
+                          className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-green-500 focus:outline-none`}
                           onChange={handleValue} />
                       </div>
                       <div className="flex flex-col grow">
@@ -194,7 +208,7 @@ export default function ModalAddSupplier({ id, supplier }) {
                           value={data?.address}
                           type='text'
                           name='address'
-                          className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-yellow-500 focus:outline-none`}
+                          className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-green-500 focus:outline-none`}
                           onChange={handleValue} />
                       </div>
                       <div className="flex flex-col grow">
@@ -203,7 +217,7 @@ export default function ModalAddSupplier({ id, supplier }) {
                           value={data?.amount}
                           type='text'
                           name='amount'
-                          className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-yellow-500 focus:outline-none`}
+                          className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-green-500 focus:outline-none`}
                           onChange={handleValue} />
                       </div>
                     </div>

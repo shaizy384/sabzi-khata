@@ -7,6 +7,7 @@ import UpdatePassModal from './UpdatePassModal';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { addSubAdmin, getSubAdmins, updateSubAdmin } from '../../redux/subadmin/action';
+import { toast } from 'react-toastify';
 
 const EditAdminRole = () => {
     const { t } = useTranslation();
@@ -31,20 +32,24 @@ const EditAdminRole = () => {
     console.log("subAdmins: ", subAdmins, subAdmin, id);
 
     useEffect(() => {
-        if (!id) return;
-        setData({ ...subAdmin })
-        const newState = {};
-        rolesDefined.forEach(key => {
-            if (subAdmin[key]) {
-                if (subAdmin[key] === 1) {
-                    newState[key] = key;
+        if (!id) {
+            setRoles({});
+            setData({ name: "", email: "", dashboard: 0, product: 0, customer: 0, customer_report: 0, supplier: 0, supplier_report: 0, admin_roles: 0 })
+            return;
+        } else if (id) {
+            setData({ ...subAdmin })
+            const newState = {};
+            console.log("subAdmin: ", subAdmin);
+            rolesDefined.forEach(key => {
+                if (subAdmin && subAdmin[key]) {
+                    if (subAdmin[key] === 1) {
+                        newState[key] = key;
+                    }
                 }
-            }
-        });
-        setRoles(newState)
-        // setData({ name: 'Shahzaib', email: 'new@brand.com' })
-        // setRoles({ dashboard: 'dashboard', customer: 'customer' })
-    }, [id])
+            });
+            setRoles(newState)
+        }
+    }, [id, subAdmin])
 
     const handleAddRole = (name, e) => {
         setData({ ...data, [name]: 1 })
@@ -56,7 +61,8 @@ const EditAdminRole = () => {
     const handleDeleteRole = (key) => {
         const newRoles = { ...roles };
         delete newRoles[key]
-        delete data[key]
+        // delete data[key]
+        setData({ ...data, [key]: 0 })
         setRoles(newRoles)
         console.log("deleted: ", roles, data);
     }
@@ -67,24 +73,31 @@ const EditAdminRole = () => {
         console.log("handleOnChange", data);
     }
 
+    const handleCancel = () => {
+        !id && setData({ dashboard: 0, product: 0, customer: 0, customer_report: 0, supplier: 0, supplier_report: 0, admin_roles: 0 })
+        navigate('/adminroles');
+    }
+
     const handleSubmit = () => {
         console.log("data: ", { ...data });
-        console.log("roles: ", { ...roles });
+        if ((!id ? data?.password : true) && data?.name && data?.email) {
+            console.log("data: ", { ...data });
+            console.log("roles: ", { ...roles });
 
-        // !id && dispatch(addSubAdmin(data))
-        !id && dispatch(addSubAdmin({ ...data, password_confirmation: data?.password }))
-        id && dispatch(updateSubAdmin(data))
-    }
-    const handleCancel = () => {
-        navigate('/adminroles');
+            // !id && dispatch(addSubAdmin(data))
+            !id && dispatch(addSubAdmin({ ...data, password_confirmation: data?.password }))
+            id && dispatch(updateSubAdmin(data))
+            handleCancel()
+        } else {
+            toast.error("All Fields are required")
+        }
     }
     return (
         <div className="py-1 rounded-lg bg-gray-50">
             <div className='mx-10 mt-10 mb-5'>
                 <div className='flex justify-end'>
-                    {<UpdatePassModal id={1} subAdmin={subAdmin} />}
-                    <button className={`bg-green-500 items-center justify-between flex hover:bg-green-600 text-white py-2 px-4 rounded`}>
-                        {/* <img className='mr-2' src={notification} width={19} alt="notification" /> */}
+                    {id && <UpdatePassModal id={1} subAdmin={subAdmin} />}
+                    <button onClick={() => navigate('/adminroles/add')} className={`bg-green-500 items-center justify-between flex hover:bg-green-600 text-white py-2 px-4 rounded`}>
                         <span>{t("Create New Subadmin")}</span>
                     </button>
                 </div>
@@ -93,7 +106,10 @@ const EditAdminRole = () => {
                 <div className="flex flex-wrap lg:justify-between justify-center mb-6">
                     <Input type={'name'} value={data.name} label={'Name'} onChange={handleOnChange} />
                     <Input type={'email'} value={data.email} label={'Email'} onChange={handleOnChange} />
-                    {!id && <Input type={'password'} value={data?.password} label={'Password'} onChange={handleOnChange} />}
+                    {!id && <div className='lg:w-fit w-full'>
+                        <label className='font-medium block mr-auto -mb-3 mt-6 w-auto'>{t('Password')}</label>
+                        <Input type={'password'} value={data?.password} onChange={handleOnChange} />
+                    </div>}
 
                     <div className="relative mt-6 lg:w-[auto] w-full">
                         <label className='font-medium block mb-3'>{t("Roles")}</label>

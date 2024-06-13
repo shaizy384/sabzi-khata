@@ -15,41 +15,56 @@ function* watcherGetSubAdmins() {
 }
 
 function* watcherAddSubAdmin(data) {
+    let toastId = toast.loading("Loading...")
     let url = '/auth/add-subAdmin';
     const Data = yield call(callApi, url, 'POST', data.payload, true);
+    console.error('amb aaaa Data:', Data);
     if (Data.status === 200 || Data.status === 201) {
+        console.error('amb aaaa success:', Data);
+        toast.update(toastId, { render: "Data stored successfully", type: 'success', isLoading: false, autoClose: 1000 })
         yield put({ type: ADD_SUB_ADMIN_SUCCESS, payload: Data.data });
         yield put({ type: GET_SUB_ADMINS });
     }
     else {
+        console.error('amb aaaa Exception:', Data);
+        toast.update(toastId, { render: "An unexpected error occurred", type: 'error', isLoading: false, autoClose: 1000 })
         yield put({ type: ADD_SUB_ADMIN_FAILURE, payload: Data.data.error })
+        console.log('Toast updated with error message');
     }
 }
 
 function* watcherUpdateSubAdmin(data) {
+    let toastId = toast.loading("Loading...")
     let url = '/auth/update-subAdmin';
     const Data = yield call(callApi, url, 'POST', data.payload, true);
     if (Data.status === 200 || Data.status === 201) {
+        toast.update(toastId, { render: "Data updated successfully", type: 'success', isLoading: false, autoClose: 1000 })
         yield put({ type: UPDATE_SUB_ADMIN_SUCCESS, payload: Data.data });
         yield put({ type: GET_SUB_ADMINS });
     }
     else {
+        toast.update(toastId, { render: "An error occured", type: 'error', isLoading: false, autoClose: 1000 })
         yield put({ type: UPDATE_SUB_ADMIN_FAILURE, payload: Data.data.error })
     }
 }
 
 
 function* watcherDeleteSubAdmin(data) {
+    let toastId = toast.loading("Loading...")
     let url = `/auth/delete-subAdmin/${data.payload}`;
     const Data = yield call(callApi, url, 'GET', '', true);
     if (Data.status === 200 || Data.status === 201) {
+        toast.update(toastId, { render: "Data deleted successfully", type: 'success', isLoading: false, autoClose: 1000 })
         yield put({ type: DELETE_SUB_ADMIN_SUCCESS, payload: Data.data });
         yield put({ type: GET_SUB_ADMINS });
     }
     else {
+        toast.update(toastId, { render: Data.data.message, type: 'error', isLoading: false, autoClose: 1000 })
         yield put({ type: DELETE_SUB_ADMIN_FAILURE, payload: Data.data.error })
     }
 }
+
+
 
 function* watcherSubAdminStatus(data) {
     let url = '/add-product';
@@ -62,16 +77,16 @@ function* watcherSubAdminStatus(data) {
         yield put({ type: SET_SUB_ADMIN_STATUS_FAILURE, payload: Data.data.error })
     }
 }
-function* watcherGetSubAdminDetails(data) {
-    let url = `/admin/SubAdmin_controller/getSubAdminDetail?SubAdmin_id=${data.payload}`;
-    const Data = yield call(callApi, url, 'GET', '', true);
-    if (Data.status === 200 || Data.status === 201) {
-        yield put({ type: GET_SUB_ADMIN_DETAILS_SUCCESS, payload: Data.data });
-    }
-    else {
-        yield put({ type: GET_SUB_ADMIN_DETAILS_FAILURE, payload: Data.data.error })
-    }
-}
+// function* watcherGetSubAdminDetails(data) {
+//     let url = `/admin/SubAdmin_controller/getSubAdminDetail?SubAdmin_id=${data.payload}`;
+//     const Data = yield call(callApi, url, 'GET', '', true);
+//     if (Data.status === 200 || Data.status === 201) {
+//         yield put({ type: GET_SUB_ADMIN_DETAILS_SUCCESS, payload: Data.data });
+//     }
+//     else {
+//         yield put({ type: GET_SUB_ADMIN_DETAILS_FAILURE, payload: Data.data.error })
+//     }
+// }
 
 // function* watcherBlockSubAdmin(data) {
 //     let url = '/admin/Customer_controller/blockCustomer';
@@ -106,7 +121,7 @@ export default function* watchSubAdmins() {
     yield takeLatest(DELETE_SUB_ADMIN, watcherDeleteSubAdmin)
     yield takeLatest(SET_SUB_ADMIN_STATUS, watcherSubAdminStatus)
 
-    yield takeLatest(GET_SUB_ADMIN_DETAILS, watcherGetSubAdminDetails)
+    // yield takeLatest(GET_SUB_ADMIN_DETAILS, watcherGetSubAdminDetails)
     // yield takeLatest(GET_SUB_ADMIN_WARNINGS, watcherGetSubAdminWarnings)
     // yield takeLatest(BLOCK_SUB_ADMIN, watcherBlockSubAdmin)
     // yield takeLatest(SET_SUB_ADMIN_WARNINGS, watcherSetSubAdminWarning)

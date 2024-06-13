@@ -98,28 +98,36 @@ const TransactionsTable = React.forwardRef(({ title, setTitle }, ref) => {
             selector: row => row.remaining_amount,
         },
         {
-            name: t('Fresh Sale Amount'),
+            name: t('Fresh Sale'),
             selector: row => row.amount_added,
         },
         {
             name: t('Total Amount'),
             selector: row => row.total_amount,
         },
-        // {
-        //     name: t('Received Amount'),
-        //     selector: row => "",
-        // },
+        {
+            name: t('Received Amount'),
+            selector: row => "",
+            // style: {
+            //     display: 'none', // Hide the column by default
+            //     '@media print': {
+            //         display: 'table-cell', // Show the column when printing
+            //     },
+            // },
+        },
     ]
     return (
         <>
-            <div ref={ref} className="sm:mx-10 mx-5 shadow-md mt-2 rounded-xl p-2 bg-white ref={componentRef}">
-                <DataTable
-                    columns={columns}
-                    data={data}
-                    pagination
-                    selectableRowsHighlight
-                    customStyles={customStyles}
-                />
+            <div className="sm:mx-10 mx-5 shadow-md rounded-xl py-2 bg-white ref={componentRef}">
+                <div ref={ref} className='mx-2 my-2' id='printable-table'>
+                    <DataTable
+                        columns={columns}
+                        data={data}
+                        pagination
+                        selectableRowsHighlight
+                        customStyles={customStyles}
+                    />
+                </div>
             </div>
         </>
     )

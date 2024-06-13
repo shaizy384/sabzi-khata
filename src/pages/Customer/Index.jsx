@@ -406,9 +406,9 @@ const Customers = () => {
         <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">{t('All Customers')}</div>
         <div className="flex gap-2 ltr:ml-auto rtl:mr:auto">
           <ModalAddCustomer />
-          <button onClick={() => navigate("addsale")} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}>
+          {/* <button onClick={() => navigate("addsale")} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}>
             {t('Add Sale')}
-          </button>
+          </button> */}
           {/* <button onClick={() => { fileRef.current.value = null; fileRef.current.click() }} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}> */}
           {/* --- Upload Image --- */}
           {/* <button onClick={() => { handleOcrApi() }} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}>

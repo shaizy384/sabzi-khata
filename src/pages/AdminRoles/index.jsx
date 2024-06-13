@@ -57,10 +57,10 @@ const AdminRoles = () => {
         {
             name: t('Action'),
             selector: row => (<div className='flex'>
-                <button onClick={() => navigate(`/adminroles/edit/${row.id}`)} className={`bg-cyan-500 hover:bg-cyan-600 text-white font-bold py- p-2.5 rounded-xl me-2`}>
+                <button onClick={() => navigate(`/adminroles/edit/${row.id}`)} className={`w-[36px] bg-cyan-500 hover:bg-cyan-600 text-white font-bold py- p-[0.525rem] rounded-xl me-2`}>
                     <img src={edit} width={18.5} alt="edit" />
                 </button>
-                <button onClick={() => dispatch(deleteSubAdmin(row?.id))} className={`bg-rose-500 hover:bg-rose-600 text-white font-bold py- p-2.5 rounded-xl`}>
+                <button onClick={() => dispatch(deleteSubAdmin(row?.id))} className={`w-[36px] bg-rose-500 hover:bg-rose-600 text-white font-bold py- p-[0.525rem] rounded-xl`}>
                     <img src={basket} width={18.5} alt="basket" />
                 </button>
             </div>),

@@ -27,24 +27,31 @@ function* watcherGetCustomers() {
 
 function* watcherAddCustomer(data) {
     let url = '/add-customer';
+    let toastId = toast.loading("Loading...")
     const Data = yield call(callApi, url, 'POST', data.payload, true);
     if (Data.status === 200 || Data.status === 201) {
+        // console.log("mmmmmmmmmmmm: ",Data);
+        toast.update(toastId, { render: "Data stored successfully", type: 'success', isLoading: false, autoClose: 1000 })
         yield put({ type: ADD_CUSTOMER_SUCCESS, payload: Data.data });
         yield put({ type: GET_CUSTOMERS });
     }
     else {
+        toast.update(toastId, { render: "something went wrong", type: 'error', isLoading: false, autoClose: 1000 })
         yield put({ type: ADD_CUSTOMER_FAILURE, payload: Data.data.error })
     }
 }
 
 function* watcherUpdateCustomer(data) {
     let url = '/update-customer';
+    let toastId = toast.loading("Loading...")
     const Data = yield call(callApi, url, 'POST', data.payload, true);
     if (Data.status === 200 || Data.status === 201) {
+        toast.update(toastId, { render: Data.data.message, type: 'success', isLoading: false, autoClose: 1000 })
         yield put({ type: UPDATE_CUSTOMER_SUCCESS, payload: Data.data });
         yield put({ type: GET_CUSTOMERS });
     }
     else {
+        toast.update(toastId, { render: Data.data.message, type: 'error', isLoading: false, autoClose: 1000 })
         yield put({ type: UPDATE_CUSTOMER_FAILURE, payload: Data.data.error })
     }
 }
@@ -63,8 +70,8 @@ function* watcherSetCustomerStatus(data) {
 
 
 
-function* watcherGetSales() {
-    let url = '/get-sale';
+function* watcherGetSales(data) {
+    let url = `/get-sale/${data.payload}`;
     const Data = yield call(callApi, url, 'GET', '', true);
     if (Data.status === 200 || Data.status === 201) {
         yield put({ type: GET_SALES_SUCCESS, payload: Data.data });
@@ -76,12 +83,15 @@ function* watcherGetSales() {
 
 function* watcherAddSale(data) {
     let url = '/add-sale';
+    // let toastId = toast.loading("Loading...")
     const Data = yield call(callApi, url, 'POST', data.payload, true);
     if (Data.status === 200 || Data.status === 201) {
+        // toast.update(toastId, { render: Data.data.message, type: 'success', isLoading: false, autoClose: 1000 })
         yield put({ type: ADD_SALE_SUCCESS, payload: Data.data });
         yield put({ type: GET_CUSTOMERS });
     }
     else {
+        // toast.update(toastId, { render: Data.data.message, type: 'error', isLoading: false, autoClose: 1000 })
         yield put({ type: ADD_SALE_FAILURE, payload: Data.data.error })
     }
 }
@@ -98,13 +108,16 @@ function* watcherGetTransactions() {
 }
 
 function* watcherAddTransaction(data) {
+    // let toastId = toast.loading("Loading...")
     let url = '/add-customer-transaction';
     const Data = yield call(callApi, url, 'POST', data.payload, true);
     if (Data.status === 200 || Data.status === 201) {
+        // toast.update(toastId, { render: Data.data.message, type: 'success', isLoading: false, autoClose: 1000 })
         yield put({ type: ADD_CUSTOMER_TRANSACTION_SUCCESS, payload: Data.data });
         yield put({ type: GET_CUSTOMER_TRANSACTIONS });
     }
     else {
+        // toast.update(toastId, { render: Data.data.message, type: 'error', isLoading: false, autoClose: 1000 })
         yield put({ type: ADD_CUSTOMER_TRANSACTION_FAILURE, payload: Data.data.error })
     }
 }

@@ -19,3 +19,25 @@
 .w-64 {
   width: 16rem !important;
 }
+
+
+/* // data table print column */
+
+/* .hidden-print {
+  display: none;
+}
+
+@media print {
+  .hidden-print {
+      display: table-cell !important;
+  }
+} */
+
+#printable-table #cell-7-19, #printable-table [data-column-id="7"] {
+  display: none !important;
+}
+@media print {
+  #printable-table #cell-7-19, #printable-table [data-column-id="7"] {
+      display: flex !important;
+  }
+}

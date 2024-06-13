@@ -17,7 +17,7 @@ const Input = (props) => {
     }
   }
   return (
-    <div className="relative mt-6 lg:w-[auto] w-full">
+    <div className="relative mt-6 lg:w-fit w-full">
       {props.logo && <div className="absolute inset-y-1 left-3 flex justify-end">
         <img className='w-5' src={props.logo} alt="" />
       </div>}

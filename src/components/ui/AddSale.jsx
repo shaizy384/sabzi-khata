@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, useParams } from 'react-router'
+import { useLocation, useNavigate, useParams } from 'react-router'
 import { addCustomerTransaction, addSale, getCustomers, updateCustomer } from '../../redux/customers/action'
 import { getProducts } from '../../redux/products/action'
 import { addPurchase, addSupplierTransaction, getSuppliers, updateSupplier } from '../../redux/suppliers/action'
@@ -13,18 +13,19 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
     const dropdownBtn = useRef()
     const prodDropdown = useRef()
     const modErrorRef = useRef()
+    const { id } = useParams()
     const brandErrorRef = useRef()
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const params = useParams()
+    const location = useLocation()
     const [pageType, setPageType] = useState("");
-    console.log("params:", params, window.location.href.split("/")[4]);
+    console.log("params:", id, window.location.href.split("/")[4], location.pathname.split("/").includes("addsale"));
     useEffect(() => {
-        window.location.href.split("/")[4] === "addsale" ?
+        location.pathname.split("/").includes("addsale") ?
             setPageType("Sale") :
             setPageType("Purchase")
         console.log("pageType: ", pageType);
-    }, [])
+    }, [location])
     const [searchCustomer, setSearchCustomer] = useState("");
     const [searchProduct, setSearchProduct] = useState("");
     const [showModal, setShowModal] = useState(false);
@@ -55,7 +56,29 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
     // const models = []
     // const models = useSelector(state => state.vehicleTypesReducer.getVehicleModels.data)
     const filteredCustomers = pageType === 'Sale' ? customers : suppliers?.filter(customer => customer?.name?.toLowerCase()?.includes(searchCustomer?.toLowerCase()))
-    const filteredproducts = productsData?.filter(product => product?.name?.toLowerCase()?.includes(searchProduct?.toLowerCase()))
+    const filteredproducts = productsData?.filter(product => product?.name?.toLowerCase()?.includes(searchProduct?.toLowerCase()));
+    useEffect(() => {
+        if (id && customers && pageType === 'Sale') {
+            // let person = (pageType === 'Sale') ? customers : suppliers?.filter(p => p?.id === id);
+            let person = customers?.filter(p => p.id == id);
+            console.log("persone:::::: ", person, customers);
+            person = person?.length > 0 && person[0]
+            console.log("persone:::::: ", person);
+            setSearchCustomer(person?.name)
+            setData({ ...data, person });
+        } else if (id && suppliers && pageType === 'Purchase') {
+            // let person = (pageType === 'Sale') ? customers : suppliers?.filter(p => p?.id === id);
+            let person = suppliers?.filter(p => p.id == id);
+            console.log("persone:::::: ", person, suppliers);
+            person = person?.length > 0 && person[0]
+            console.log("persone:::::: ", person);
+            setSearchCustomer(person?.name)
+            setData({ ...data, person });
+        } else if (!id) {
+            setSearchCustomer("")
+            setData({ person: {}, products: [] });
+        }
+    }, [id, customers, suppliers, pageType])
 
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
@@ -139,17 +162,24 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
     let total_amount = 0;
     const handleSubmit = () => {
         if (data.products.length > 0) {
+            const totalGrandAmount = data.products.reduce((acc, amount) => {
+                return acc + parseInt(amount?.price);
+            }, 0);
+            pageType === 'Sale' ?
+                dispatch(updateCustomer({ ...data?.person, amount: parseInt(data?.person?.amount) + totalGrandAmount })) :
+                dispatch(updateSupplier({ ...data?.person, amount: parseInt(data?.person?.amount) + totalGrandAmount }))
+
             for (const item of data.products) {
-                total_amount = parseInt(data?.person?.amount) + parseInt(item.price)
+                // total_amount = parseInt(data?.person?.amount) + parseInt(item.price)
                 if (pageType === 'Sale') {
                     dispatch(addSale(item))
-                    dispatch(updateCustomer({ ...data?.person, amount: total_amount }))
+                    // dispatch(updateCustomer({ ...data?.person, amount: total_amount }))
                     dispatch(addCustomerTransaction({ amount_type: 'credit', amount_added: item?.price, remaining_amount: data?.person?.amount, total_amount, customer_id: data?.person?.id }))
                     setData({ person: {}, products: [] })
                     setSearchCustomer("")
                 } else if (pageType === 'Purchase') {
                     dispatch(addPurchase(item))
-                    dispatch(updateSupplier({ ...data?.person, amount: total_amount }))
+                    // dispatch(updateSupplier({ ...data?.person, amount: total_amount }))
                     dispatch(addSupplierTransaction({ amount_type: 'credit', amount_added: item?.price, remaining_amount: data?.person?.amount, total_amount, supplier_id: data?.person?.id }))
                     setData({ person: {}, products: [] })
                     setSearchCustomer("")
@@ -180,7 +210,7 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
         prodDropdown.current.style.display = "none"
         if (isInclude?.length > 0) return;
 
-        setSearchProduct(name)
+        // setSearchProduct(name)
         // setData([...data, { id: id, name }])
 
         setData((prevItems) => ({
@@ -195,7 +225,7 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
         // setData({ ...data, products: [...data?.products, { product_id: id, name, customer_id: data?.customer?.customer_id }] })
         // filteredproducts = filteredproducts.filter(p => p.id !== id)
     }
-    const handleBrandList = () => {
+    const handlePersonList = () => {
         dropdownBtn.current.style.display = "block"
         console.log(dropdownBtn.current.style.display === "block");
     }
@@ -222,7 +252,7 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
                 <div className="relative p-6 flex-auto">
                     <label htmlFor="default-input" className="block mb-2 text-lg font-semibold text-gray-900">{t(`Select ${pageType === 'Sale' ? 'Customer' : 'Supplier'}`)}</label>
                     <div className="relative mt-2 mb-6">
-                        <input type="text" className="relative w-full rounded-md bg-white py-2.5 ltr:pl-2.5 rtl:pr-2.5 ltr:pr-10 rtl:pl-10 ltr:text-left rtl:text-right text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-colorPrimary sm:text-base sm:leading-" aria-haspopup="listbox" aria-expanded="true" placeholder={t(`Search ${pageType === 'Sale' ? 'Customer' : 'Supplier'}`)} aria-labelledby="listbox-label" onFocus={handleBrandList} value={searchCustomer} onChange={e => setSearchCustomer(capitalizeFirstLetter(e.target.value))} />
+                        <input type="text" className="relative w-full rounded-md bg-white py-2.5 ltr:pl-2.5 rtl:pr-2.5 ltr:pr-10 rtl:pl-10 ltr:text-left rtl:text-right text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-colorPrimary sm:text-base sm:leading-" aria-haspopup="listbox" aria-expanded="true" placeholder={t(`Search ${pageType === 'Sale' ? 'Customer' : 'Supplier'}`)} aria-labelledby="listbox-label" onFocus={handlePersonList} value={searchCustomer} onChange={e => setSearchCustomer(capitalizeFirstLetter(e.target.value))} />
                         <p className="text-red-600 text-sm" ref={brandErrorRef}></p>
                         {/* BrandS Dropdown */}
                         <ul className="hidden absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-ba shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3" ref={dropdownBtn}>
@@ -254,6 +284,7 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
                                 {filteredproducts?.length !== 0 ?
                                     filteredproducts?.map(product => {
                                         const { name } = product;
+                                        console.log("filteredproducts filteredproducts: ", filteredproducts);
                                         return <li className="text-gray-900 relative cursor-pointer select-none py-2.5 pl-2.5 pr-9 hover:bg-gray-200" onClick={() => handleProductItem(product)} id="listbox-option-0" role="option">
                                             <div className="flex items-center">
                                                 <span className="font-normal ml-3 block truncate">{product?.name}</span>

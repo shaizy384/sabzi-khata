@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSuppliers } from '../../redux/suppliers/action';
 
-const ServiceProvider = () => {
+const Supplier = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -303,9 +303,9 @@ const ServiceProvider = () => {
         <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">{t('All Suppliers')}</div>
         <div className="flex gap-2 ltr:ml-auto rtl:mr-auto">
           <ModalAddSupplier />
-          <button onClick={() => navigate("addpurchase")} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}>
+          {/* <button onClick={() => navigate("addpurchase")} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}>
             {t('Add Purchase')}
-          </button>
+          </button> */}
         </div>
       </div>
       <div className='sm:mx-10 mx-5 mt-10 flex'>
@@ -400,4 +400,4 @@ const ServiceProvider = () => {
   )
 }
 
-export default ServiceProvider
+export default Supplier

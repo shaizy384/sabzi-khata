@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component';
 import ViewTransactionModal from './ViewTransactionModal';
 import { useTranslation } from 'react-i18next';
@@ -7,25 +7,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPurchases } from '../../redux/suppliers/action';
 import { useLocation } from 'react-router';
 
-const TransactionsDatatable = () => {
+const TransactionsDatatable = ({ id }) => {
     const { t } = useTranslation();
     const dispatch = useDispatch()
     const { pathname } = useLocation()
+    const [previousId, setPreviousId] = useState(null)
     const pageType = pathname.split("/")[1]
     console.log(pageType);
     const sales = useSelector((state) => state.customersReducer.getSales?.data);
     const purchases = useSelector((state) => state.suppliersReducer.getPurchases?.data);
 
     useEffect(() => {
-        if (!purchases) {
-            dispatch(getPurchases())
+        if ((!purchases || previousId !== id) && id) {
+            setPreviousId(id)
+            dispatch(getPurchases(id))
         }
     }, [purchases])
     useEffect(() => {
-        if (!sales) {
-            dispatch(getSales())
+        if ((!sales || previousId !== id) && id) {
+            setPreviousId(id)
+            dispatch(getSales(id))
         }
-    }, [sales])
+    }, [sales, id])
     console.log("sales: ", sales, pageType !== "suppliers" ? sales : purchases);
     console.log("purchases: ", purchases);
 
@@ -155,15 +158,20 @@ const TransactionsDatatable = () => {
     // //     return row.customer.toLowerCase().includes(searchTerm.toLowerCase());
     // // });
     return (
-        <div className="md:mx-10 mx-5 shadow-md mt-2 rounded-xl p-2 bg-white">
-            <DataTable
-                columns={columns}
-                data={summarizedSales}
-                pagination
-                selectableRowsHighlight
-                customStyles={customStyles}
-            />
-        </div>
+        <>
+            <div className='sm:mx-10 mx-5 mt-10 mb-5 flex justify-between items-center flex-wrap gap-3'>
+                <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">{t(`${pageType !== "suppliers" ? "Sales" : "Purchase"} History`)}</div>
+            </div>
+            <div className="md:mx-10 mx-5 shadow-md mt-2 rounded-xl p-2 bg-white">
+                <DataTable
+                    columns={columns}
+                    data={summarizedSales}
+                    pagination
+                    selectableRowsHighlight
+                    customStyles={customStyles}
+                />
+            </div>
+        </>
     )
 }
 export default TransactionsDatatable

@@ -31,9 +31,10 @@ export const setSupplierStatus = (data) => {
 }
 
 
-export const getPurchases = () => {
+export const getPurchases = (data) => {
     return ({
-        type: GET_PURCHASE
+        type: GET_PURCHASE,
+        payload: data
     })
 }
 export const addPurchase = (data) => {

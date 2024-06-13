@@ -4,14 +4,19 @@ import { setLanguage } from '../../redux/localization/action';
 import i18n from '../../i18n';
 import { useTranslation } from 'react-i18next';
 import { logout } from '../../redux/auth/action';
+import defaultAvatar from '../../assets/images/default-avatar-icon.png'
+import { clearUser } from '../../redux/user/action';
+import { useNavigate } from 'react-router';
 
 const NavBar = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const userData = useSelector((state) => state.userReducer.getUser.data);
   const language = useSelector((state) => state.localizationReducer.language);
   const path = window.location.pathname.split('/').slice(1)[0]
-  const navTitle = (path === "dashboard" && t("Dashboard")) || (path === "suppliers" && "Supplier") || (path === "products" && "Products") || (path === "customers" && "Customer") || (path === "adminroles" && "Admin Roles") || (path === "supplierreport" && "Supplier Report") || (path === "customerreport" && "Customer Report") || (path === "notifications" && "Notifications")
+  // location.pathname.split("/").includes("addsale")
+  const navTitle = (path === "dashboard" && t("Dashboard")) || (path === "suppliers" && "Supplier") || (path === "products" && "Products") || (path === "customers" && "Customer") || (path === "adminroles" && "Subadmin Roles") || (path === "supplierreport" && "Supplier Report") || (path === "customerreport" && "Customer Report") || (path === "addpurchase" && "Add Purchase") || (path === "addsale" && "Add Sale")
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [langDropdown, setLangDropdown] = useState(false);
@@ -53,10 +58,12 @@ const NavBar = () => {
 
   const handleLogout = () => {
     dispatch(logout())
+    dispatch(clearUser())
+    navigate('/')
   }
   return (
     <nav className=" shadow-sm flex flex-wrap items-center justify-between p-4 bg-white w-full">
-      <h6 className='font-medium text-lg'>{t(navTitle)}</h6>
+      <h6 className='font-medium text-lg'>{navTitle && t(navTitle)}</h6>
       <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
         <span
           type="button"
@@ -71,7 +78,8 @@ const NavBar = () => {
             <div className="flex items-center">
               <img
                 className="w-8 h-8 rounded-full"
-                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
+                src={defaultAvatar}
+                // src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
                 alt="user photo"
               />
               <span className="block text-sm text-gray-900 font-medium ms-2 capitalize">

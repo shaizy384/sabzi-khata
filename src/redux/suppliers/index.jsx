@@ -1,11 +1,10 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import { callApi } from "../../api/APIs";
-
 import { toast } from 'react-toastify';
 import { ADD_PURCHASE, ADD_PURCHASE_FAILURE, ADD_PURCHASE_SUCCESS, ADD_SUPPLIER, ADD_SUPPLIER_FAILURE, ADD_SUPPLIER_SUCCESS, ADD_SUPPLIER_TRANSACTION, ADD_SUPPLIER_TRANSACTION_FAILURE, ADD_SUPPLIER_TRANSACTION_SUCCESS, BLOCK_SUPPLIER, BLOCK_SUPPLIER_FAILURE, BLOCK_SUPPLIER_SUCCESS, GET_CUSTOMER_STATS_SUCCESS, GET_PURCHASE, GET_PURCHASE_FAILURE, GET_PURCHASE_SUCCESS, GET_SUPPLIERS, GET_SUPPLIERS_FAILURE, GET_SUPPLIERS_SUCCESS, GET_SUPPLIER_DETAILS, GET_SUPPLIER_DETAILS_FAILURE, GET_SUPPLIER_DETAILS_SUCCESS, GET_SUPPLIER_STATS, GET_SUPPLIER_STATS_FAILURE, GET_SUPPLIER_STATS_SUCCESS, GET_SUPPLIER_TRANSACTIONS, GET_SUPPLIER_TRANSACTIONS_FAILURE, GET_SUPPLIER_TRANSACTIONS_SUCCESS, SET_SUPPLIER_STATUS, SET_SUPPLIER_STATUS_FAILURE, SET_SUPPLIER_STATUS_SUCCESS, UPDATE_SUPPLIER, UPDATE_SUPPLIER_FAILURE, UPDATE_SUPPLIER_SUCCESS } from "../actionTypes";
 
 function* watcherGetSupplierStats() {
-    let url = '/customers-stats';
+    let url = '/suppliers-stats';
     const Data = yield call(callApi, url, 'GET', '', true);
     if (Data.status === 200 || Data.status === 201) {
         yield put({ type: GET_SUPPLIER_STATS_SUCCESS, payload: Data.data });
@@ -28,44 +27,53 @@ function* watcherGetSuppliers() {
 
 function* watcherAddSupplier(data) {
     let url = '/add-supplier';
+    let toastId = toast.loading("Loading...")
     const Data = yield call(callApi, url, 'POST', data.payload, true);
     if (Data.status === 200 || Data.status === 201) {
+        toast.update(toastId, { render: "Data stored successfully", type: 'success', isLoading: false, autoClose: 1000 })
         yield put({ type: ADD_SUPPLIER_SUCCESS, payload: Data.data });
         yield put({ type: GET_SUPPLIERS, payload: Data.data });
     }
     else {
+        toast.update(toastId, { render: "An error occured", type: 'error', isLoading: false, autoClose: 1000 })
         yield put({ type: ADD_SUPPLIER_FAILURE, payload: Data.data.error })
     }
 }
 
 function* watcherUpdateSupplier(data) {
+    let toastId = toast.loading("Loading...")
     let url = '/update-supplier';
     const Data = yield call(callApi, url, 'POST', data.payload, true);
     if (Data.status === 200 || Data.status === 201) {
+        toast.update(toastId, { render: "Data updated successfully", type: 'success', isLoading: false, autoClose: 1000 })
         yield put({ type: UPDATE_SUPPLIER_SUCCESS, payload: Data.data });
         yield put({ type: GET_SUPPLIERS, payload: Data.data });
     }
     else {
+        toast.update(toastId, { render: "An error occured", type: 'error', isLoading: false, autoClose: 1000 })
         yield put({ type: UPDATE_SUPPLIER_FAILURE, payload: Data.data.error })
     }
 }
 
 function* watcherSetSupplierStatus(data) {
     let url = `/supplier/status-update/${data.payload}`;
+    let toastId = toast.loading("Loading...")
     const Data = yield call(callApi, url, 'GET', '', true);
     if (Data.status === 200 || Data.status === 201) {
+        toast.update(toastId, { render: "status updated successfully", type: 'success', isLoading: false, autoClose: 1000 })
         yield put({ type: SET_SUPPLIER_STATUS_SUCCESS, payload: Data.data });
         yield put({ type: GET_SUPPLIERS, payload: Data.data });
     }
     else {
+        toast.update(toastId, { render: "An error occuredd", type: 'error', isLoading: false, autoClose: 1000 })
         yield put({ type: SET_SUPPLIER_STATUS_FAILURE, payload: Data.data.error })
     }
 }
 
 
-
-function* watcherGetPurchases() {
-    let url = '/get-purchase';
+function* watcherGetPurchases(data) {
+    console.log("iiiiiiiiddddddddddd: ",data);
+    let url = `/get-purchase/${data.payload}`;
     const Data = yield call(callApi, url, 'GET', '', true);
     if (Data.status === 200 || Data.status === 201) {
         yield put({ type: GET_PURCHASE_SUCCESS, payload: Data.data });
@@ -76,13 +84,16 @@ function* watcherGetPurchases() {
 }
 
 function* watcherAddPurchase(data) {
+    // let toastId = toast.loading("Loading...")
     let url = '/add-purchase';
     const Data = yield call(callApi, url, 'POST', data.payload, true);
     if (Data.status === 200 || Data.status === 201) {
+        // toast.update(toastId, { render: Data.data.message, type: 'success', isLoading: false, autoClose: 1000 })
         yield put({ type: ADD_PURCHASE_SUCCESS, payload: Data.data });
         yield put({ type: GET_SUPPLIERS, payload: Data.data });
     }
     else {
+        // toast.update(toastId, { render: Data.data.message, type: 'error', isLoading: false, autoClose: 1000 })
         yield put({ type: ADD_PURCHASE_FAILURE, payload: Data.data.error })
     }
 }
@@ -98,13 +109,16 @@ function* watcherGetSupplierTransactions() {
     }
 }
 function* watcherAddSupplierTransaction(data) {
+    // let toastId = toast.loading("Loading...")
     let url = '/add-supplier-transaction';
     const Data = yield call(callApi, url, 'POST', data.payload, true);
     if (Data.status === 200 || Data.status === 201) {
+        // toast.update(toastId, { render: Data.data.message, type: 'success', isLoading: false, autoClose: 1000 })
         yield put({ type: ADD_SUPPLIER_TRANSACTION_SUCCESS, payload: Data.data });
         yield put({ type: GET_SUPPLIER_TRANSACTIONS });
     }
     else {
+        // toast.update(toastId, { render: Data.data.message, type: 'error', isLoading: false, autoClose: 1000 })
         yield put({ type: ADD_SUPPLIER_TRANSACTION_FAILURE, payload: Data.data.error })
     }
 }

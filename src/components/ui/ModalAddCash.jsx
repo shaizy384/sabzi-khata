@@ -5,6 +5,7 @@ import Input from "./Input";
 import { addSale, addCustomerTransaction, updateCustomer } from "../../redux/customers/action";
 import { useDispatch } from "react-redux";
 import { addPurchase, addSupplierTransaction, updateSupplier } from "../../redux/suppliers/action";
+import { toast } from "react-toastify";
 
 export default function ModalAddCash({ isCustomer, person }) {
   const priceRef = useRef()
@@ -37,14 +38,21 @@ export default function ModalAddCash({ isCustomer, person }) {
 
   const handleSubmit = () => {
     // console.log("person cash flow: ", { ...person, amount: data?.total_amount });
-    if (isCustomer) {
-      console.log("customer cash flow: ", { ...person, amount: data?.total_amount }, data);
-      dispatch(updateCustomer({ ...person, amount: data?.total_amount }))
-      dispatch(addCustomerTransaction({ ...data, customer_id: person?.id }))
+    if (data?.remaining_amount < data?.amount_added) {
+      toast.error("Amount cannot be greater than Payable Amount")
+    } else if (data?.amount_added < 1) {
+      toast.error("Amount cannot be 0")
+
     } else {
-      console.log("supplier cash flow: ", { ...person, amount: data?.total_amount }, data);
-      dispatch(updateSupplier({ ...person, amount: data?.total_amount }))
-      dispatch(addSupplierTransaction({ ...data, supplier_id: person?.id }))
+      if (isCustomer) {
+        console.log("customer cash flow: ", { ...person, amount: data?.total_amount }, data);
+        dispatch(updateCustomer({ ...person, amount: data?.total_amount }))
+        dispatch(addCustomerTransaction({ ...data, customer_id: person?.id }))
+      } else {
+        console.log("supplier cash flow: ", { ...person, amount: data?.total_amount }, data);
+        dispatch(updateSupplier({ ...person, amount: data?.total_amount }))
+        dispatch(addSupplierTransaction({ ...data, supplier_id: person?.id }))
+      }
     }
     // console.log(data);
     // if (order_id && data?.price && data?.price > 0) {
@@ -128,7 +136,7 @@ export default function ModalAddCash({ isCustomer, person }) {
                         </div>
                         <div className="mb-6">
                           <label for="default-input" className="block mb-2 text-lg font-semibold text-gray-900">{t('Pay Amount')}</label>
-                          <input type="text" name="amount_added" value={data?.amount_added} onChange={handleChange} placeholder={t("Enter Paid Amount")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:ring-2 focus:border-colorPrimary block w-full p-2.5 outline-none" />
+                          <input type="number" name="amount_added" value={data?.amount_added} onChange={handleChange} placeholder={t("Enter Paid Amount")} id="default-input" className=" border border-gray-300 text-gray-900 rounded-lg focus:ring-colorPrimary focus:ring-2 focus:border-colorPrimary block w-full p-2.5 outline-none" />
                         </div>
                         {/* <div className='flex flex-wrap justify-center mb-6'>
                           <Input

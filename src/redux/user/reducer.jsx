@@ -1,4 +1,4 @@
-import { GET_USER, GET_USER_FAILURE, GET_USER_SUCCESS } from "../actionTypes";
+import { CLEAR_USER, GET_USER, GET_USER_FAILURE, GET_USER_SUCCESS } from "../actionTypes";
 
 const initial_state = {
     getUser: {
@@ -39,6 +39,15 @@ const userReducer = (state = initial_state, { type, payload }) => {
                     ...state.getUser,
                     loading: false,
                     error: payload,
+                }
+            };
+
+        case CLEAR_USER:
+            return {
+                ...state,
+                getUser: {
+                    ...state.getUser,
+                    data: null,
                 }
             };
         default:

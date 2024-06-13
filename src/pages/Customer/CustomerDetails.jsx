@@ -5,10 +5,13 @@ import PersonalDetails from '../../components/ui/PersonalDetails'
 import BlockConfirmationModal from '../../components/ui/BlockConfirmationModal'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCustomers } from '../../redux/customers/action'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
+import { useTranslation } from 'react-i18next'
 
 const CustomerDetails = () => {
   const { id } = useParams()
+  const { t } = useTranslation();
+  const navigate = useNavigate();
   const dispatch = useDispatch()
   const customers = useSelector((state) => state.customersReducer.getCustomers?.data);
   let customer = customers?.filter(c => c?.id == id)
@@ -22,11 +25,14 @@ const CustomerDetails = () => {
 
   return (
     <div className="py-1 rounded-lg bg-gray-50">
-      <div className='md:mx-10 mx-5 mt-10 mb-8 flex gap-3 justify-between md:flex-row flex-col'>
+      <div className='md:mx-10 mx-5 mt-10 mb-8 flex gap-3 justify-between flex-wrap md:flex-row flex-col'>
         <Breadcrumbs home="Customers" child="Customer Details" />
-        <div className='flex justify-end'>
+        <div className='flex justify-end gap-2 ml-auto'>
           {/* <Modal /> */}
           <BlockConfirmationModal id={customer?.id} person={customer} type='customer' />
+          {customer?.status === 1 && <button onClick={() => navigate(`/customers/addsale/${customer?.id}`)} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}>
+            {t('Add Sale')}
+          </button>}
           {/* <button className={`bg-red-600 items-center justify-between flex hover:bg-red-700 text-white  py-2 px-4 rounded`}>
             <svg className='mr-2' width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M18.364 5.63604C19.9926 7.26472 21 9.51472 21 12C21 16.9706 16.9706 21 12 21C9.51472 21 7.26472 19.9926 5.63604 18.364M18.364 5.63604C16.7353 4.00736 14.4853 3 12 3C7.02944 3 3 7.02944 3 12C3 14.4853 4.00736 16.7353 5.63604 18.364M18.364 5.63604L5.63604 18.364" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
             Block
@@ -56,8 +62,8 @@ const CustomerDetails = () => {
         </div>
       </div> */}
       <PersonalDetails person={customer} type='customer' />
-      <TransactionsDatatable />
-    </div>
+      <TransactionsDatatable id={customer?.id} />
+    </div >
   )
 }
 

@@ -6,17 +6,12 @@ import EmailPage from '../pages/auth/emailPage/Index';
 import EmailVerification from '../pages/auth/EmailVerification/LoginPage';
 import Layout from '../components/layout';
 import Dasboard from '../pages/Dashboard';
-import OrderManagement from '../pages/OrderManagement/Index';
-import OrderDetails from '../pages/OrderManagement/OrderDetails';
 import Customers from '../pages/Customer/Index';
 import CustomerDetails from '../pages/Customer/CustomerDetails';
-import ServiceProvider from '../pages/Supplier/Index';
+import Supplier from '../pages/Supplier/Index';
 import SupplierDetails from '../pages/Supplier/SupplierDetails';
 import AdminRoles from '../pages/AdminRoles';
 import EditAdminRole from '../pages/AdminRoles/EditAdminRole';
-import UserAppSettings from '../pages/appSettings/Index';
-import Notification from '../pages/Notification';
-import BlockedUsers from '../pages/appSettings/BlockedUsers';
 import Signup from '../pages/auth/Signup';
 import Products from '../pages/Products/Index';
 import AddSale from '../components/ui/AddSale';
@@ -24,11 +19,13 @@ import GenerateReport from '../pages/GenerateReport';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../redux/user/action';
+import OnBoardingScreen from '../pages/OnBoardingScreen';
 
 const Routers = () => {
     const dispatch = useDispatch();
     const data = useSelector((state) => state.userReducer.getUser.data);
     const isAuthorized = useSelector((state) => state.authReducer.isAuthenticated);
+    const userData = useSelector((state) => state.userReducer.getUser.data);
     console.log("isAuthorized isAuthorized: ", isAuthorized, " :", data);
     useEffect(() => {
         if (data === null && isAuthorized) {
@@ -59,82 +56,70 @@ const Routers = () => {
                         path="/emailverification"
                         element={<PublicRoute><EmailVerification /></PublicRoute>}
                     />
-                    <Route
+                    < Route
+                        path="/welcome"
+                        element={<Layout><OnBoardingScreen /></Layout>}
+                    />
+                    {userData?.dashboard === 1 && < Route
                         path="/dashboard"
                         element={<Layout><Dasboard /></Layout>}
-                    />
-                    <Route
-                        path="/ordermanagement"
-                        element={<Layout><OrderManagement /></Layout>}
-                    />
-                    <Route
-                        path="/ordermanagement/orderdetails"
-                        element={<Layout><OrderDetails /></Layout>}
-                    />
-                    <Route
+                    />}
+                    {userData?.customer === 1 && <Route
                         path="/customers"
                         element={<Layout><Customers /></Layout>}
-                    />
-                    <Route
+                    />}
+                    {userData?.customer === 1 && <Route
                         path="/customers/customerdetails/:id"
                         element={<Layout><CustomerDetails /></Layout>}
-                    />
-                    <Route
-                        path="/request"
-                        element={<Layout><ServiceProvider /></Layout>}
-                    />
-                    <Route
-                        path="customers/addsale"
+                    />}
+                    {userData?.customer === 1 && <Route
+                        path="customers/addsale/:id"
                         element={<Layout><AddSale /></Layout>}
-                    />
-                    <Route
-                        path="suppliers/addpurchase"
+                    />}
+                    {userData?.supplier === 1 && <Route
+                        path="suppliers/addpurchase/:id"
                         element={<Layout><AddSale /></Layout>}
-                    />
-                    <Route
+                    />}
+                    {userData?.supplier === 1 && <Route
                         path="/suppliers"
-                        element={<Layout><ServiceProvider /></Layout>}
-                    />
-                    <Route
+                        element={<Layout><Supplier /></Layout>}
+                    />}
+                    {userData?.supplier === 1 && <Route
                         path="/suppliers/supplierdetails/:id"
                         element={<Layout><SupplierDetails /></Layout>}
-                    />
-                    {/* <Route
-                        path="/serviceprovider/serviceproviderdetails/vehicledetails"
-                        element={<Layout><VehicleDetails /></Layout>}
-                    /> */}
-                    {/* <Route
-                        path="/users/userdetails/addresses"
-                        element={<Layout><Addresses /></Layout>}
-                    /> */}
-                    {/* <Route
-                        path="/users/userdetails/receiver"
-                        element={<Layout><Receiver /></Layout>}
-                    /> */}
-                    <Route
+                    />}
+                    {userData?.customer === 1 && <Route
+                        path="/addsale"
+                        element={<Layout><AddSale /></Layout>}
+                    />}
+                    {userData?.supplier === 1 && <Route
+                        path="/addpurchase"
+                        element={<Layout><AddSale /></Layout>}
+                    />}
+                    {userData?.admin_roles === 1 && <Route
                         path="/adminroles"
                         element={<Layout><AdminRoles /></Layout>}
-                    />
-                    <Route
+                    />}
+                    {userData?.admin_roles === 1 && <Route
                         path="/adminroles/edit/:id"
                         element={<Layout><EditAdminRole /></Layout>}
-                    />
-                    <Route
+                    />}
+                    {userData?.admin_roles === 1 && <Route
                         path="/adminroles/add"
                         element={<Layout><EditAdminRole /></Layout>}
-                    />
-                    <Route
+                    />}
+                    {userData?.product === 1 && < Route
                         path="/products"
                         element={<Layout><Products /></Layout>}
-                    />
-                    <Route
+                    />}
+                    {userData?.supplier_report === 1 && <Route
                         path="/supplierreport"
                         element={<Layout><GenerateReport /></Layout>}
-                    />
-                    <Route
+                    />}
+                    {userData?.customer_report === 1 && <Route
                         path="/customerreport"
                         element={<Layout><GenerateReport /></Layout>}
-                    />
+                    />}
                     {/* <Route
                         path="/supplierreport"
                         element={<Layout><SupplierReport /></Layout>}
@@ -143,22 +128,6 @@ const Routers = () => {
                         path="/customerreport"
                         element={<Layout><CustomersReport /></Layout>}
                     /> */}
-                    <Route
-                        path="/userappsettings"
-                        element={<Layout><UserAppSettings /></Layout>}
-                    />
-                    <Route
-                        path="/providerappsettings"
-                        element={<Layout><UserAppSettings /></Layout>}
-                    />
-                    <Route
-                        path="/userappsettings/blockedusers"
-                        element={<Layout><BlockedUsers /></Layout>}
-                    />
-                    <Route
-                        path="/notifications"
-                        element={<Layout><Notification /></Layout>}
-                    />
                 </Routes>
             </BrowserRouter>
         </>

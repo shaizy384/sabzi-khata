@@ -32,7 +32,8 @@ export default function ModalAddCustomer({ id, customer }) {
 
   const handleCancel = () => {
     setShowModal(false);
-    setData(([]))
+    !customer?.id && setData({})
+    !customer?.id && setImageUrl(null)
     setModalPage("picture")
     setSearch("")
   }
@@ -56,14 +57,26 @@ export default function ModalAddCustomer({ id, customer }) {
     if (modalPage === "picture" && data?.profile_image) {
       setModalPage("details")
     }
-    else if (modalPage === "details" && data?.name && data?.phone && data?.cnic && data?.address && data?.amount) {
+    else if (data?.amount < 1) {
+      toast.error("Amount cannot be 0")
+    }
+    else if (data?.phone?.length !== 11) {
+      toast.error("Phone number must contains 11 numbers")
+    }
+    else if (data?.name?.length > 20) {
+      toast.error("Name should be less than 20 characters")
+    }
+    else if (data?.cnic.length !== 13) {
+      toast.error("Cnic must contains 13 numbers")
+    } else if (modalPage === "details" && data?.name && data?.phone && data?.cnic && data?.address && data?.amount) {
       if (id) {
         console.log(data);
         dispatch(updateCustomer(data))
-
+        handleCancel()
       } else if (!id) {
         console.log(data);
         dispatch(addCustomer(data))
+        handleCancel()
       }
     } else {
       toast.error("All fields are reqiured")
@@ -160,7 +173,7 @@ export default function ModalAddCustomer({ id, customer }) {
                           value={data?.name}
                           type='text'
                           name='name'
-                          className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-yellow-500 focus:outline-none`}
+                          className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-green-500 focus:outline-none`}
                           onChange={handleValue}
                         />
                       </div>
@@ -168,19 +181,19 @@ export default function ModalAddCustomer({ id, customer }) {
                         <label className='font-medium block mb-3 text-gray-500'>{t('Phone no')}</label>
                         <input
                           value={data?.phone}
-                          type='text'
+                          type='number'
                           name='phone'
-                          className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-yellow-500 focus:outline-none`}
-                          onChange={handleValue} />
+                          className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-green-500 focus:outline-none`}
+                          onChange={handleValue} max={11} />
                       </div>
                       <div className="flex flex-col grow">
                         <label className='font-medium block mb-3 text-gray-500'>{t('CNIC')}</label>
                         <input
                           value={data?.cnic}
-                          type='text'
+                          type='number'
                           name='cnic'
-                          className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-yellow-500 focus:outline-none`}
-                          onChange={handleValue} />
+                          className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-green-500 focus:outline-none`}
+                          onChange={handleValue} max={13} />
                       </div>
                       <div className="flex flex-col grow">
                         <label className='font-medium block mb-3 text-gray-500'>{t('Address')}</label>
@@ -188,16 +201,16 @@ export default function ModalAddCustomer({ id, customer }) {
                           value={data?.address}
                           type='text'
                           name='address'
-                          className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-yellow-500 focus:outline-none`}
+                          className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-green-500 focus:outline-none`}
                           onChange={handleValue} />
                       </div>
                       <div className="flex flex-col grow">
                         <label className='font-medium block mb-3 text-gray-500'>{t('Total Amount')}</label>
                         <input
                           value={data?.amount}
-                          type='text'
+                          type='number'
                           name='amount'
-                          className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-yellow-500 focus:outline-none`}
+                          className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-green-500 focus:outline-none`}
                           onChange={handleValue} />
                       </div>
                     </div>

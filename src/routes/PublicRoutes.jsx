@@ -9,7 +9,7 @@ export const PublicRoute = ({ children }) => {
     // const auth = false;
     // if (localStorage.getItem("AUTH_USER"))
     if (auth) {
-        return <Navigate to="/dashboard" />;
+        return <Navigate to="/welcome" />;
     }
     return (
         <>
