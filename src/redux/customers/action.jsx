@@ -54,12 +54,12 @@ export const addCustomerTransaction = (data) => {
         payload: data
     })
 }
-// export const getCustomerDetails = (data) => {
-//     return ({
-//         type: GET_CUSTOMER_DETAILS,
-//         payload: data
-//     })
-// }
+export const getCustomerDetails = (data) => {
+    return ({
+        type: GET_CUSTOMER_DETAILS,
+        payload: data
+    })
+}
 // export const customerPersonalDetail = (data) => {
 //     return ({
 //         type: CUSTOMER_PERSONAL_DETAILS,

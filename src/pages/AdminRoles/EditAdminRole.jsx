@@ -14,7 +14,7 @@ const EditAdminRole = () => {
     const navigate = useNavigate();
     const { id } = useParams()
     const dispatch = useDispatch()
-    const [data, setData] = useState({ dashboard: 0, product: 0, customer: 0, customer_report: 0, supplier: 0, supplier_report: 0, admin_roles: 0 });
+    const [data, setData] = useState({ dashboard: 0, product: 0, customer: 0, customer_report: 0, supplier: 0, supplier_report: 0 });
     const [roles, setRoles] = useState({});
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const rolesDefined = ['dashboard', 'product', 'customer', 'customer_report', 'supplier', 'supplier_report']
@@ -24,7 +24,7 @@ const EditAdminRole = () => {
             dispatch(getSubAdmins())
         }
     }, [subAdmins])
-    let subAdmin = subAdmins?.filter(s => s?.id == id);
+    let subAdmin = subAdmins?.filter(s => s?._id == id);
     if (subAdmins?.length > 0) {
         subAdmin = subAdmin[0]
     }
@@ -32,11 +32,11 @@ const EditAdminRole = () => {
     console.log("subAdmins: ", subAdmins, subAdmin, id);
 
     useEffect(() => {
-        if (!id) {
+        if (!id && !subAdmin) {
             setRoles({});
-            setData({ name: "", email: "", dashboard: 0, product: 0, customer: 0, customer_report: 0, supplier: 0, supplier_report: 0, admin_roles: 0 })
+            setData({ fullName: "", email: "", dashboard: 0, product: 0, customer: 0, customer_report: 0, supplier: 0, supplier_report: 0 })
             return;
-        } else if (id) {
+        } else if (id && subAdmin) {
             setData({ ...subAdmin })
             const newState = {};
             console.log("subAdmin: ", subAdmin);
@@ -74,18 +74,18 @@ const EditAdminRole = () => {
     }
 
     const handleCancel = () => {
-        !id && setData({ dashboard: 0, product: 0, customer: 0, customer_report: 0, supplier: 0, supplier_report: 0, admin_roles: 0 })
+        !id && setData({ dashboard: 0, product: 0, customer: 0, customer_report: 0, supplier: 0, supplier_report: 0 })
         navigate('/adminroles');
     }
 
     const handleSubmit = () => {
         console.log("data: ", { ...data });
-        if ((!id ? data?.password : true) && data?.name && data?.email) {
+        if ((!id ? data?.password : true) && data?.fullName && data?.email) {
             console.log("data: ", { ...data });
             console.log("roles: ", { ...roles });
 
             // !id && dispatch(addSubAdmin(data))
-            !id && dispatch(addSubAdmin({ ...data, password_confirmation: data?.password }))
+            !id && dispatch(addSubAdmin(data))
             id && dispatch(updateSubAdmin(data))
             handleCancel()
         } else {
@@ -104,7 +104,7 @@ const EditAdminRole = () => {
             </div>
             <div className="h-full mx-10 shadow my-2 rounded-2xl py-5 px-12 bg-white">
                 <div className="flex flex-wrap lg:justify-between justify-center mb-6">
-                    <Input type={'name'} value={data.name} label={'Name'} onChange={handleOnChange} />
+                    <Input type={'fullName'} value={data.fullName} label={'Name'} onChange={handleOnChange} />
                     <Input type={'email'} value={data.email} label={'Email'} onChange={handleOnChange} />
                     {!id && <div className='lg:w-fit w-full'>
                         <label className='font-medium block mr-auto -mb-3 mt-6 w-auto'>{t('Password')}</label>

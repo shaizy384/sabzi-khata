@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, GET_PRODUCT_DETAILS, BLOCK_PRODUCT, ADD_PRODUCT, SET_PRODUCT_STATUS, UPDATE_PRODUCT } from "../actionTypes"
+import { GET_PRODUCTS, ADD_PRODUCT, SET_PRODUCT_STATUS, UPDATE_PRODUCT } from "../actionTypes"
 
 export const getProducts = () => {
     return ({
@@ -18,20 +18,9 @@ export const updateProduct = (data) => {
     })
 }
 export const setProductStatus = (data) => {
+    console.log("data.payload status: ", data);
     return ({
         type: SET_PRODUCT_STATUS,
-        payload: data
-    })
-}
-export const getProductDetails = (data) => {
-    return ({
-        type: GET_PRODUCT_DETAILS,
-        payload: data
-    })
-}
-export const blockProduct = (data) => {
-    return ({
-        type: BLOCK_PRODUCT,
         payload: data
     })
 }

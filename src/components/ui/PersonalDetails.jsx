@@ -28,8 +28,8 @@ const PersonalDetails = ({ person, type }) => {
             </div>
           </button>
         </div>}
-        {type === 'customer' && <ModalAddCustomer id={person?.id} customer={person} type={type} />}
-        {type === 'supplier' && <ModalAddSupplier id={person?.id} supplier={person} type={type} />}
+        {type === 'customer' && <ModalAddCustomer id={person?._id} customer={person} type={type} />}
+        {type === 'supplier' && <ModalAddSupplier id={person?._id} supplier={person} type={type} />}
 
         {/* <span className="me-3 font-semibold  text-gray-800 ">Approved / Disapproved</span>
         <label className="relative inline-flex items-center cursor-pointer">
@@ -47,7 +47,7 @@ const PersonalDetails = ({ person, type }) => {
           />
         </div>
         <div className='xl:w-4/5 mt-5 flex flex-wrap ga sm:justify-between justify-center'>
-          <DisabledInput value={person?.id} label={'Acc No:'} />
+          <DisabledInput value={person?._id} label={'Acc No:'} />
           <DisabledInput value={person?.name} label={'Full Name'} />
           <DisabledInput value={person?.phone} label={'Email'} />
           <DisabledInput value={person?.address} label={'Phone'} />

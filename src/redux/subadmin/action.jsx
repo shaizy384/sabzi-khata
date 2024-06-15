@@ -1,4 +1,4 @@
-import { BLOCK_CUSTOMER, GET_SUB_ADMINS, GET_CUSTOMER_DETAILS, GET_CUSTOMER_WARNINGS, ORDER_DETAILS, SET_CUSTOMER_WARNINGS, CUSTOMER_PERSONAL_DETAILS, ADD_SUB_ADMIN, UPDATE_SUB_ADMIN, SET_SUB_ADMIN_STATUS, DELETE_SUB_ADMIN } from "../actionTypes"
+import { BLOCK_CUSTOMER, GET_SUB_ADMINS, GET_CUSTOMER_DETAILS, GET_CUSTOMER_WARNINGS, ORDER_DETAILS, SET_CUSTOMER_WARNINGS, CUSTOMER_PERSONAL_DETAILS, ADD_SUB_ADMIN, UPDATE_SUB_ADMIN, SET_SUB_ADMIN_STATUS, DELETE_SUB_ADMIN, UPDATE_SUB_ADMIN_PASSWORD } from "../actionTypes"
 
 export const getSubAdmins = () => {
     return ({
@@ -14,6 +14,12 @@ export const addSubAdmin = (data) => {
 export const updateSubAdmin = (data) => {
     return ({
         type: UPDATE_SUB_ADMIN,
+        payload: data
+    })
+}
+export const updateSubAdminPassword = (data) => {
+    return ({
+        type: UPDATE_SUB_ADMIN_PASSWORD,
         payload: data
     })
 }

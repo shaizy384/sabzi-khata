@@ -50,7 +50,7 @@ const authReducer = (state = initial_state, { type, payload }) => {
 
         case LOGIN_SUCCESS:
             console.log("LOGIN_SUCCESS LOGIN_SUCCESS", payload);
-            localStorage.setItem('authToken', `Bearer ${payload.token}`);
+            localStorage.setItem('authToken', `Bearer ${payload.data.accessToken}`);
             return {
                 ...state,
                 loading: false,

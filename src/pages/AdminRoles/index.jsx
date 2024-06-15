@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useId } from 'react'
 import DataTable from 'react-data-table-component';
 import Breadcrumbs from '../../components/ui/Breadcrumbs';
 import basket from "../../assets/svgs/delete.svg";
@@ -11,6 +11,8 @@ import { deleteSubAdmin, getSubAdmins } from '../../redux/subadmin/action';
 
 const AdminRoles = () => {
     const { t } = useTranslation();
+    const id = useId()
+    console.log("iidd: ", id);
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const subAdmins = useSelector((state) => state.subAdminsReducer.getSubAdmins?.data);
@@ -44,11 +46,11 @@ const AdminRoles = () => {
     const columns = [
         {
             name: t('Sr No.'),
-            selector: row => row.id,
+            selector: row => id,
         },
         {
             name: t('Name'),
-            selector: row => row.name,
+            selector: row => row.fullName,
         },
         {
             name: t('Email'),
@@ -57,10 +59,10 @@ const AdminRoles = () => {
         {
             name: t('Action'),
             selector: row => (<div className='flex'>
-                <button onClick={() => navigate(`/adminroles/edit/${row.id}`)} className={`w-[36px] bg-cyan-500 hover:bg-cyan-600 text-white font-bold py- p-[0.525rem] rounded-xl me-2`}>
+                <button onClick={() => navigate(`/adminroles/edit/${row._id}`)} className={`w-[36px] bg-cyan-500 hover:bg-cyan-600 text-white font-bold py- p-[0.525rem] rounded-xl me-2`}>
                     <img src={edit} width={18.5} alt="edit" />
                 </button>
-                <button onClick={() => dispatch(deleteSubAdmin(row?.id))} className={`w-[36px] bg-rose-500 hover:bg-rose-600 text-white font-bold py- p-[0.525rem] rounded-xl`}>
+                <button onClick={() => dispatch(deleteSubAdmin(row?._id))} className={`w-[36px] bg-rose-500 hover:bg-rose-600 text-white font-bold py- p-[0.525rem] rounded-xl`}>
                     <img src={basket} width={18.5} alt="basket" />
                 </button>
             </div>),

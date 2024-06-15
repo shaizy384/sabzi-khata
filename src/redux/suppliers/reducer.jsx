@@ -91,6 +91,12 @@ const initial_state = {
     loading: false,
     error: null,
   },
+
+  getSupplierDetails: {
+    data: null,
+    loading: false,
+    error: null,
+  },
   // setSupplierBlock: {
   //   data: null,
   //   loading: false,
@@ -290,30 +296,29 @@ const suppliersReducer = (state = initial_state, { type, payload }) => {
         }
       };
 
-    // case GET_SUPPLIER_DETAILS:
-    //   return {
-    //     ...state,
-    //     getUserDetails: {
-    //       loading: true,
-    //     }
-    //   };
-    // case GET_SUPPLIER_DETAILS_SUCCESS:
-    //   return {
-    //     ...state,
-    //     getUserDetails: {
-    //       loading: false,
-    //       data: payload.data,
-    //     }
-    //   };
-
-    // case GET_SUPPLIER_DETAILS_FAILURE:
-    //   return {
-    //     ...state,
-    //     getUserDetails: {
-    //       loading: false,
-    //       error: payload,
-    //     }
-    //   };
+    case GET_SUPPLIER_DETAILS:
+      return {
+        ...state,
+        getSupplierDetails: {
+          loading: true,
+        }
+      };
+    case GET_SUPPLIER_DETAILS_SUCCESS:
+      return {
+        ...state,
+        getSupplierDetails: {
+          loading: false,
+          data: payload.data,
+        }
+      };
+    case GET_SUPPLIER_DETAILS_FAILURE:
+      return {
+        ...state,
+        getSupplierDetails: {
+          loading: false,
+          error: payload,
+        }
+      };
 
     // case BLOCK_SUPPLIER:
     //   return {

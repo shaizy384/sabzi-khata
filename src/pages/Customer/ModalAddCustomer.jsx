@@ -24,7 +24,7 @@ export default function ModalAddCustomer({ id, customer }) {
   }
   console.log(".............data: ", data);
   useEffect(() => {
-    if (customer?.id) {
+    if (customer?._id) {
       setData({ ...customer })
       setImageUrl(customer?.profile_image)
     }
@@ -32,8 +32,8 @@ export default function ModalAddCustomer({ id, customer }) {
 
   const handleCancel = () => {
     setShowModal(false);
-    !customer?.id && setData({})
-    !customer?.id && setImageUrl(null)
+    !customer?._id && setData({})
+    !customer?._id && setImageUrl(null)
     setModalPage("picture")
     setSearch("")
   }
@@ -41,7 +41,10 @@ export default function ModalAddCustomer({ id, customer }) {
   const handleFile = (e) => {
     console.log(e.target.files[0])
     const file = e.target.files[0];
-    setData({ ...data, profile_image: e.target.files[0] })
+
+    // const formdata = new FormData();
+    // formdata.append("file", file)
+    setData({ ...data, profile_image: file })
 
     // to show profile_image
     const reader = new FileReader();
@@ -204,7 +207,7 @@ export default function ModalAddCustomer({ id, customer }) {
                           className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-green-500 focus:outline-none`}
                           onChange={handleValue} />
                       </div>
-                      <div className="flex flex-col grow">
+                      {!id && <div className="flex flex-col grow">
                         <label className='font-medium block mb-3 text-gray-500'>{t('Total Amount')}</label>
                         <input
                           value={data?.amount}
@@ -212,7 +215,7 @@ export default function ModalAddCustomer({ id, customer }) {
                           name='amount'
                           className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-green-500 focus:outline-none`}
                           onChange={handleValue} />
-                      </div>
+                      </div>}
                     </div>
                   }
                   {/* {modalPage === "documents" &&

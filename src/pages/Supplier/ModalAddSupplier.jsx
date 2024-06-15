@@ -25,7 +25,7 @@ export default function ModalAddSupplier({ id, supplier }) {
 
   console.log(".............data: ", data);
   useEffect(() => {
-    if (supplier?.id) {
+    if (supplier?._id) {
       setData({ ...supplier })
       setImageUrl(supplier?.profile_image)
     }
@@ -33,8 +33,8 @@ export default function ModalAddSupplier({ id, supplier }) {
 
   const handleCancel = () => {
     setShowModal(false);
-    !supplier?.id && setData({})
-    !supplier?.id && setImageUrl(null)
+    !supplier?._id && setData({})
+    !supplier?._id && setImageUrl(null)
     setModalPage("picture")
     setSearch("")
   }
@@ -211,7 +211,7 @@ export default function ModalAddSupplier({ id, supplier }) {
                           className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-green-500 focus:outline-none`}
                           onChange={handleValue} />
                       </div>
-                      <div className="flex flex-col grow">
+                      {!id && <div className="flex flex-col grow">
                         <label className='font-medium block mb-3 text-gray-500'>{t('Total Amount')}</label>
                         <input
                           value={data?.amount}
@@ -219,7 +219,7 @@ export default function ModalAddSupplier({ id, supplier }) {
                           name='amount'
                           className={`block rounded-2xl border border-neutral-300 bg-transparent py-4 pl-5 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-green-500 focus:outline-none`}
                           onChange={handleValue} />
-                      </div>
+                      </div>}
                     </div>
                   }
                   {/* {modalPage === "documents" &&

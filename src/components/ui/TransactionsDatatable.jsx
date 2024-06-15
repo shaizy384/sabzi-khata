@@ -7,49 +7,49 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPurchases } from '../../redux/suppliers/action';
 import { useLocation } from 'react-router';
 
-const TransactionsDatatable = ({ id }) => {
+const TransactionsDatatable = ({ id, orders }) => {
     const { t } = useTranslation();
     const dispatch = useDispatch()
     const { pathname } = useLocation()
     const [previousId, setPreviousId] = useState(null)
     const pageType = pathname.split("/")[1]
     console.log(pageType);
-    const sales = useSelector((state) => state.customersReducer.getSales?.data);
-    const purchases = useSelector((state) => state.suppliersReducer.getPurchases?.data);
+    // const sales = useSelector((state) => state.customersReducer.getSales?.data);
+    // const purchases = useSelector((state) => state.suppliersReducer.getPurchases?.data);
 
-    useEffect(() => {
-        if ((!purchases || previousId !== id) && id) {
-            setPreviousId(id)
-            dispatch(getPurchases(id))
-        }
-    }, [purchases])
-    useEffect(() => {
-        if ((!sales || previousId !== id) && id) {
-            setPreviousId(id)
-            dispatch(getSales(id))
-        }
-    }, [sales, id])
-    console.log("sales: ", sales, pageType !== "suppliers" ? sales : purchases);
-    console.log("purchases: ", purchases);
+    // useEffect(() => {
+    //     if ((!purchases || previousId !== id) && id) {
+    //         setPreviousId(id)
+    //         dispatch(getPurchases(id))
+    //     }
+    // }, [purchases])
+    // useEffect(() => {
+    //     if ((!sales || previousId !== id) && id) {
+    //         setPreviousId(id)
+    //         dispatch(getSales(id))
+    //     }
+    // }, [sales, id])
+    // console.log("sales: ", sales, pageType !== "suppliers" ? sales : purchases);
+    // console.log("purchases: ", purchases);
 
-    const summarizeDataByDate = (data) => {
-        const sale = data?.reduce((acc, current) => {
-            const date = current.created_at.slice(0, 10);
+    // const summarizeDataByDate = (data) => {
+    //     const sale = data?.reduce((acc, current) => {
+    //         const date = current.created_at.slice(0, 10);
 
-            if (!acc[date]) {
-                acc[date] = { date, transactions: 0, totalAmount: 0 };
-            }
+    //         if (!acc[date]) {
+    //             acc[date] = { date, transactions: 0, totalAmount: 0 };
+    //         }
 
-            acc[date].transactions += 1;
-            acc[date].totalAmount += parseInt(current.price);
+    //         acc[date].transactions += 1;
+    //         acc[date].totalAmount += parseInt(current.price);
 
-            return acc;
-        }, {});
+    //         return acc;
+    //     }, {});
 
-        return sale ? Object?.values(sale) : [];
-    };
-    const summarizedSales = summarizeDataByDate(pageType !== "suppliers" ? sales : purchases);
-    console.log("result result result: ", summarizedSales);
+    //     return sale ? Object?.values(sale) : [];
+    // };
+    // const summarizedSales = summarizeDataByDate(pageType !== "suppliers" ? sales : purchases);
+    // console.log("result result result: ", summarizedSales);
 
 
     const customStyles = {
@@ -79,7 +79,7 @@ const TransactionsDatatable = ({ id }) => {
         },
         {
             name: t('Amount'),
-            selector: row => row.totalAmount,
+            selector: row => row.total_price,
         },
         {
             name: t('Transactions'),
@@ -87,12 +87,15 @@ const TransactionsDatatable = ({ id }) => {
         },
         {
             name: t('Details'),
-            selector: row => (<ViewTransactionModal date={row.date} sales={pageType !== "suppliers" ? sales : purchases} title={pageType !== "suppliers" ? "Sales" : "Purchase"} />),
+            selector: row => (<ViewTransactionModal ordersPerDay={row?.ordersPerDay} title={pageType !== "suppliers" ? "Sales" : "Purchase"} />),
+            // selector: row => (<ViewTransactionModal date={row.date} sales={pageType !== "suppliers" ? sales : purchases} title={pageType !== "suppliers" ? "Sales" : "Purchase"} />),
             // selector: row => (<button onClick={() => navigate('/ordermanagement/orderdetails')} className={`bg-[#2D9D46] hover:bg-[#217E36] text-white font-bold py-2 px-4 rounded`}>
             //     view
             // </button>),
         },
     ];
+
+    console.log("orders?.ordersPerDay: ", orders, orders?.ordersPerDay);
 
     // const data = [
     //     {
@@ -165,7 +168,7 @@ const TransactionsDatatable = ({ id }) => {
             <div className="md:mx-10 mx-5 shadow-md mt-2 rounded-xl p-2 bg-white">
                 <DataTable
                     columns={columns}
-                    data={summarizedSales}
+                    data={orders}
                     pagination
                     selectableRowsHighlight
                     customStyles={customStyles}

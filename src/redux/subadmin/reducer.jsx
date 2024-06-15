@@ -27,7 +27,10 @@ import {
   SET_SUB_ADMIN_STATUS_FAILURE,
   DELETE_SUB_ADMIN,
   DELETE_SUB_ADMIN_SUCCESS,
-  DELETE_SUB_ADMIN_FAILURE
+  DELETE_SUB_ADMIN_FAILURE,
+  UPDATE_SUB_ADMIN_PASSWORD,
+  UPDATE_SUB_ADMIN_PASSWORD_SUCCESS,
+  UPDATE_SUB_ADMIN_PASSWORD_FAILURE
 } from "../actionTypes";
 import { getSubAdmins } from "./action";
 
@@ -43,6 +46,11 @@ const initial_state = {
     error: null,
   },
   updateSubAdmin: {
+    data: null,
+    loading: false,
+    error: null,
+  },
+  updateSubAdminPassword: {
     data: null,
     loading: false,
     error: null,
@@ -175,6 +183,30 @@ const subAdminsReducer = (state = initial_state, { type, payload }) => {
       return {
         ...state,
         updateSubAdmin: {
+          loading: false,
+          error: payload,
+        }
+      };
+
+    case UPDATE_SUB_ADMIN_PASSWORD:
+      return {
+        ...state,
+        updateSubAdminPassword: {
+          loading: true,
+        }
+      };
+    case UPDATE_SUB_ADMIN_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        updateSubAdminPassword: {
+          loading: false,
+          data: payload.data,
+        }
+      };
+    case UPDATE_SUB_ADMIN_PASSWORD_FAILURE:
+      return {
+        ...state,
+        updateSubAdminPassword: {
           loading: false,
           error: payload,
         }

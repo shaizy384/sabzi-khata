@@ -108,7 +108,7 @@ const Customers = () => {
     {
       name: t('Action'),
       selector: row => (<div className="flex">
-        <button onClick={() => navigate(`/customers/customerdetails/${row.id}`)} className={`bg-yellowPrimary text-white font-bold py-2 px-2 rounded-s`}>
+        <button onClick={() => navigate(`/customers/customerdetails/${row._id}`)} className={`bg-yellowPrimary text-white font-bold py-2 px-2 rounded-s`}>
           <svg className="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 14"><g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" /><path d="M10 13c4.97 0 9-2.686 9-6s-4.03-6-9-6-9 2.686-9 6 4.03 6 9 6Z" /></g></svg>
         </button>
         <ModalAddCash isCustomer={true} person={row} />

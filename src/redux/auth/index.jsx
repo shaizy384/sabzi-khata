@@ -5,7 +5,7 @@ import { callApi } from "../../api/APIs";
 
 function* watcherSignup(data) {
     let toastId = toast.loading("Loading...")
-    let url = '/auth/register';
+    let url = '/users/register';
     const Data = yield call(callApi, url, 'POST', data.payload);
     if (Data.status === 200 || Data.status === 201) {
         toast.update(toastId, { render: Data.data.message, type: 'success', isLoading: false, autoClose: 1000 })
@@ -20,7 +20,8 @@ function* watcherSignup(data) {
 
 function* watcherLogin(data) {
     let toastId = toast.loading("Loading...")
-    let url = '/auth/login';
+    let url = '/users/login';
+    console.log("watcherLogin: ", data);
     const Data = yield call(callApi, url, 'POST', data.payload);
     if (Data.status === 200 || Data.status === 201) {
         toast.update(toastId, { render: Data.data.message, type: 'success', isLoading: false, autoClose: 1000 })

@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../../redux/products/action';
 
-const ViewTransactionModal = ({ sales, date, title }) => {
+const ViewTransactionModal = ({ sales, date, title, ordersPerDay }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
-  const filterSales = sales?.filter(sale => sale.created_at.slice(0, 10) === date)
-  console.log("filterSales filterSales: ", filterSales);
+  // const filterSales = sales?.filter(sale => sale.created_at.slice(0, 10) === date)
+  // console.log("filterSales filterSales: ", filterSales);
   const productsData = useSelector((state) => state.productsReducer.getProducts?.data);
   useEffect(() => {
     if (!productsData) {
@@ -17,7 +17,7 @@ const ViewTransactionModal = ({ sales, date, title }) => {
     }
   }, [productsData])
   const filterProduct = (id) => {
-    const product = productsData?.filter(p => p.id == id);
+    const product = productsData?.filter(p => p._id === id);
     console.log("product product: ", product, productsData);
     if (product?.length > 0) { return product[0]?.name; };
   }
@@ -44,7 +44,7 @@ const ViewTransactionModal = ({ sales, date, title }) => {
   const columns = [
     {
       name: t('Date'),
-      selector: row => row.created_at.slice(0, 10),
+      selector: row => row.date,
     },
     {
       name: t('Product'),
@@ -59,6 +59,8 @@ const ViewTransactionModal = ({ sales, date, title }) => {
       selector: row => row.price,
     },
   ];
+
+  console.log("ordersPerDay: ", ordersPerDay);
 
   const data = [
     {
@@ -118,7 +120,7 @@ const ViewTransactionModal = ({ sales, date, title }) => {
                   <div className="mt-2 bg-white">
                     <DataTable
                       columns={columns}
-                      data={filterSales}
+                      data={ordersPerDay}
                       pagination
                       selectableRowsHighlight
                       customStyles={customStyles}

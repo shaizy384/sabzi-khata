@@ -91,11 +91,11 @@ const initial_state = {
     loading: false,
     error: null,
   },
-  // getCustomerDetails: {
-  //   data: null,
-  //   loading: false,
-  //   error: null,
-  // },
+  getCustomerDetails: {
+    data: null,
+    loading: false,
+    error: null,
+  },
   // getCustomerWarnings: {
   //   data: null,
   //   loading: false,
@@ -363,33 +363,30 @@ const customersReducer = (state = initial_state, { type, payload }) => {
         }
       };
 
-    // case GET_CUSTOMER_DETAILS:
-    //   return {
-    //     ...state,
-    //     getUserDetails: {
-    //       loading: true,
-    //     }
+    case GET_CUSTOMER_DETAILS:
+      return {
+        ...state,
+        getCustomerDetails: {
+          loading: true,
+        }
+      };
+    case GET_CUSTOMER_DETAILS_SUCCESS:
+      return {
+        ...state,
+        getCustomerDetails: {
+          loading: false,
+          data: payload.data,
+        }
+      };
+    case GET_CUSTOMER_DETAILS_FAILURE:
+      return {
+        ...state,
+        getCustomerDetails: {
+          loading: false,
+          error: payload,
+        }
+      };
 
-    //   };
-    // case GET_CUSTOMER_DETAILS_SUCCESS:
-    //   return {
-    //     ...state,
-    //     getUserDetails: {
-    //       loading: false,
-    //       data: payload.data,
-    //     }
-
-    //   };
-
-    // case GET_CUSTOMER_DETAILS_FAILURE:
-    //   return {
-    //     ...state,
-    //     getUserDetails: {
-    //       loading: false,
-    //       error: payload,
-    //     }
-
-    //   };
     // case GET_CUSTOMER_WARNINGS:
     //   return {
     //     ...state,

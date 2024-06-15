@@ -29,13 +29,19 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
     const [searchCustomer, setSearchCustomer] = useState("");
     const [searchProduct, setSearchProduct] = useState("");
     const [showModal, setShowModal] = useState(false);
-    const [data, setData] = useState({ person: {}, products: [] });
+    const [data, setData] = useState({ sales: [] });
     console.log(data);
     // const brands = useSelector(state => state.vehicleTypesReducer.getVehicleBrands.data)
     const productsData = useSelector((state) => state.productsReducer.getProducts?.data);
     const customers = useSelector((state) => state.customersReducer.getCustomers?.data);
 
     const suppliers = useSelector((state) => state.suppliersReducer.getSuppliers?.data);
+
+    const handleEmpty = () => {
+        setSearchCustomer("")
+        setData({ sales: [] });
+    }
+
     useEffect(() => {
         if (!suppliers) {
             dispatch(getSuppliers())
@@ -60,23 +66,22 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
     useEffect(() => {
         if (id && customers && pageType === 'Sale') {
             // let person = (pageType === 'Sale') ? customers : suppliers?.filter(p => p?.id === id);
-            let person = customers?.filter(p => p.id == id);
+            let person = customers?.filter(p => p._id == id);
             console.log("persone:::::: ", person, customers);
             person = person?.length > 0 && person[0]
             console.log("persone:::::: ", person);
             setSearchCustomer(person?.name)
-            setData({ ...data, person });
+            setData({ ...data, person_id: person._id, previous_amount: person.amount });
         } else if (id && suppliers && pageType === 'Purchase') {
             // let person = (pageType === 'Sale') ? customers : suppliers?.filter(p => p?.id === id);
-            let person = suppliers?.filter(p => p.id == id);
+            let person = suppliers?.filter(p => p._id == id);
             console.log("persone:::::: ", person, suppliers);
             person = person?.length > 0 && person[0]
             console.log("persone:::::: ", person);
             setSearchCustomer(person?.name)
-            setData({ ...data, person });
+            setData({ ...data, person_id: person._id, previous_amount: person.amount });
         } else if (!id) {
-            setSearchCustomer("")
-            setData({ person: {}, products: [] });
+            handleEmpty()
         }
     }, [id, customers, suppliers, pageType])
 
@@ -129,7 +134,7 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
     const handleDeleteItem = (product_id) => {
         setData((prevItems) => ({
             ...prevItems,
-            products: prevItems?.products?.filter((item) =>
+            sales: prevItems?.sales?.filter((item) =>
                 item.product_id !== product_id
             )
         }));
@@ -161,31 +166,48 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
     // { amount_added: "", total_amount: "", remaining_amount: "", amount_type: 'debit' }
     let total_amount = 0;
     const handleSubmit = () => {
-        if (data.products.length > 0) {
-            const totalGrandAmount = data.products.reduce((acc, amount) => {
-                return acc + parseInt(amount?.price);
+        if (data?.sales?.length > 0 && data?.person_id) {
+            const totalGrandAmount = data.sales.reduce((acc, product) => {
+                console.log("product: ", typeof product?.price);
+                if (!product.price || !product.quantity) {
+                    return toast.error("All fields are required")
+                }
+                return acc + parseInt(product?.price);
             }, 0);
-            pageType === 'Sale' ?
-                dispatch(updateCustomer({ ...data?.person, amount: parseInt(data?.person?.amount) + totalGrandAmount })) :
-                dispatch(updateSupplier({ ...data?.person, amount: parseInt(data?.person?.amount) + totalGrandAmount }))
+            // pageType === 'Sale' ?
+            //     dispatch(updateCustomer({ ...data?.person, amount: parseInt(data?.person?.amount) + totalGrandAmount })) :
+            //     dispatch(updateSupplier({ ...data?.person, amount: parseInt(data?.person?.amount) + totalGrandAmount }))
+            const previous_amount = data?.previous_amount
+            console.log("add add sale sale: ", typeof totalGrandAmount, typeof previous_amount, { ...data, total_amount: totalGrandAmount + previous_amount, previous_amount, amount_added: totalGrandAmount }, typeof data?.previous_amount);
+            // delete data.person;
 
-            for (const item of data.products) {
-                // total_amount = parseInt(data?.person?.amount) + parseInt(item.price)
-                if (pageType === 'Sale') {
-                    dispatch(addSale(item))
-                    // dispatch(updateCustomer({ ...data?.person, amount: total_amount }))
-                    dispatch(addCustomerTransaction({ amount_type: 'credit', amount_added: item?.price, remaining_amount: data?.person?.amount, total_amount, customer_id: data?.person?.id }))
-                    setData({ person: {}, products: [] })
-                    setSearchCustomer("")
-                } else if (pageType === 'Purchase') {
-                    dispatch(addPurchase(item))
-                    // dispatch(updateSupplier({ ...data?.person, amount: total_amount }))
-                    dispatch(addSupplierTransaction({ amount_type: 'credit', amount_added: item?.price, remaining_amount: data?.person?.amount, total_amount, supplier_id: data?.person?.id }))
-                    setData({ person: {}, products: [] })
-                    setSearchCustomer("")
-                };
+            const salesData = {
+                ...data, amount_type: 'credit', total_amount: totalGrandAmount + previous_amount, previous_amount, amount_added: totalGrandAmount
             }
-            console.log(data);
+
+            pageType === 'Sale' ?
+                dispatch(addSale(salesData)) :
+                dispatch(addPurchase(salesData))
+
+            setData({ ...data, sales: [] });
+
+            // for (const item of data.sales) {
+            //     // total_amount = parseInt(data?.person?.amount) + parseInt(item.price)
+            //     if (pageType === 'Sale') {
+            //         dispatch(addSale(item))
+            //         // dispatch(updateCustomer({ ...data?.person, amount: total_amount }))
+            //         dispatch(addCustomerTransaction({ amount_type: 'credit', amount_added: item?.price, remaining_amount: data?.person?.amount, total_amount, person_id: data?.person?.id }))
+            //         setData({ sales: [] })
+            //         setSearchCustomer("")
+            //     } else if (pageType === 'Purchase') {
+            //         dispatch(addPurchase(item))
+            //         // dispatch(updateSupplier({ ...data?.person, amount: total_amount }))
+            //         dispatch(addSupplierTransaction({ amount_type: 'credit', amount_added: item?.price, remaining_amount: data?.person?.amount, total_amount, person_id: data?.person?.id }))
+            //         setData({ sales: [] })
+            //         setSearchCustomer("")
+            //     };
+            // }
+            console.log("data: ", data, total_amount);
         } else {
             toast.error("All fields are reqiured")
         }
@@ -197,15 +219,15 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
         // }
     }
     const handleCustomerItem = (person) => {
-        const { id, name } = person
+        const { _id, name, amount } = person
         console.log(person);
         dropdownBtn.current.style.display = "none"
         setSearchCustomer(name)
-        setData({ ...data, person })
+        setData({ ...data, person_id: _id, previous_amount: amount })
     }
     const handleProductItem = (product) => {
-        const { id, name } = product
-        const isInclude = data?.products?.filter(p => p.product_id === id)
+        const { _id, name } = product
+        const isInclude = data?.sales?.filter(p => p.product_id === _id)
         console.log("isInclude isInclude: ", isInclude);
         prodDropdown.current.style.display = "none"
         if (isInclude?.length > 0) return;
@@ -215,14 +237,14 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
 
         setData((prevItems) => ({
             ...prevItems,
-            products: [
-                ...prevItems.products,
+            sales: [
+                ...prevItems.sales,
                 pageType === 'Sale' ?
-                    { product_id: id, name, customer_id: data?.person?.id } :
-                    { product_id: id, name, supplier_id: data?.person?.id }
+                    { product_id: _id, name, customer_id: data.person_id } :
+                    { product_id: _id, name, supplier_id: data.person_id }
             ]
         }));
-        // setData({ ...data, products: [...data?.products, { product_id: id, name, customer_id: data?.customer?.customer_id }] })
+        // setData({ ...data, sales: [...data?.sales, { product_id: id, name, person_id: data?.customer?.person_id }] })
         // filteredproducts = filteredproducts.filter(p => p.id !== id)
     }
     const handlePersonList = () => {
@@ -238,7 +260,7 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
     const handleInputChange = (id, newValue, type) => {
         setData((prevItems) => ({
             ...prevItems,
-            products: prevItems?.products?.map((item) =>
+            sales: prevItems?.sales?.map((item) =>
                 item.product_id === id ? { ...item, [type]: newValue } : item
             )
         }));
@@ -258,12 +280,12 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
                         <ul className="hidden absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-ba shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3" ref={dropdownBtn}>
                             {filteredCustomers?.length !== 0 ?
                                 filteredCustomers?.map(customer => {
-                                    const { name } = customer;
+                                    const { _id, name } = customer;
                                     return <li className="text-gray-900 relative cursor-pointer select-none py-2.5 pl-2.5 pr-9 hover:bg-gray-200" onClick={() => handleCustomerItem(customer)} id="listbox-option-0" role="option">
                                         <div className="flex items-center">
                                             <span className="font-normal ml-3 block truncate">{customer?.name}</span>
                                         </div>
-                                        {data?.person?.id && name === data.person.name && <span className="text-colorPrimary absolute inset-y-0 right-0 flex items-center pr-4">
+                                        {data?.person_id && _id === data.person_id && <span className="text-colorPrimary absolute inset-y-0 right-0 flex items-center pr-4">
                                             <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                 <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
                                             </svg>
@@ -274,10 +296,10 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
                         </ul>
                     </div>
 
-                    <div className={`${!data?.person?.id && 'opacity-50'}`}>
+                    <div className={`${!data?.person_id && 'opacity-50'}`}>
                         <label htmlFor="default-input" className="block mb-2 text-lg font-semibold text-gray-900">{t('Select Products')}</label>
                         <div className="relative mt-2 mb-6">
-                            <input type="text" disabled={!data?.person?.id} className="relative w-full rounded-md bg-white py-2.5 ltr:pl-2.5 rtl:pr-2.5 ltr:pr-10 rtl:pl-10 ltr:text-left rtl:text-right text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-colorPrimary sm:text-base sm:leading-" aria-haspopup="listbox" aria-expanded="true" placeholder={t("Search Products")} aria-labelledby="listbox-label" onFocus={handleSearchList} onChange={e => setSearchProduct(capitalizeFirstLetter(e.target.value))} />
+                            <input type="text" disabled={!data?.person_id} className="relative w-full rounded-md bg-white py-2.5 ltr:pl-2.5 rtl:pr-2.5 ltr:pr-10 rtl:pl-10 ltr:text-left rtl:text-right text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-colorPrimary sm:text-base sm:leading-" aria-haspopup="listbox" aria-expanded="true" placeholder={t("Search Products")} aria-labelledby="listbox-label" onFocus={handleSearchList} onChange={e => setSearchProduct(capitalizeFirstLetter(e.target.value))} />
                             <p className="text-red-600 text-sm" ref={brandErrorRef}></p>
                             {/* BrandS Dropdown */}
                             <ul className="hidden absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-ba shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3" ref={prodDropdown}>
@@ -289,7 +311,7 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
                                             <div className="flex items-center">
                                                 <span className="font-normal ml-3 block truncate">{product?.name}</span>
                                             </div>
-                                            {data.id && name === data.name && <span className="text-colorPrimary absolute inset-y-0 right-0 flex items-center pr-4">
+                                            {data._id && name === data.name && <span className="text-colorPrimary absolute inset-y-0 right-0 flex items-center pr-4">
                                                 <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                     <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
                                                 </svg>
@@ -300,9 +322,9 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
                             </ul>
                         </div>
 
-                        {data?.products?.length > 0 && <div className='[&_div]:[&_div]:min-w-[122px]'><DataTable
+                        {data?.sales?.length > 0 && <div className='[&_div]:[&_div]:min-w-[122px]'><DataTable
                             columns={columns}
-                            data={data.products}
+                            data={data.sales}
                             pagination={false}
                             selectableRowsHighlight
                             customStyles={customStyles}
@@ -316,7 +338,7 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
                         <p className="text-red-600 text-sm" ref={modErrorRef}></p>
                     </div> */}
                     <div className="flex justify-end gap-2 mt-8">
-                        <button onClick={() => navigate(-1)} className={`bg-gray-400 items-center justify-between flex hover:bg-gray-500 text-white py-2 px-5 rounded`}>
+                        <button onClick={() => { navigate(-1); handleEmpty() }} className={`bg-gray-400 items-center justify-between flex hover:bg-gray-500 text-white py-2 px-5 rounded`}>
                             {t('Cancel')}
                         </button>
                         <button onClick={handleSubmit} className={`bg-[#2D9D46] items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded`}>

@@ -13,6 +13,7 @@ const NavBar = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const userData = useSelector((state) => state.userReducer.getUser.data);
+  console.log("userData: ", userData);
   const language = useSelector((state) => state.localizationReducer.language);
   const path = window.location.pathname.split('/').slice(1)[0]
   // location.pathname.split("/").includes("addsale")
@@ -83,7 +84,7 @@ const NavBar = () => {
                 alt="user photo"
               />
               <span className="block text-sm text-gray-900 font-medium ms-2 capitalize">
-                {userData ? userData?.name : "Loading..."}
+                {userData ? userData?.fullName : "Loading..."}
               </span>
             </div>
             <div className="ms-4">
@@ -112,7 +113,7 @@ const NavBar = () => {
           >
             <div className="px-4 py-3" onClick={() => closeDropdown()} >
               <span className="block text-sm text-gray-900 truncate capitalize">
-                {userData?.name}
+                {userData?.fullName}
               </span>
               <span className="block text-sm text-gray-500 truncate">
                 {userData?.email}

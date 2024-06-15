@@ -1,10 +1,10 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import { callApi } from "../../api/APIs";
 import { toast } from 'react-toastify';
-import { ADD_SUB_ADMIN, ADD_SUB_ADMIN_FAILURE, ADD_SUB_ADMIN_SUCCESS, BLOCK_SUB_ADMIN, BLOCK_SUB_ADMIN_FAILURE, BLOCK_SUB_ADMIN_SUCCESS, DELETE_SUB_ADMIN, DELETE_SUB_ADMIN_FAILURE, DELETE_SUB_ADMIN_SUCCESS, GET_SUB_ADMINS, GET_SUB_ADMINS_FAILURE, GET_SUB_ADMINS_SUCCESS, GET_SUB_ADMIN_DETAILS, GET_SUB_ADMIN_DETAILS_FAILURE, GET_SUB_ADMIN_DETAILS_SUCCESS, GET_SUB_ADMIN_WARNINGS, GET_SUB_ADMIN_WARNINGS_FAILURE, GET_SUB_ADMIN_WARNINGS_SUCCESS, SET_SUB_ADMIN_STATUS, SET_SUB_ADMIN_STATUS_FAILURE, SET_SUB_ADMIN_STATUS_SUCCESS, SET_SUB_ADMIN_WARNINGS, SET_SUB_ADMIN_WARNINGS_FAILURE, SET_SUB_ADMIN_WARNINGS_SUCCESS, UPDATE_SUB_ADMIN, UPDATE_SUB_ADMIN_FAILURE, UPDATE_SUB_ADMIN_SUCCESS } from "../actionTypes";
+import { ADD_SUB_ADMIN, ADD_SUB_ADMIN_FAILURE, ADD_SUB_ADMIN_SUCCESS, BLOCK_SUB_ADMIN, BLOCK_SUB_ADMIN_FAILURE, BLOCK_SUB_ADMIN_SUCCESS, DELETE_SUB_ADMIN, DELETE_SUB_ADMIN_FAILURE, DELETE_SUB_ADMIN_SUCCESS, GET_SUB_ADMINS, GET_SUB_ADMINS_FAILURE, GET_SUB_ADMINS_SUCCESS, GET_SUB_ADMIN_DETAILS, GET_SUB_ADMIN_DETAILS_FAILURE, GET_SUB_ADMIN_DETAILS_SUCCESS, GET_SUB_ADMIN_WARNINGS, GET_SUB_ADMIN_WARNINGS_FAILURE, GET_SUB_ADMIN_WARNINGS_SUCCESS, SET_SUB_ADMIN_STATUS, SET_SUB_ADMIN_STATUS_FAILURE, SET_SUB_ADMIN_STATUS_SUCCESS, SET_SUB_ADMIN_WARNINGS, SET_SUB_ADMIN_WARNINGS_FAILURE, SET_SUB_ADMIN_WARNINGS_SUCCESS, UPDATE_SUB_ADMIN, UPDATE_SUB_ADMIN_FAILURE, UPDATE_SUB_ADMIN_PASSWORD, UPDATE_SUB_ADMIN_PASSWORD_FAILURE, UPDATE_SUB_ADMIN_PASSWORD_SUCCESS, UPDATE_SUB_ADMIN_SUCCESS } from "../actionTypes";
 
 function* watcherGetSubAdmins() {
-    let url = '/get-subAdmin';
+    let url = '/subadmins/getSubadmins';
     const Data = yield call(callApi, url, 'GET', '', true);
     if (Data.status === 200 || Data.status === 201) {
         yield put({ type: GET_SUB_ADMINS_SUCCESS, payload: Data.data });
@@ -16,45 +16,55 @@ function* watcherGetSubAdmins() {
 
 function* watcherAddSubAdmin(data) {
     let toastId = toast.loading("Loading...")
-    let url = '/auth/add-subAdmin';
+    let url = '/subadmins/addSubadmin';
     const Data = yield call(callApi, url, 'POST', data.payload, true);
-    console.error('amb aaaa Data:', Data);
     if (Data.status === 200 || Data.status === 201) {
-        console.error('amb aaaa success:', Data);
-        toast.update(toastId, { render: "Data stored successfully", type: 'success', isLoading: false, autoClose: 1000 })
+        toast.update(toastId, { render: Data.data.message, type: 'success', isLoading: false, autoClose: 1000 })
         yield put({ type: ADD_SUB_ADMIN_SUCCESS, payload: Data.data });
         yield put({ type: GET_SUB_ADMINS });
     }
     else {
-        console.error('amb aaaa Exception:', Data);
-        toast.update(toastId, { render: "An unexpected error occurred", type: 'error', isLoading: false, autoClose: 1000 })
+        toast.update(toastId, { render: Data.data.message, type: 'error', isLoading: false, autoClose: 1000 })
         yield put({ type: ADD_SUB_ADMIN_FAILURE, payload: Data.data.error })
-        console.log('Toast updated with error message');
     }
 }
 
 function* watcherUpdateSubAdmin(data) {
     let toastId = toast.loading("Loading...")
-    let url = '/auth/update-subAdmin';
-    const Data = yield call(callApi, url, 'POST', data.payload, true);
+    let url = '/subadmins/updateSubadmin';
+    const Data = yield call(callApi, url, 'PATCH', data.payload, true);
     if (Data.status === 200 || Data.status === 201) {
-        toast.update(toastId, { render: "Data updated successfully", type: 'success', isLoading: false, autoClose: 1000 })
+        toast.update(toastId, { render: Data.data.message, type: 'success', isLoading: false, autoClose: 1000 })
         yield put({ type: UPDATE_SUB_ADMIN_SUCCESS, payload: Data.data });
         yield put({ type: GET_SUB_ADMINS });
     }
     else {
-        toast.update(toastId, { render: "An error occured", type: 'error', isLoading: false, autoClose: 1000 })
+        toast.update(toastId, { render: Data.data.message, type: 'error', isLoading: false, autoClose: 1000 })
         yield put({ type: UPDATE_SUB_ADMIN_FAILURE, payload: Data.data.error })
+    }
+}
+
+function* watcherUpdateSubAdminPassword(data) {
+    let toastId = toast.loading("Loading...")
+    let url = '/subadmins/updateSubadminPassword';
+    const Data = yield call(callApi, url, 'PATCH', data.payload, true);
+    if (Data.status === 200 || Data.status === 201) {
+        toast.update(toastId, { render: Data.data.message, type: 'success', isLoading: false, autoClose: 1000 })
+        yield put({ type: UPDATE_SUB_ADMIN_PASSWORD_SUCCESS, payload: Data.data });
+    }
+    else {
+        toast.update(toastId, { render: Data.data.message, type: 'error', isLoading: false, autoClose: 1000 })
+        yield put({ type: UPDATE_SUB_ADMIN_PASSWORD_FAILURE, payload: Data.data.error })
     }
 }
 
 
 function* watcherDeleteSubAdmin(data) {
     let toastId = toast.loading("Loading...")
-    let url = `/auth/delete-subAdmin/${data.payload}`;
-    const Data = yield call(callApi, url, 'GET', '', true);
+    let url = `/subadmins/deleteSubadmin/${data.payload}`;
+    const Data = yield call(callApi, url, 'DELETE', '', true);
     if (Data.status === 200 || Data.status === 201) {
-        toast.update(toastId, { render: "Data deleted successfully", type: 'success', isLoading: false, autoClose: 1000 })
+        toast.update(toastId, { render: Data.data.message, type: 'success', isLoading: false, autoClose: 1000 })
         yield put({ type: DELETE_SUB_ADMIN_SUCCESS, payload: Data.data });
         yield put({ type: GET_SUB_ADMINS });
     }
@@ -118,6 +128,7 @@ export default function* watchSubAdmins() {
     yield takeLatest(GET_SUB_ADMINS, watcherGetSubAdmins)
     yield takeLatest(ADD_SUB_ADMIN, watcherAddSubAdmin)
     yield takeLatest(UPDATE_SUB_ADMIN, watcherUpdateSubAdmin)
+    yield takeLatest(UPDATE_SUB_ADMIN_PASSWORD, watcherUpdateSubAdminPassword)
     yield takeLatest(DELETE_SUB_ADMIN, watcherDeleteSubAdmin)
     yield takeLatest(SET_SUB_ADMIN_STATUS, watcherSubAdminStatus)
 
