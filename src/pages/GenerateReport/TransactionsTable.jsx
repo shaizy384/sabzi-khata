@@ -95,7 +95,7 @@ const TransactionsTable = React.forwardRef(({ title, setTitle }, ref) => {
         },
         {
             name: t('Remaining Amount'),
-            selector: row => row.remaining_amount,
+            selector: row => row.previous_amount,
         },
         {
             name: t('Fresh Sale'),
