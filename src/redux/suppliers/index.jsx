@@ -117,7 +117,7 @@ function* watcherAddPurchase(data) {
 }
 
 function* watcherGetSupplierTransactions() {
-    let url = '/get-supplier-transaction';
+    let url = '/suppliers/getTransactionReport';
     const Data = yield call(callApi, url, 'GET', '', true);
     if (Data.status === 200 || Data.status === 201) {
         yield put({ type: GET_SUPPLIER_TRANSACTIONS_SUCCESS, payload: Data.data });

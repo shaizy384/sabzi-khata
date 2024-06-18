@@ -11,8 +11,8 @@ const TransactionsTable = React.forwardRef(({ title, setTitle }, ref) => {
     const dispatch = useDispatch();
     const location = useLocation();
     const [data, setData] = useState([])
-    const customers = useSelector((state) => state.customersReducer.getCustomers?.data);
-    const suppliers = useSelector((state) => state.suppliersReducer.getSuppliers?.data);
+    // const customers = useSelector((state) => state.customersReducer.getCustomers?.data);
+    // const suppliers = useSelector((state) => state.suppliersReducer.getSuppliers?.data);
     const customertransactions = useSelector((state) => state.customersReducer.getCustomerTransactions?.data);
     const supplierTransactions = useSelector((state) => state.suppliersReducer.getSupplierTransactions?.data);
 
@@ -41,24 +41,24 @@ const TransactionsTable = React.forwardRef(({ title, setTitle }, ref) => {
 
     // console.log("supplierTransactions: ", supplierTransactions, customertransactions, title, location);
 
-    useEffect(() => {
-        if (!suppliers) {
-            dispatch(getSuppliers())
-        }
-    }, [suppliers])
+    // useEffect(() => {
+    //     if (!suppliers) {
+    //         dispatch(getSuppliers())
+    //     }
+    // }, [suppliers])
 
-    useEffect(() => {
-        if (!customers) {
-            dispatch(getCustomers())
-        }
-    }, [customers])
+    // useEffect(() => {
+    //     if (!customers) {
+    //         dispatch(getCustomers())
+    //     }
+    // }, [customers])
 
-    const filterPerson = (id) => {
-        const person = title === "Supplier" ? suppliers : customers
-            ?.filter(p => p.id === id);
-        // console.log("filterPerson filterPerson filterPerson: ", person, id);
-        return person?.length > 0 && person[0];
-    }
+    // const filterPerson = (id) => {
+    //     const person = title === "Supplier" ? suppliers : customers
+    //         ?.filter(p => p.id === id);
+    //     // console.log("filterPerson filterPerson filterPerson: ", person, id);
+    //     return person?.length > 0 && person[0];
+    // }
 
     const customStyles = {
         rows: {
@@ -87,11 +87,11 @@ const TransactionsTable = React.forwardRef(({ title, setTitle }, ref) => {
         },
         {
             name: t('Name'),
-            selector: row => filterPerson(title === "Customer" ? row.customer_id : row.supplier_id)?.name,
+            selector: row => row?.name,
         },
         {
             name: t('Address'),
-            selector: row => filterPerson(title === "Customer" ? row.customer_id : row.supplier_id)?.address,
+            selector: row => row?.address,
         },
         {
             name: t('Remaining Amount'),
@@ -103,7 +103,7 @@ const TransactionsTable = React.forwardRef(({ title, setTitle }, ref) => {
         },
         {
             name: t('Total Amount'),
-            selector: row => row.total_amount,
+            selector: row => row.remaining_amount,
         },
         {
             name: t('Received Amount'),

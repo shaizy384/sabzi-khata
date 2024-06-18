@@ -118,7 +118,7 @@ function* watcherAddCustomerCash(data) {
 }
 
 function* watcherGetTransactions() {
-    let url = '/get-customer-transaction';
+    let url = '/customers/getTransactionReport';
     const Data = yield call(callApi, url, 'GET', '', true);
     if (Data.status === 200 || Data.status === 201) {
         yield put({ type: GET_CUSTOMER_TRANSACTIONS_SUCCESS, payload: Data.data });
