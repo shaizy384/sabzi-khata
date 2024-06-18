@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import money_icon from '../../assets/svgs/money.svg'
 import { useTranslation } from "react-i18next";
 import Input from "./Input";
-import { addSale, addCustomerTransaction, updateCustomer } from "../../redux/customers/action";
+import { addSale, addCustomerTransaction, updateCustomer, addCustomerCash } from "../../redux/customers/action";
 import { useDispatch } from "react-redux";
-import { addPurchase, addSupplierTransaction, updateSupplier } from "../../redux/suppliers/action";
+import { addPurchase, addSupplierCash, addSupplierTransaction, updateSupplier } from "../../redux/suppliers/action";
 import { toast } from "react-toastify";
 
 export default function ModalAddCash({ isCustomer, person }) {
@@ -12,7 +12,7 @@ export default function ModalAddCash({ isCustomer, person }) {
   const { t } = useTranslation();
   const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false);
-  const [data, setData] = useState({ amount_added: "", total_amount: "", remaining_amount: "", amount_type: 'debit' });
+  const [data, setData] = useState({ amount_added: "", remaining_amount: "", previous_amount: "", amount_type: 'debit' });
   const [type, setType] = useState(null);
   const handleValue = (e) => {
     priceRef.current.style.display = "none"
@@ -25,33 +25,37 @@ export default function ModalAddCash({ isCustomer, person }) {
   // console.log(path);
   useEffect(() => {
     if (person?.amount) {
-      setData({ ...data, remaining_amount: person?.amount })
+      setData({ ...data, previous_amount: person?.amount })
     }
   }, [person])
 
   const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value, total_amount: parseInt(data.remaining_amount) - parseInt(e.target.value) })
+    setData({ ...data, [e.target.name]: e.target.value, remaining_amount: parseInt(data.previous_amount) - parseInt(e.target.value) })
     console.log(data);
     // emailRef.current.innerText = ""
     // passwordRef.current.innerText = ""
   };
 
   const handleSubmit = () => {
-    // console.log("person cash flow: ", { ...person, amount: data?.total_amount });
-    if (data?.remaining_amount < data?.amount_added) {
+    // console.log("person cash flow: ", { ...person, amount: data?.remaining_amount });
+    if (data?.previous_amount < data?.amount_added) {
       toast.error("Amount cannot be greater than Payable Amount")
     } else if (data?.amount_added < 1) {
       toast.error("Amount cannot be 0")
 
     } else {
       if (isCustomer) {
-        console.log("customer cash flow: ", { ...person, amount: data?.total_amount }, data);
-        dispatch(updateCustomer({ ...person, amount: data?.total_amount }))
-        dispatch(addCustomerTransaction({ ...data, customer_id: person?.id }))
+        // console.log("customer cash flow: ", { ...person, amount: data?.remaining_amount }, data);
+        console.log("customer cash flow: ", { person_id: person._id, ...data });
+        dispatch(addCustomerCash({ ...data, person_id: person?._id }))
+        // dispatch(updateCustomer({ ...person, amount: data?.remaining_amount }))
+        // dispatch(addCustomerTransaction({ ...data, customer_id: person?.id }))
       } else {
-        console.log("supplier cash flow: ", { ...person, amount: data?.total_amount }, data);
-        dispatch(updateSupplier({ ...person, amount: data?.total_amount }))
-        dispatch(addSupplierTransaction({ ...data, supplier_id: person?.id }))
+        console.log("addSupplierCash cash flow: ", { person_id: person._id, ...data });
+        dispatch(addSupplierCash({ ...data, person_id: person?._id }))
+        // console.log("supplier cash flow: ", { ...person, amount: data?.remaining_amount }, data);
+        // dispatch(updateSupplier({ ...person, amount: data?.remaining_amount }))
+        // dispatch(addSupplierTransaction({ ...data, supplier_id: person?.id }))
       }
     }
     // console.log(data);

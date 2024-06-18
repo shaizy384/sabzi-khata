@@ -73,6 +73,7 @@ const authReducer = (state = initial_state, { type, payload }) => {
             return {
                 ...state,
                 isAuthenticated: false,
+                token: null
             };
 
         default: return { ...state };

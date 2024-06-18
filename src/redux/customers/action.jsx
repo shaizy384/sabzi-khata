@@ -1,4 +1,4 @@
-import { BLOCK_CUSTOMER, GET_CUSTOMERS, GET_CUSTOMER_DETAILS, GET_CUSTOMER_WARNINGS, ORDER_DETAILS, SET_CUSTOMER_WARNINGS, CUSTOMER_PERSONAL_DETAILS, ADD_CUSTOMER, UPDATE_CUSTOMER, SET_CUSTOMER_STATUS, GET_SALES, ADD_SALE, ADD_CUSTOMER_TRANSACTION, GET_CUSTOMER_TRANSACTIONS, GET_CUSTOMER_STATS } from "../actionTypes"
+import { BLOCK_CUSTOMER, GET_CUSTOMERS, GET_CUSTOMER_DETAILS, GET_CUSTOMER_WARNINGS, ORDER_DETAILS, SET_CUSTOMER_WARNINGS, CUSTOMER_PERSONAL_DETAILS, ADD_CUSTOMER, UPDATE_CUSTOMER, SET_CUSTOMER_STATUS, GET_SALES, ADD_SALE, ADD_CUSTOMER_TRANSACTION, GET_CUSTOMER_TRANSACTIONS, GET_CUSTOMER_STATS, ADD_CUSTOMER_CASH } from "../actionTypes"
 
 export const getCustomerStats = () => {
     return ({
@@ -48,12 +48,18 @@ export const getCustomerTransactions = () => {
         type: GET_CUSTOMER_TRANSACTIONS
     })
 }
-export const addCustomerTransaction = (data) => {
+export const addCustomerCash = (data) => {
     return ({
-        type: ADD_CUSTOMER_TRANSACTION,
+        type: ADD_CUSTOMER_CASH,
         payload: data
     })
 }
+// export const addCustomerTransaction = (data) => {
+//     return ({
+//         type: ADD_CUSTOMER_TRANSACTION,
+//         payload: data
+//     })
+// }
 export const getCustomerDetails = (data) => {
     return ({
         type: GET_CUSTOMER_DETAILS,

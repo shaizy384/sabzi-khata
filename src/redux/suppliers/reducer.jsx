@@ -39,7 +39,10 @@ import {
   GET_SUPPLIER_TRANSACTIONS_FAILURE,
   GET_SUPPLIER_STATS,
   GET_SUPPLIER_STATS_SUCCESS,
-  GET_SUPPLIER_STATS_FAILURE
+  GET_SUPPLIER_STATS_FAILURE,
+  ADD_SUPPLIER_CASH,
+  ADD_SUPPLIER_CASH_SUCCESS,
+  ADD_SUPPLIER_CASH_FAILURE
 } from "../actionTypes";
 import { addSupplier, setSupplierStatus, updateSupplier } from "./action";
 const initial_state = {
@@ -93,6 +96,12 @@ const initial_state = {
   },
 
   getSupplierDetails: {
+    data: null,
+    loading: false,
+    error: null,
+  },
+
+  addSupplierCash: {
     data: null,
     loading: false,
     error: null,
@@ -343,6 +352,33 @@ const suppliersReducer = (state = initial_state, { type, payload }) => {
     //       error: payload,
     //     }
     //   };
+
+
+
+    case ADD_SUPPLIER_CASH:
+      return {
+        ...state,
+        addSupplierCash: {
+          loading: true,
+        }
+      };
+    case ADD_SUPPLIER_CASH_SUCCESS:
+      return {
+        ...state,
+        addSupplierCash: {
+          loading: false,
+          data: payload.data,
+        }
+      };
+    case ADD_SUPPLIER_CASH_FAILURE:
+      return {
+        ...state,
+        addSupplierCash: {
+          loading: false,
+          error: payload,
+        }
+      };
+
 
 
     case GET_PURCHASE:

@@ -39,7 +39,10 @@ import {
   ADD_CUSTOMER_TRANSACTION_FAILURE,
   GET_CUSTOMER_STATS,
   GET_CUSTOMER_STATS_SUCCESS,
-  GET_CUSTOMER_STATS_FAILURE
+  GET_CUSTOMER_STATS_FAILURE,
+  ADD_CUSTOMER_CASH,
+  ADD_CUSTOMER_CASH_SUCCESS,
+  ADD_CUSTOMER_CASH_FAILURE
 } from "../actionTypes";
 import { addCustomer, setCustomerStatus } from "./action";
 
@@ -76,6 +79,12 @@ const initial_state = {
     error: null,
   },
   addSale: {
+    data: null,
+    loading: false,
+    error: null,
+  },
+
+  addCustomerCash: {
     data: null,
     loading: false,
     error: null,
@@ -264,6 +273,31 @@ const customersReducer = (state = initial_state, { type, payload }) => {
         }
       };
 
+
+
+    case ADD_CUSTOMER_CASH:
+      return {
+        ...state,
+        addCustomerCash: {
+          loading: true,
+        }
+      };
+    case ADD_CUSTOMER_CASH_SUCCESS:
+      return {
+        ...state,
+        addCustomerCash: {
+          loading: false,
+          data: payload.data,
+        }
+      };
+    case ADD_CUSTOMER_CASH_FAILURE:
+      return {
+        ...state,
+        addCustomerCash: {
+          loading: false,
+          error: payload,
+        }
+      };
 
 
 

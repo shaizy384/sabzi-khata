@@ -1,4 +1,4 @@
-import { GET_SUPPLIERS, GET_SUPPLIER_DETAILS, BLOCK_SUPPLIER, ADD_CUSTOMER, ADD_SUPPLIER, UPDATE_SUPPLIER, SET_SUPPLIER_STATUS, GET_SALES, ADD_SALE, GET_PURCHASE, ADD_PURCHASE, GET_SUPPLIER_TRANSACTIONS, ADD_SUPPLIER_TRANSACTION, GET_SUPPLIER_STATS } from "../actionTypes"
+import { GET_SUPPLIERS, GET_SUPPLIER_DETAILS, BLOCK_SUPPLIER, ADD_CUSTOMER, ADD_SUPPLIER, UPDATE_SUPPLIER, SET_SUPPLIER_STATUS, GET_SALES, ADD_SALE, GET_PURCHASE, ADD_PURCHASE, GET_SUPPLIER_TRANSACTIONS, ADD_SUPPLIER_TRANSACTION, GET_SUPPLIER_STATS, ADD_SUPPLIER_CASH } from "../actionTypes"
 
 export const getSupplierStats = () => {
     return ({
@@ -58,6 +58,14 @@ export const addSupplierTransaction = (data) => {
 export const getSupplierDetails = (data) => {
     return ({
         type: GET_SUPPLIER_DETAILS,
+        payload: data
+    })
+}
+
+
+export const addSupplierCash = (data) => {
+    return ({
+        type: ADD_SUPPLIER_CASH,
         payload: data
     })
 }
