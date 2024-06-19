@@ -14,7 +14,6 @@ function* watcherSignup(data) {
     else {
         toast.update(toastId, { render: Data.data.message, type: 'error', isLoading: false, autoClose: 1000 })
         yield put({ type: SIGNUP_FAILURE, payload: Data.data.error })
-        // toast.error(Data.data.message)
     }
 }
 

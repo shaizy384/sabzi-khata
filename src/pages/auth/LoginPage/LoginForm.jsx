@@ -1,30 +1,25 @@
 import React, { useState } from 'react'
-// import logo from "../../../assets/svgs/logo.svg"
-// import logo from "../../../assets/images/veg-cal-logo2.png"
 import logo from "../../../assets/images/veg-cal-logo1.png"
 import Input from "../../../components/ui/Input";
 import email from '../../../assets/svgs/mail.svg';
 import lock from '../../../assets/svgs/lock.svg';
-// import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../../redux/navbarTitle/action';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { loginUser } from '../../../redux/auth/action';
+import Loader from "../../../assets/gifs/loader.gif";
 
 const LoginForm = () => {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
   const [data, setData] = useState({ email: "", password: "" });
-  const adminData = useSelector((state) => state.authReducer?.data);
+  const loading = useSelector((state) => state.authReducer?.loading);
 
   const handleOnChange = (value, name) => {
     setData({ ...data, [name]: value })
-    // setData({ ...data, [e.target.name]: e.target.value })
-    console.log(data);
   }
   const handleSubmit = async () => {
+    if (loading) return;
     if (!data?.email || !data?.password) {
       toast.error("All fields are reqiured")
     } else if (!emailPattern.test(data?.email)) {
@@ -33,11 +28,8 @@ const LoginForm = () => {
       toast.error("Password must contains atleast 8 characters")
     } else if (data?.email && data?.password) {
       console.log(data);
-      // dispatch(loginUser(data));
       dispatch(loginUser(data))
-      // dispatch(login())
     }
-    // navigate("/dashboard")
   };
   return (
     <div className="md:w-1/2 w-screen  bg-white h-screen flex justify-center items-center flex-col ">
@@ -67,8 +59,8 @@ const LoginForm = () => {
               </Link>
             </div>
           </div> */}
-          <button className="font-bold mt-6 cursor-pointer group relative flex gap-1.5 justify-center py-4 bg-colorPrimary md:w-96 w-full bg-opacity-80 text-white rounded-xl  hover:bg-hoverPrimary hover:shadow-lg transition " onClick={handleSubmit}>
-            Sign In
+          <button className={`h-12 font-bold mt-3 cursor-pointer group relative flex gap-1.5 items-center justify-center ${loading ? "py-2" : "py-4"} bg-colorPrimary md:w-96 w-full bg-opacity-80 text-white rounded-xl hover:bg-hoverPrimary hover:shadow-lg transition`} onClick={handleSubmit}>
+            {loading ? <img className="h-8" src={Loader} alt="loader" /> : "Sign In"}
           </button>
           <p className="mt-3 mb-8 text-center text-sm text-gray-500">
             Not a member?{' '}

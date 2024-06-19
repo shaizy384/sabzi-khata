@@ -23,7 +23,7 @@ const authReducer = (state = initial_state, { type, payload }) => {
             }
 
         case SIGNUP_SUCCESS:
-            localStorage.setItem('authToken', `Bearer ${payload.token}`);
+            localStorage.setItem('authToken', `Bearer ${payload.data.accessToken}`);
             console.log("SIGNUP_SUCCESS SIGNUP_SUCCESS", payload);
             return {
                 ...state,
