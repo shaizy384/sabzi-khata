@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import notification from "../../assets/svgs/notification.svg";
 import cross from "../../assets/svgs/cross.svg";
 import Input from '../../components/ui/Input';
 import { useNavigate, useParams } from 'react-router';
@@ -19,6 +18,7 @@ const EditAdminRole = () => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const rolesDefined = ['dashboard', 'product', 'customer', 'customer_report', 'supplier', 'supplier_report']
     const subAdmins = useSelector((state) => state.subAdminsReducer.getSubAdmins?.data);
+
     useEffect(() => {
         if (!subAdmins) {
             dispatch(getSubAdmins())
@@ -29,8 +29,6 @@ const EditAdminRole = () => {
         subAdmin = subAdmin[0]
     }
 
-    console.log("subAdmins: ", subAdmins, subAdmin, id);
-
     useEffect(() => {
         if (!id && !subAdmin) {
             setRoles({});
@@ -39,7 +37,6 @@ const EditAdminRole = () => {
         } else if (id && subAdmin) {
             setData({ ...subAdmin })
             const newState = {};
-            console.log("subAdmin: ", subAdmin);
             rolesDefined.forEach(key => {
                 if (subAdmin && subAdmin[key]) {
                     if (subAdmin[key] === 1) {
@@ -54,23 +51,18 @@ const EditAdminRole = () => {
     const handleAddRole = (name, e) => {
         setData({ ...data, [name]: 1 })
         setRoles({ ...roles, [name]: name })
-        console.log("roles roles: ", data, roles);
         setDropdownVisible(false);
     }
 
     const handleDeleteRole = (key) => {
         const newRoles = { ...roles };
         delete newRoles[key]
-        // delete data[key]
         setData({ ...data, [key]: 0 })
         setRoles(newRoles)
-        console.log("deleted: ", roles, data);
     }
 
     const handleOnChange = (value, name) => {
         setData({ ...data, [name]: value })
-        // setData({ ...data, [e.target.name]: e.target.value })
-        console.log("handleOnChange", data);
     }
 
     const handleCancel = () => {
@@ -79,12 +71,7 @@ const EditAdminRole = () => {
     }
 
     const handleSubmit = () => {
-        console.log("data: ", { ...data });
         if ((!id ? data?.password : true) && data?.fullName && data?.email) {
-            console.log("data: ", { ...data });
-            console.log("roles: ", { ...roles });
-
-            // !id && dispatch(addSubAdmin(data))
             !id && dispatch(addSubAdmin(data))
             id && dispatch(updateSubAdmin(data))
             handleCancel()
@@ -140,67 +127,12 @@ const EditAdminRole = () => {
                                             </button>
                                         </li>
                                     })}
-                                    {/* <li>
-                                        <button
-                                            name="dashboard"
-                                            onClick={(e) => handleAddRole('dashboard', e)}
-                                            className={`flex sm:w-96 w-full py-3 px-5 hover:bg-gray-100`}
-                                        >
-                                            {t("Dashboard")}
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            name="customer"
-                                            onClick={(e) => handleAddRole('customer', e)}
-                                            className={`flex sm:w-96 w-full py-3 px-5 hover:bg-gray-100`}
-                                        >
-                                            {t('Customer')}
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            name="supplier"
-                                            onClick={(e) => handleAddRole('supplier', e)}
-                                            className={`flex sm:w-96 w-full py-3 px-5 hover:bg-gray-100`}
-                                        >
-                                            {t('Supplier')}
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            name="product"
-                                            onClick={(e) => handleAddRole('product', e)}
-                                            className={`flex sm:w-96 w-full py-3 px-5 hover:bg-gray-100`}
-                                        >
-                                            {t("Products")}
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            name="customer_report"
-                                            onClick={(e) => handleAddRole('customer_report', e)}
-                                            className={`flex sm:w-96 w-full py-3 px-5 hover:bg-gray-100`}
-                                        >
-                                            {t('Customer Report')}
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            name="supplier_report"
-                                            onClick={(e) => handleAddRole('supplier_report', e)}
-                                            className={`flex sm:w-96 w-full py-3 px-5 hover:bg-gray-100`}
-                                        >
-                                            {t('Supplier Report')}
-                                        </button>
-                                    </li> */}
                                 </ul>
                             </div>
                         )}
 
                         <div className="flex flex-wrap lg:w-96 w-full">
                             {Object.keys(roles).map((keyName, i) => {
-                                console.log("role: ", keyName, i, ":", data[keyName]);
                                 return <div className="flex items-baseline rounded-lg bg-colorPrimary text-white py-1.5 px-3 me-3 mt-3">
                                     <span className='capitalize'>{t(roles[keyName].replace(/_/g, ' '))}</span>
                                     <img className='block cursor-pointer ms-2' width={9} src={cross} alt="" onClick={() => handleDeleteRole(keyName)} />

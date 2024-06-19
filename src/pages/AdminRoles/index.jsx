@@ -1,18 +1,15 @@
 import React, { useEffect, useId } from 'react'
 import DataTable from 'react-data-table-component';
-import Breadcrumbs from '../../components/ui/Breadcrumbs';
 import basket from "../../assets/svgs/delete.svg";
 import edit from "../../assets/svgs/edit.svg";
-import notification from "../../assets/svgs/notification.svg";
 import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteSubAdmin, getSubAdmins } from '../../redux/subadmin/action';
 
 const AdminRoles = () => {
-    const { t } = useTranslation();
     const id = useId()
-    console.log("iidd: ", id);
+    const { t } = useTranslation();
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const subAdmins = useSelector((state) => state.subAdminsReducer.getSubAdmins?.data);
@@ -22,7 +19,6 @@ const AdminRoles = () => {
         }
     }, [subAdmins])
 
-    console.log("subAdmins: ", subAdmins);
     const customStyles = {
         rows: {
             style: {
@@ -68,30 +64,11 @@ const AdminRoles = () => {
             </div>),
         }
     ];
-    const data = [
-        {
-            srNum: 1,
-            name: "Shahzaib",
-            email: 'new@brand.com',
-            password: '290888890',
-            roles: 'User,  User App settings',
-            actions: ''
-        },
-        {
-            srNum: 2,
-            name: "Furqan",
-            email: 'new@brand.com',
-            password: '290888890',
-            roles: 'Provider,  Provider App Settings',
-            actions: ''
-        },
-    ]
 
     return (
         <div className="py-1 rounded-lg bg-gray-50">
             <div className='md:mx-10 mx-5 mt-10 mb-5'>
                 <button onClick={() => navigate('/adminroles/add')} className={`bg-green-500 items-center justify-between flex hover:bg-green-600 text-white py-2 px-4 ms-auto rounded`}>
-                    {/* <img className='mr-2' src={notification} width={19} alt="notification" /> */}
                     <span className=''>{t('Create New Subadmin')}</span>
                 </button>
             </div>

@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { updateSubAdmin, updateSubAdminPassword } from "../../redux/subadmin/action";
+import { updateSubAdminPassword } from "../../redux/subadmin/action";
 import Input from "../../components/ui/Input";
 
 export default function UpdatePassModal({ id, subAdmin }) {
   const { t } = useTranslation();
   const dispatch = useDispatch()
-  const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState({});
+  const [showModal, setShowModal] = useState(false);
+
   const handleOnChange = (value, name) => {
     setData({ ...data, [name]: value })
-    // setData({ ...data, [e.target.name]: e.target.value })
-    console.log("handleOnChange", data);
   }
-  // const handleValue = (e) => {
-  //   setData({
-  //     ...data,
-  //     [e.target.name]: e.target.value
-  //   })
-  // }
 
   useEffect(() => {
     if (subAdmin?._id) {
