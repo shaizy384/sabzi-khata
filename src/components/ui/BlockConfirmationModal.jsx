@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { setCustomerStatus } from "../../redux/customers/action";
 import { setSupplierStatus } from "../../redux/suppliers/action";
-// import basket from "../../assets/svgs/delete.svg";
 
 export default function BlockConfirmationModal({ id, type, person }) {
     const { t } = useTranslation();
@@ -19,7 +18,6 @@ export default function BlockConfirmationModal({ id, type, person }) {
 
     const handleCancel = () => {
         setShowModal(false);
-        // setData({})
     }
 
     const handleSubmit = () => {
@@ -55,19 +53,12 @@ export default function BlockConfirmationModal({ id, type, person }) {
                         {t("Blocked")}
                     </button>
                     <div className="tooltip z-10 hidden group-hover:block bg-white px-2 py-1 rounded absolute mt-2 mr-2 shadow-lg">
-                        {/* <h1 className='text-center bg-white border-2 border-cpbg-colorPrimary px-2 py-1 rounded mt-2'>
-                            Activated
-                        </h1> */}
                         <h1 className='text-black bg-white rounded mb-2 mt-2'>
                             <span className='font-bold'>{t("Press")}</span> {t("to")} <span className='font-bold text-colorPrimary'>{t("ACTIVATE")}</span> {t(modalType)}
                         </h1>
                     </div>
                 </div>
             }
-            {/* {<button onClick={() => setShowModal(true)} className={`bg-red-600 items-center justify-between flex hover:bg-red-700 text-white  py-2 px-4 rounded`}>
-                <svg className='ltr:mr-2 rtl:ml-2' width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M18.364 5.63604C19.9926 7.26472 21 9.51472 21 12C21 16.9706 16.9706 21 12 21C9.51472 21 7.26472 19.9926 5.63604 18.364M18.364 5.63604C16.7353 4.00736 14.4853 3 12 3C7.02944 3 3 7.02944 3 12C3 14.4853 4.00736 16.7353 5.63604 18.364M18.364 5.63604L5.63604 18.364" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                {t(`Block ${modalType}`)}
-            </button>} */}
             {
                 showModal ? (
                     <>
@@ -96,17 +87,16 @@ export default function BlockConfirmationModal({ id, type, person }) {
                                         </div>
                                         <div className="mb-2 pt-3 flex gap-3">
                                             <button
-                                                className="bg-gray-200 hover:bg-gray-300 w-full text-gray-500 font-medium px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
                                                 type="button"
                                                 onClick={handleCancel}
+                                                className="bg-gray-200 hover:bg-gray-300 w-full text-gray-500 font-medium px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
                                             >
                                                 Cancel
                                             </button>
                                             <button
-                                                // className={` ${approveDriver ? 'bg-[#0DA06A]' : 'bg-red-500'} w-full text-white font-medium px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150`}
-                                                className={` ${!id ? 'bg-[#0DA06A]' : 'bg-red-500'} w-full text-white font-medium px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150`}
                                                 type="button"
                                                 onClick={handleSubmit}
+                                                className={` ${!id ? 'bg-[#0DA06A]' : 'bg-red-500'} w-full text-white font-medium px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150`}
                                             >
                                                 Block {modalType}
                                             </button>

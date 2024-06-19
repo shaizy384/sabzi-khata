@@ -10,10 +10,8 @@ const Input = (props) => {
     setShowPass(!showPass)
   }
   const handleChange = (e) => {
-      console.log(e.target.value, e.target.name);
-      if (props?.onChange) {
+    if (props?.onChange) {
       props.onChange(e.target.value, e.target.name);
-      console.log(e.target.value, e.target.name);
     }
   }
   return (

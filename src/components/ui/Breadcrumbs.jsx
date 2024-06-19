@@ -1,9 +1,11 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
+
 const Breadcrumbs = ({ home, child }) => {
   const { t } = useTranslation();
   const paths = window.location.pathname.split('/').slice(1)
+
   return (
     <nav className="flex" aria-label="Breadcrumb">
       <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
@@ -23,7 +25,6 @@ const Breadcrumbs = ({ home, child }) => {
             <NavLink to={`/${paths.join("/")}`} className="ms-1 text-sm font-medium text-gray-700 hover:text-colorPrimary md:ms-2">{t(child)}</NavLink>
           </div>
         </li>
-
       </ol>
     </nav>
   );

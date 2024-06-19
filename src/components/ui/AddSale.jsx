@@ -3,39 +3,33 @@ import DataTable from 'react-data-table-component'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate, useParams } from 'react-router'
-import { addCustomerTransaction, addSale, getCustomers, updateCustomer } from '../../redux/customers/action'
+import { addSale, getCustomers } from '../../redux/customers/action'
 import { getProducts } from '../../redux/products/action'
-import { addPurchase, addSupplierTransaction, getSuppliers, updateSupplier } from '../../redux/suppliers/action'
+import { addPurchase, getSuppliers } from '../../redux/suppliers/action'
 import { toast } from 'react-toastify'
 
-const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
-    const { t } = useTranslation();
+const AddSale = () => {
+    const { id } = useParams()
     const dropdownBtn = useRef()
     const prodDropdown = useRef()
-    const modErrorRef = useRef()
-    const { id } = useParams()
+    const { t } = useTranslation()
     const brandErrorRef = useRef()
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const location = useLocation()
     const [pageType, setPageType] = useState("");
-    console.log("params:", id, window.location.href.split("/")[4], location.pathname.split("/").includes("addsale"));
+    const [searchCustomer, setSearchCustomer] = useState("");
+    const [searchProduct, setSearchProduct] = useState("");
+    const [data, setData] = useState({ sales: [] });
+    const productsData = useSelector((state) => state.productsReducer.getProducts?.data);
+    const customers = useSelector((state) => state.customersReducer.getCustomers?.data);
+    const suppliers = useSelector((state) => state.suppliersReducer.getSuppliers?.data);
+
     useEffect(() => {
         location.pathname.split("/").includes("addsale") ?
             setPageType("Sale") :
             setPageType("Purchase")
-        console.log("pageType: ", pageType);
     }, [location])
-    const [searchCustomer, setSearchCustomer] = useState("");
-    const [searchProduct, setSearchProduct] = useState("");
-    const [showModal, setShowModal] = useState(false);
-    const [data, setData] = useState({ sales: [] });
-    console.log(data);
-    // const brands = useSelector(state => state.vehicleTypesReducer.getVehicleBrands.data)
-    const productsData = useSelector((state) => state.productsReducer.getProducts?.data);
-    const customers = useSelector((state) => state.customersReducer.getCustomers?.data);
-
-    const suppliers = useSelector((state) => state.suppliersReducer.getSuppliers?.data);
 
     const handleEmpty = () => {
         setSearchCustomer("")
@@ -47,37 +41,31 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
             dispatch(getSuppliers())
         }
     }, [suppliers])
+
     useEffect(() => {
         if (!customers) {
             dispatch(getCustomers())
         }
     }, [customers])
+
     useEffect(() => {
         if (!productsData) {
             dispatch(getProducts())
         }
     }, [productsData])
-    //   const customers = [{ id: 1, cust_name: "Ali" }]
-    // const products = [{ id: 1, name: "Mango" }]
-    // const models = []
-    // const models = useSelector(state => state.vehicleTypesReducer.getVehicleModels.data)
+
     const filteredCustomers = pageType === 'Sale' ? customers : suppliers?.filter(customer => customer?.name?.toLowerCase()?.includes(searchCustomer?.toLowerCase()))
     const filteredproducts = productsData?.filter(product => product?.name?.toLowerCase()?.includes(searchProduct?.toLowerCase()));
+
     useEffect(() => {
         if (id && customers && pageType === 'Sale') {
-            // let person = (pageType === 'Sale') ? customers : suppliers?.filter(p => p?.id === id);
             let person = customers?.filter(p => p._id == id);
-            console.log("persone:::::: ", person, customers);
             person = person?.length > 0 && person[0]
-            console.log("persone:::::: ", person);
             setSearchCustomer(person?.name)
             setData({ ...data, person_id: person._id, previous_amount: person.amount });
         } else if (id && suppliers && pageType === 'Purchase') {
-            // let person = (pageType === 'Sale') ? customers : suppliers?.filter(p => p?.id === id);
             let person = suppliers?.filter(p => p._id == id);
-            console.log("persone:::::: ", person, suppliers);
             person = person?.length > 0 && person[0]
-            console.log("persone:::::: ", person);
             setSearchCustomer(person?.name)
             setData({ ...data, person_id: person._id, previous_amount: person.amount });
         } else if (!id) {
@@ -140,46 +128,16 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
         }));
     }
 
-    // const handleValue = (e) => {
-    //     setData({
-    //         ...data,
-    //         [e.target.name]: capitalizeFirstLetter(e.target.value)
-    //     })
-    // }
-
-    // useEffect(() => {
-    //     if (model_id) {
-    //         setData({
-    //             model_id, model_name, brand_id_fk, brand_name,
-    //         })
-    //         setSearchCustomer(brand_name)
-    //     }
-    // }, [model_id])
-
-    // const handleCloseModel = () => {
-    //     setShowModal(false)
-    //     if (!model_id) {
-    //         setData({ brand_id_fk: "", brand_name: "", model_name: "" })
-    //         setSearchCustomer("")
-    //     }
-    // }
-    // { amount_added: "", total_amount: "", remaining_amount: "", amount_type: 'debit' }
-    let total_amount = 0;
     const handleSubmit = () => {
         if (data?.sales?.length > 0 && data?.person_id) {
             const totalGrandAmount = data.sales.reduce((acc, product) => {
-                console.log("product: ", typeof product?.price);
                 if (!product.price || !product.quantity) {
                     return toast.error("All fields are required")
                 }
                 return acc + parseInt(product?.price);
             }, 0);
-            // pageType === 'Sale' ?
-            //     dispatch(updateCustomer({ ...data?.person, amount: parseInt(data?.person?.amount) + totalGrandAmount })) :
-            //     dispatch(updateSupplier({ ...data?.person, amount: parseInt(data?.person?.amount) + totalGrandAmount }))
+
             const previous_amount = data?.previous_amount
-            console.log("add add sale sale: ", typeof totalGrandAmount, typeof previous_amount, { ...data, total_amount: totalGrandAmount + previous_amount, previous_amount, amount_added: totalGrandAmount }, typeof data?.previous_amount);
-            // delete data.person;
 
             const salesData = {
                 ...data, amount_type: 'credit', total_amount: totalGrandAmount + previous_amount, previous_amount, amount_added: totalGrandAmount
@@ -190,37 +148,12 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
                 dispatch(addPurchase(salesData))
 
             setData({ ...data, sales: [] });
-
-            // for (const item of data.sales) {
-            //     // total_amount = parseInt(data?.person?.amount) + parseInt(item.price)
-            //     if (pageType === 'Sale') {
-            //         dispatch(addSale(item))
-            //         // dispatch(updateCustomer({ ...data?.person, amount: total_amount }))
-            //         dispatch(addCustomerTransaction({ amount_type: 'credit', amount_added: item?.price, remaining_amount: data?.person?.amount, total_amount, person_id: data?.person?.id }))
-            //         setData({ sales: [] })
-            //         setSearchCustomer("")
-            //     } else if (pageType === 'Purchase') {
-            //         dispatch(addPurchase(item))
-            //         // dispatch(updateSupplier({ ...data?.person, amount: total_amount }))
-            //         dispatch(addSupplierTransaction({ amount_type: 'credit', amount_added: item?.price, remaining_amount: data?.person?.amount, total_amount, person_id: data?.person?.id }))
-            //         setData({ sales: [] })
-            //         setSearchCustomer("")
-            //     };
-            // }
-            console.log("data: ", data, total_amount);
         } else {
             toast.error("All fields are reqiured")
         }
-        // if (!data.brand_id_fk || !data.brand_name) {
-        //     brandErrorRef.current.innerText = "Brand name is required*"
-        // } else if (!data.model_name) {
-        //     modErrorRef.current.innerText = "Model name is required*"
-        // }
-        // }
     }
     const handleCustomerItem = (person) => {
         const { _id, name, amount } = person
-        console.log(person);
         dropdownBtn.current.style.display = "none"
         setSearchCustomer(name)
         setData({ ...data, person_id: _id, previous_amount: amount })
@@ -228,12 +161,8 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
     const handleProductItem = (product) => {
         const { _id, name } = product
         const isInclude = data?.sales?.filter(p => p.product_id === _id)
-        console.log("isInclude isInclude: ", isInclude);
+        if (isInclude?.length > 0) return;  // if procduct already exists
         prodDropdown.current.style.display = "none"
-        if (isInclude?.length > 0) return;
-
-        // setSearchProduct(name)
-        // setData([...data, { id: id, name }])
 
         setData((prevItems) => ({
             ...prevItems,
@@ -244,8 +173,6 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
                     { product_id: _id, name, supplier_id: data.person_id }
             ]
         }));
-        // setData({ ...data, sales: [...data?.sales, { product_id: id, name, person_id: data?.customer?.person_id }] })
-        // filteredproducts = filteredproducts.filter(p => p.id !== id)
     }
     const handlePersonList = () => {
         dropdownBtn.current.style.display = "block"
@@ -276,14 +203,14 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
                     <div className="relative mt-2 mb-6">
                         <input type="text" className="relative w-full rounded-md bg-white py-2.5 ltr:pl-2.5 rtl:pr-2.5 ltr:pr-10 rtl:pl-10 ltr:text-left rtl:text-right text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-colorPrimary sm:text-base sm:leading-" aria-haspopup="listbox" aria-expanded="true" placeholder={t(`Search ${pageType === 'Sale' ? 'Customer' : 'Supplier'}`)} aria-labelledby="listbox-label" onFocus={handlePersonList} value={searchCustomer} onChange={e => setSearchCustomer(capitalizeFirstLetter(e.target.value))} />
                         <p className="text-red-600 text-sm" ref={brandErrorRef}></p>
-                        {/* BrandS Dropdown */}
+                        {/* Person Dropdown */}
                         <ul className="hidden absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-ba shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3" ref={dropdownBtn}>
                             {filteredCustomers?.length !== 0 ?
                                 filteredCustomers?.map(customer => {
                                     const { _id, name } = customer;
                                     return <li className="text-gray-900 relative cursor-pointer select-none py-2.5 pl-2.5 pr-9 hover:bg-gray-200" onClick={() => handleCustomerItem(customer)} id="listbox-option-0" role="option">
                                         <div className="flex items-center">
-                                            <span className="font-normal ml-3 block truncate">{customer?.name}</span>
+                                            <span className="font-normal ml-3 block truncate">{name}</span>
                                         </div>
                                         {data?.person_id && _id === data.person_id && <span className="text-colorPrimary absolute inset-y-0 right-0 flex items-center pr-4">
                                             <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -301,7 +228,7 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
                         <div className="relative mt-2 mb-6">
                             <input type="text" disabled={!data?.person_id} className="relative w-full rounded-md bg-white py-2.5 ltr:pl-2.5 rtl:pr-2.5 ltr:pr-10 rtl:pl-10 ltr:text-left rtl:text-right text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-colorPrimary sm:text-base sm:leading-" aria-haspopup="listbox" aria-expanded="true" placeholder={t("Search Products")} aria-labelledby="listbox-label" onFocus={handleSearchList} onChange={e => setSearchProduct(capitalizeFirstLetter(e.target.value))} />
                             <p className="text-red-600 text-sm" ref={brandErrorRef}></p>
-                            {/* BrandS Dropdown */}
+                            {/* Products Dropdown */}
                             <ul className="hidden absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-ba shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3" ref={prodDropdown}>
                                 {filteredproducts?.length !== 0 ?
                                     filteredproducts?.map(product => {
@@ -332,11 +259,6 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
                         /></div>}
                     </div>
 
-                    {/* <div className="mb-6">
-                        <label htmlFor="default-input" className="block mb-2 text-lg font-semibold text-gray-900">Select Products</label>
-                        <input type="text" name="model_name" placeholder="Search Products" id="default-input" className="border border-gray-300 text-base text-gray-900  rounded-lg focus:ring-colorPrimary focus:border-colorPrimary block w-full p-2.5 outline-colorPrimary" value={data?.model_name} onChange={(e) => handleValue(e)} />
-                        <p className="text-red-600 text-sm" ref={modErrorRef}></p>
-                    </div> */}
                     <div className="flex justify-end gap-2 mt-8">
                         <button onClick={() => { navigate(-1); handleEmpty() }} className={`bg-gray-400 items-center justify-between flex hover:bg-gray-500 text-white py-2 px-5 rounded`}>
                             {t('Cancel')}
@@ -346,7 +268,6 @@ const AddSale = ({ model_id, model_name, brand_id_fk, brand_name }) => {
                         </button>
                     </div>
                 </div>
-
             </div>
         </div>
     )

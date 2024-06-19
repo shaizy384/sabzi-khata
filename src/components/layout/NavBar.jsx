@@ -12,21 +12,17 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const dropdownRef = useRef(null);
+  const [langDropdown, setLangDropdown] = useState(false);
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
   const userData = useSelector((state) => state.userReducer.getUser.data);
-  console.log("userData: ", userData);
-  const language = useSelector((state) => state.localizationReducer.language);
   const path = window.location.pathname.split('/').slice(1)[0]
-  // location.pathname.split("/").includes("addsale")
+  const language = useSelector((state) => state.localizationReducer.language);
+
   const navTitle = (path === "dashboard" && t("Dashboard")) || (path === "suppliers" && "Supplier") || (path === "products" && "Products") || (path === "customers" && "Customer") || (path === "adminroles" && "Subadmin Roles") || (path === "supplierreport" && "Supplier Report") || (path === "customerreport" && "Customer Report") || (path === "addpurchase" && "Add Purchase") || (path === "addsale" && "Add Sale")
 
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [langDropdown, setLangDropdown] = useState(false);
-  const dropdownRef = useRef(null);
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
-  };
-  const closeLangDropdown = () => {
-    setLangDropdown(false);
   };
   const closeDropdown = () => {
     setDropdownOpen(false);
@@ -50,7 +46,6 @@ const NavBar = () => {
       document.documentElement.setAttribute('dir', 'ltr')
   }, [language])
   const handleChange = (lang) => {
-    console.log("lan: ", language, lang);
     dispatch(setLanguage(lang));
     lang === "en" ?
       document.documentElement.setAttribute('dir', 'ltr') :
@@ -80,7 +75,6 @@ const NavBar = () => {
               <img
                 className="w-8 h-8 rounded-full"
                 src={defaultAvatar}
-                // src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
                 alt="user photo"
               />
               <span className="block text-sm text-gray-900 font-medium ms-2 capitalize">
@@ -122,7 +116,6 @@ const NavBar = () => {
             <ul className="py-2" aria-labelledby="user-menu-button">
               <li onClick={() => setLangDropdown(!langDropdown)}>
                 <div
-                  // onClick={() => closeDropdown()}
                   className="flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                 >
                   <span>{t("Language")}</span>
@@ -144,17 +137,6 @@ const NavBar = () => {
                       <span>{t("English")}</span>
                     </div>
                   </li>
-                  {/* <li>
-                    <div
-                      onClick={() => handleChange("ur+en")}
-                      className={`flex gap-2 items-center px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer ${language === 'ur+en' ? "text-colorPrimary font-medium ltr:pl-2.5 rtl:pr-2.5" : " text-gray-700 ltr:pl-8 rtl:pr-8"}`}
-                    >
-                      {language === 'ur+en' && <div className="flex-none rounded-full bg-green-500/20 p-1">
-                        <div className="h-1.5 w-1.5 rounded-full bg-colorPrimary" />
-                      </div>}
-                      <span>{t("Urdu + English")}</span>
-                    </div>
-                  </li> */}
                   <li>
                     <div
                       onClick={() => handleChange("ur")}

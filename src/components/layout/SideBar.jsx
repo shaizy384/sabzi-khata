@@ -1,10 +1,5 @@
 import React, { useState } from "react";
 import logo from "../../assets/images/veg-cal-logo1.png";
-// import logo from "../../assets/images/sabzi2.png";
-// import logo from "../../assets/images/Sabzi_clean.png";veg-cal-logo.png
-// import logo from "../../assets/svgs/logo.svg";
-import notification from "../../assets/svgs/notification.svg";
-import { secondaryColor } from "../../constants/colors";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -15,11 +10,9 @@ const SideBar = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const userData = useSelector((state) => state.userReducer.getUser.data);
   const userLoading = useSelector((state) => state.userReducer.getUser.loading);
+
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
-  };
-  const toggleSettings = () => {
-    setSettingsOpen(!isSettingsOpen);
   };
   const closeSidebar = () => {
     setSidebarOpen(false);
@@ -63,7 +56,6 @@ const SideBar = () => {
         aria-label="Sidebar"
       >
         <div className="bg-white h-full px-3 py-4 overflow-y-auto shadow-lg">
-          {/* <div className="bg-gray-900 h-full px-3 py-4 overflow-y-auto"> */}
           <NavLink onClick={closeSidebar} to="/" className="flex items-center justify-center pt-5">
             <img src={logo} className="w-32  m-auto" alt="Flowbite Logo" />
           </NavLink>
@@ -84,23 +76,6 @@ const SideBar = () => {
                 <span className="ms-3 ">{t("Dashboard")}</span>
               </NavLink>
             </li>}
-            {/* <li>
-              <NavLink onClick={closeSidebar} to="/ordermanagement" className={`flex items-center p-2  text-gray-500 rounded-lg hover:text-white hover:bg-colorPrimary group`}>
-                <svg
-                  className={`flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-white`}
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 18 18"
-                >
-                  <path d="M1 18h16a1 1 0 0 0 1-1v-6h-4.439a.99.99 0 0 0-.908.6 3.978 3.978 0 0 1-7.306 0 .99.99 0 0 0-.908-.6H0v6a1 1 0 0 0 1 1Z" />
-                  <path d="M4.439 9a2.99 2.99 0 0 1 2.742 1.8 1.977 1.977 0 0 0 3.638 0A2.99 2.99 0 0 1 13.561 9H17.8L15.977.783A1 1 0 0 0 15 0H3a1 1 0 0 0-.977.783L.2 9h4.239Z" />
-                </svg>
-                <span className="flex-1 ms-3 whitespace-nowrap ">
-                  Order Management
-                </span>
-              </NavLink>
-            </li> */}
             {userData?.customer === 1 && <li>
               <NavLink onClick={closeSidebar} to='/customers' className={`flex items-center p-2  text-gray-500 rounded-lg hover:text-white hover:bg-colorPrimary group`}>
                 <svg
@@ -158,7 +133,7 @@ const SideBar = () => {
                   <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
                 </svg>
                 <span className="flex-1 ms-3 whitespace-nowrap ">
-                {t("Add Sale")}
+                  {t("Add Sale")}
                 </span>
               </NavLink>
             </li>}
@@ -174,7 +149,7 @@ const SideBar = () => {
                   <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
                 </svg>
                 <span className="flex-1 ms-3 whitespace-nowrap ">
-                {t("Add Purchase")}
+                  {t("Add Purchase")}
                 </span>
               </NavLink>
             </li>}

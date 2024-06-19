@@ -4,21 +4,20 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../../redux/products/action';
 
-const ViewTransactionModal = ({ sales, date, title, ordersPerDay }) => {
+const ViewTransactionModal = ({ title, ordersPerDay }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
-  // const filterSales = sales?.filter(sale => sale.created_at.slice(0, 10) === date)
-  // console.log("filterSales filterSales: ", filterSales);
   const productsData = useSelector((state) => state.productsReducer.getProducts?.data);
+
   useEffect(() => {
     if (!productsData) {
       dispatch(getProducts())
     }
   }, [productsData])
+
   const filterProduct = (id) => {
     const product = productsData?.filter(p => p._id === id);
-    console.log("product product: ", product, productsData);
     if (product?.length > 0) { return product[0]?.name; };
   }
   const customStyles = {
@@ -60,38 +59,8 @@ const ViewTransactionModal = ({ sales, date, title, ordersPerDay }) => {
     },
   ];
 
-  console.log("ordersPerDay: ", ordersPerDay);
-
-  const data = [
-    {
-      id: 1,
-      date: "2023-09-05",
-      product: "Mango",
-      amount: 1500,
-      quantity: 3
-    },
-    {
-      id: 2,
-      date: "2023-09-05",
-      price: "$12.00",
-      product: "Onion",
-      amount: 1500,
-      quantity: 3
-    },
-    {
-      id: 3,
-      date: "2023-09-05",
-      price: "$12.00",
-      product: "Apple",
-      amount: 1500,
-      quantity: 3
-    },
-  ]
-
-
   const handleCancel = () => {
     setShowModal(false);
-    // setSearch("")
   }
   return (
     <>
@@ -114,7 +83,6 @@ const ViewTransactionModal = ({ sales, date, title, ordersPerDay }) => {
                   <button className="p- ml-auto bg-transparent -mr[17px] border-0 text-colorPrimary float-right text-3xl leading-none font-semibold outline-none focus:outline-none" onClick={handleCancel}
                   >×</button>
                 </div>
-
                 {/*body*/}
                 <div className="relative my-6 mx-3 flex-auto overflow-auto">
                   <div className="mt-2 bg-white">
