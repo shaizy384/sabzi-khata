@@ -1,4 +1,3 @@
-import { Input } from "postcss";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { addProduct } from "../../redux/products/action";
@@ -17,11 +16,9 @@ export default function ModalAddProduct() {
   const handleSubmit = () => {
     if (data?.unit.length > 5) {
       toast.error("Unit letter cannot be more than 5")
-
     }
     else if (data?.name.length > 10) {
       toast.error("Name letters cannot be more than 10")
-
     }
     else if (data?.name && data?.unit) {
       console.log("data: ", data);
@@ -32,8 +29,6 @@ export default function ModalAddProduct() {
       toast.error("All fields are reqiured")
     }
   }
-  // const path = window.location.href.split("/")[3]
-  // console.log(path);
   return (
     <>
       <button onClick={() => setShowModal(true)} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ltr:ml-auto rtl:mr-auto`}>
@@ -74,7 +69,6 @@ export default function ModalAddProduct() {
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-center border-blueGray-200 rounded-b">
-
                   <button
                     className="bg-colorPrimary w-1/ text-white active:bg-colorPrimary font-bold uppercase text-sm px-6 py-2.5 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-4 ease-linear transition-all duration-150"
                     type="button"
