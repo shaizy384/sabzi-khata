@@ -2,8 +2,6 @@ import React, { useEffect } from 'react'
 import DashboardCards from './DashboardCards'
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCustomerStats } from '../../redux/customers/action';
-import { getSupplierStats } from '../../redux/suppliers/action';
 import { dashboardData } from '../../redux/dashboard/action';
 
 const Dashboard = () => {
@@ -12,31 +10,12 @@ const Dashboard = () => {
     const data = useSelector((state) => state.dashboardDataReducer?.data);
     const dataLoading = useSelector((state) => state.dashboardDataReducer?.loading);
     const isAuthorized = useSelector((state) => state.authReducer.isAuthenticated);
-    
+
     useEffect(() => {
         if (!data && isAuthorized) {
             dispatch(dashboardData());
         }
     }, [data, isAuthorized]);
-
-    console.log("stats: ", data);
-
-
-    // const customerStats = useSelector((state) => state.customersReducer.getCustomerStats?.data);
-    // const customerLoading = useSelector((state) => state.customersReducer.getCustomerStats?.loading);
-    // const supplierStats = useSelector((state) => state.suppliersReducer.getSupplierStats?.data);
-    // const supplierLoading = useSelector((state) => state.customersReducer.getCustomerStats?.loading);
-    // useEffect(() => {
-    //     if (!customerStats) {
-    //         dispatch(getCustomerStats())
-    //     }
-    // }, [customerStats])
-    // useEffect(() => {
-    //     if (!supplierStats) {
-    //         dispatch(getSupplierStats())
-    //     }
-    // }, [supplierStats])
-    // console.log("customerStats supplierStats: ", customerStats, supplierStats);
 
     return (
         <>

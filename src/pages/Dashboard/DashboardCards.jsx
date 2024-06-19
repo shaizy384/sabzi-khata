@@ -1,12 +1,7 @@
-import React, { useState } from 'react'
-import deUser from "../../assets/svgs/deactivate-user.svg"
-import service from "../../assets/svgs/service-provider.svg"
-import deservice from "../../assets/svgs/deactivate-service-provider.svg"
-import admin from "../../assets/svgs/admin.svg"
+import React from 'react'
 import PersonsSvg from './PersonsSvg'
 import MoneySvg from './MoneySvg'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 
 const SkeletonLoader = () => (
     <div className="flex justify-between items-center animate-pulse bg-white shadow p-6 h-[129px] rounded-xl">
