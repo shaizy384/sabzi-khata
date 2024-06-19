@@ -1,10 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import searchIcon from "../../assets/svgs/search.svg";
-// import vehicle1 from "../../assets/images/vehicle.png";
 import uploadIcon from "../../assets/svgs/upload.svg";
-import { AVAILABLE, NOT_AVAILABLE, RESERVED } from "../../constants/constants";
-import Input from "../../components/ui/Input";
 import { useTranslation } from "react-i18next";
 import { addCustomer, updateCustomer } from "../../redux/customers/action";
 import { toast } from "react-toastify";
@@ -16,13 +12,10 @@ export default function ModalAddCustomer({ id, customer }) {
   const [imageUrl, setImageUrl] = useState(null);
   const [data, setData] = useState({});
   const [modalPage, setModalPage] = useState("picture");
-  const [search, setSearch] = useState("")
   const [showModal, setShowModal] = useState(false);
-  const handleSearch = (e) => { setSearch(e.target.value) }
   const handleValue = (e) => {
     setData({ ...data, [e.target.name]: e.target.value })
   }
-  console.log(".............data: ", data);
   useEffect(() => {
     if (customer?._id) {
       setData({ ...customer })
@@ -35,18 +28,14 @@ export default function ModalAddCustomer({ id, customer }) {
     !customer?._id && setData({})
     !customer?._id && setImageUrl(null)
     setModalPage("picture")
-    setSearch("")
   }
 
   const handleFile = (e) => {
     console.log(e.target.files[0])
     const file = e.target.files[0];
-
-    // const formdata = new FormData();
-    // formdata.append("file", file)
     setData({ ...data, profile_image: file })
 
-    // to show profile_image
+    // to display profile_image
     const reader = new FileReader();
     reader.onloadend = () => {
       setImageUrl(reader.result);
@@ -84,13 +73,6 @@ export default function ModalAddCustomer({ id, customer }) {
     } else {
       toast.error("All fields are reqiured")
     }
-    // else if (modalPage === "documents" && data?.profile_image) {
-    //   console.log(data);
-    //   // handleCancel()  // to close and remove all modal data
-    // }
-    // if (rider_id && vehicle_id) {
-    //   dispatch(authorizeVehicle(data))
-    // }
   }
   return (
     <>
@@ -136,16 +118,6 @@ export default function ModalAddCustomer({ id, customer }) {
                         <h3 className="font-medium leading-tight">{t("Customer's Personal Details ")}</h3>
                       </span>
                     </li>
-                    {/* <li className={"flex items-center text-gray-400 space-x-3 rtl:space-x-reverse " + (modalPage === 'documents' && 'text-colorPrimary')}>
-                      <span className="hidden md:flex items-center justify-center w-9 h-9 shrink-0">
-                        <svg width="50" height="56" viewBox="0 0 50 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path fillRule="evenodd" clipRule="evenodd" d="M39 45.5V50.75C39 53.6494 36.6494 56 33.75 56H5.75C2.8505 56 0.5 53.6494 0.5 50.75V15.75C0.5 12.8505 2.8505 10.5 5.75 10.5H11V3.5C11 1.567 12.567 0 14.5 0H36.1006C37.957 0 39.7374 0.737499 41.0503 2.05025L47.4497 8.44974C48.7626 9.76252 49.5 11.543 49.5 13.3995V42C49.5 43.933 47.933 45.5 46 45.5H39ZM42.5 38.5V17.5H35.5C33.567 17.5 32 15.933 32 14V7H18V38.5H42.5ZM32 45.5V49H7.5V17.5H11V42C11 43.933 12.567 45.5 14.5 45.5H32Z" fill="currentColor" />
-                        </svg>
-                      </span>
-                      <span>
-                        <h3 className="font-medium leading-tight">Driver’s Documents</h3>
-                      </span>
-                    </li> */}
                   </ol>
                 </div>
 
@@ -168,7 +140,6 @@ export default function ModalAddCustomer({ id, customer }) {
                       <input id="file-upload" name="file-upload" type="file" accept='image/*' className="sr-only" ref={fileInpRef} onChange={handleFile} />
                     </div>}
                   {modalPage === "details" &&
-                    // <div className="my-5 overflow-x-auto flex max-h-[43v whitespace-nowrap">
                     <div className="grid grid-cols-2 gap-3 justify-between mb-6 my-5">
                       <div className="flex flex-col grow">
                         <label className='font-medium block mb-3 text-gray-500'>{t('Name')}</label>
@@ -218,20 +189,6 @@ export default function ModalAddCustomer({ id, customer }) {
                       </div>}
                     </div>
                   }
-                  {/* {modalPage === "documents" &&
-                    <div className="flex justify-evenly my-5 flex-wrap gap-3">
-                      <div className="flex flex-col gap-2">
-                        <label className='font-medium block mb-3 text-gray-500'>License Front</label>
-                        <img src={uploadIcon} className="cursor-pointer" width={190} alt="" onClick={() => fileInpRef.current.click()} />
-                        <input id="file-upload" name="file-upload" type="file" accept='.pdf' className="sr-only" ref={fileInpRef} onChange={handleFile} />
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <label className='font-medium block mb-3 text-gray-500'>License Front</label>
-                        <img src={uploadIcon} className="cursor-pointer" width={190} alt="" onClick={() => fileInpRef.current.click()} />
-                        <input id="file-upload" name="file-upload" type="file" accept='.pdf' className="sr-only" ref={fileInpRef} onChange={handleFile} />
-                      </div>
-                    </div>
-                  } */}
                   {/*footer*/}
                   <div className="flex items-center justify-center border-blueGray-200 rounded-b">
                     <button
