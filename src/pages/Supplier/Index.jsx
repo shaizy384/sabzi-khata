@@ -10,18 +10,18 @@ import { getSuppliers } from '../../redux/suppliers/action';
 const Supplier = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState('all');
-  const [searchTerm, setSearchTerm] = useState('');
   const dispatch = useDispatch()
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState('all');
+  const [dropdownVisible, setDropdownVisible] = useState(false);
   const suppliers = useSelector((state) => state.suppliersReducer.getSuppliers?.data);
+
   useEffect(() => {
     if (!suppliers) {
       dispatch(getSuppliers())
     }
   }, [suppliers])
 
-  console.log("suppliers: ", suppliers);
   const customStyles = {
     rows: {
       style: {
@@ -83,208 +83,6 @@ const Supplier = () => {
       </div>),
     },
   ];
-  const data = [
-    {
-      "picture": "https://dummyimage.com/200x200/000/fff&text=Person+1",
-      "name": "John Smith",
-      "email": "john.smith@example.com",
-      "address": "SDK",
-      "total_amount": "1813",
-      "phone": "+1 (555) 123-4567",
-      "gender": "Male",
-      "dob": "1985-03-10"
-    },
-    {
-      "picture": "https://dummyimage.com/200x200/000/fff&text=Person+2",
-      "name": "Jane Doe",
-      "email": "jane.doe@example.com",
-      "address": "SDK",
-      "total_amount": "1813",
-      "phone": "+1 (555) 234-5678",
-      "gender": "Female",
-      "dob": "1990-07-18"
-    },
-    {
-      "picture": "https://dummyimage.com/200x200/000/fff&text=Person+3",
-      "name": "Alex Johnson",
-      "email": "alex.johnson@example.com",
-      "address": "SDK",
-      "total_amount": "1813",
-      "phone": "+1 (555) 345-6789",
-      "gender": "Non-binary",
-      "dob": "1988-12-05"
-    },
-    {
-      "picture": "https://dummyimage.com/200x200/000/fff&text=Person+4",
-      "name": "Emily Davis",
-      "email": "emily.davis@example.com",
-      "address": "SDK",
-      "total_amount": "1813",
-      "phone": "+1 (555) 456-7890",
-      "gender": "Female",
-      "dob": "1995-01-22"
-    },
-    {
-      "picture": "https://dummyimage.com/200x200/000/fff&text=Person+5",
-      "name": "Michael Brown",
-      "email": "michael.brown@example.com",
-      "address": "SDK",
-      "total_amount": "1813",
-      "phone": "+1 (555) 567-8901",
-      "gender": "Male",
-      "dob": "1982-09-14"
-    },
-    {
-      "picture": "https://dummyimage.com/200x200/000/fff&text=Person+6",
-      "name": "Olivia Taylor",
-      "email": "olivia.taylor@example.com",
-      "address": "SDK",
-      "total_amount": "1813",
-      "phone": "+1 (555) 678-9012",
-      "gender": "Female",
-      "dob": "1993-04-30"
-    },
-    {
-      "picture": "https://dummyimage.com/200x200/000/fff&text=Person+7",
-      "name": "Daniel Wilson",
-      "email": "daniel.wilson@example.com",
-      "address": "SDK",
-      "total_amount": "1813",
-      "phone": "+1 (555) 789-0123",
-      "gender": "Male",
-      "dob": "1987-06-08"
-    },
-    {
-      "picture": "https://dummyimage.com/200x200/000/fff&text=Person+8",
-      "name": "Sophia Miller",
-      "email": "sophia.miller@example.com",
-      "address": "SDK",
-      "total_amount": "1813",
-      "phone": "+1 (555) 890-1234",
-      "gender": "Female",
-      "dob": "1997-11-17"
-    },
-    {
-      "picture": "https://dummyimage.com/200x200/000/fff&text=Person+9",
-      "name": "Ethan Martinez",
-      "email": "ethan.martinez@example.com",
-      "address": "SDK",
-      "total_amount": "1813",
-      "phone": "+1 (555) 901-2345",
-      "gender": "Male",
-      "dob": "1984-02-25"
-    },
-    {
-      "picture": "https://dummyimage.com/200x200/000/fff&text=Person+10",
-      "name": "Ava Garcia",
-      "email": "ava.garcia@example.com",
-      "address": "SDK",
-      "total_amount": "1813",
-      "phone": "+1 (555) 012-3456",
-      "gender": "Female",
-      "dob": "1994-08-12"
-    },
-    {
-      "picture": "https://dummyimage.com/200x200/000/fff&text=Person+11",
-      "name": "Matthew Brown",
-      "email": "matthew.brown@example.com",
-      "address": "SDK",
-      "total_amount": "1813",
-      "phone": "+1 (555) 123-4567",
-      "gender": "Male",
-      "dob": "1986-03-20"
-    },
-    {
-      "picture": "https://dummyimage.com/200x200/000/fff&text=Person+12",
-      "name": "Grace Davis",
-      "email": "grace.davis@example.com",
-      "address": "SDK",
-      "total_amount": "1813",
-      "phone": "+1 (555) 234-5678",
-      "gender": "Female",
-      "dob": "1991-07-25"
-    },
-    {
-      "picture": "https://dummyimage.com/200x200/000/fff&text=Person+13",
-      "name": "Noah Taylor",
-      "email": "noah.taylor@example.com",
-      "address": "SDK",
-      "total_amount": "1813",
-      "phone": "+1 (555) 345-6789",
-      "gender": "Male",
-      "dob": "1989-12-12"
-    },
-    {
-      "picture": "https://dummyimage.com/200x200/000/fff&text=Person+14",
-      "name": "Lily Moore",
-      "email": "lily.moore@example.com",
-      "address": "SDK",
-      "total_amount": "1813",
-      "phone": "+1 (555) 456-7890",
-      "gender": "Female",
-      "dob": "1996-01-28"
-    },
-    {
-      "picture": "https://dummyimage.com/200x200/000/fff&text=Person+15",
-      "name": "Carter Johnson",
-      "email": "carter.johnson@example.com",
-      "address": "SDK",
-      "total_amount": "1813",
-      "phone": "+1 (555) 567-8901",
-      "gender": "Male",
-      "dob": "1983-09-18"
-    },
-    {
-      "picture": "https://dummyimage.com/200x200/000/fff&text=Person+16",
-      "name": "Chloe White",
-      "email": "chloe.white@example.com",
-      "address": "SDK",
-      "total_amount": "1813",
-      "phone": "+1 (555) 678-9012",
-      "gender": "Female",
-      "dob": "1992-05-05"
-    },
-    {
-      "picture": "https://dummyimage.com/200x200/000/fff&text=Person+17",
-      "name": "Logan Harris",
-      "email": "logan.harris@example.com",
-      "address": "SDK",
-      "total_amount": "1813",
-      "phone": "+1 (555) 789-0123",
-      "gender": "Male",
-      "dob": "1988-07-10"
-    },
-    {
-      "picture": "https://dummyimage.com/200x200/000/fff&text=Person+18",
-      "name": "Emma Wilson",
-      "email": "emma.wilson@example.com",
-      "address": "SDK",
-      "total_amount": "1813",
-      "phone": "+1 (555) 890-1234",
-      "gender": "Female",
-      "dob": "1998-11-23"
-    },
-    {
-      "picture": "https://dummyimage.com/200x200/000/fff&text=Person+19",
-      "name": "Mason Miller",
-      "email": "mason.miller@example.com",
-      "address": "SDK",
-      "total_amount": "1813",
-      "phone": "+1 (555) 901-2345",
-      "gender": "Male",
-      "dob": "1985-02-28"
-    },
-    {
-      "picture": "https://dummyimage.com/200x200/000/fff&text=Person+20",
-      "name": "Isabella Clark",
-      "email": "isabella.clark@example.com",
-      "address": "SDK",
-      "total_amount": "1813",
-      "phone": "+1 (555) 012-3456",
-      "gender": "Female",
-      "dob": "1993-08-15"
-    }
-  ]
 
   const filteredData = suppliers?.filter((row) => {
     // Filter by selected order status
@@ -297,15 +95,13 @@ const Supplier = () => {
     // Filter by search term in customer names
     return row.name.toLowerCase().includes(searchTerm.toLowerCase());
   });
+
   return (
     <div className="py-1 rounded-lg bg-gray-50">
       <div className='sm:mx-10 mx-5 mt-10 mb-5 flex justify-between items-center flex-wrap gap-3'>
         <div className="bg-gray-50 text-gray-900 font-semibold text-2xl">{t('All Suppliers')}</div>
         <div className="flex gap-2 ltr:ml-auto rtl:mr-auto">
           <ModalAddSupplier />
-          {/* <button onClick={() => navigate("addpurchase")} className={`bg-colorPrimary items-center justify-between flex hover:bg-opacity-90 text-white py-2 px-5 rounded ml-auto`}>
-            {t('Add Purchase')}
-          </button> */}
         </div>
       </div>
       <div className='sm:mx-10 mx-5 mt-10 flex'>

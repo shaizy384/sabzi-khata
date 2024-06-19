@@ -1,10 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import searchIcon from "../../assets/svgs/search.svg";
-// import vehicle1 from "../../assets/images/vehicle.png";
 import uploadIcon from "../../assets/svgs/upload.svg";
-import { AVAILABLE, NOT_AVAILABLE, RESERVED } from "../../constants/constants";
-import Input from "../../components/ui/Input";
 import { useTranslation } from "react-i18next";
 import { addSupplier, updateSupplier } from "../../redux/suppliers/action";
 import { toast } from "react-toastify";
@@ -14,16 +10,14 @@ export default function ModalAddSupplier({ id, supplier }) {
   const fileInpRef = useRef()
   const dispatch = useDispatch()
   const [data, setData] = useState([]);
-  const [modalPage, setModalPage] = useState("picture");
   const [imageUrl, setImageUrl] = useState(null);
-  const [search, setSearch] = useState("")
   const [showModal, setShowModal] = useState(false);
-  const handleSearch = (e) => { setSearch(e.target.value) }
+  const [modalPage, setModalPage] = useState("picture");
+
   const handleValue = (e) => {
     setData({ ...data, [e.target.name]: e.target.value })
   }
 
-  console.log(".............data: ", data);
   useEffect(() => {
     if (supplier?._id) {
       setData({ ...supplier })
@@ -36,15 +30,10 @@ export default function ModalAddSupplier({ id, supplier }) {
     !supplier?._id && setData({})
     !supplier?._id && setImageUrl(null)
     setModalPage("picture")
-    setSearch("")
   }
 
   const handleFile = (e) => {
-    console.log(e.target.files[0])
     const file = e.target.files[0];
-
-    // let fd = new FormData()
-    // fd.append("images", file);
     setData({ ...data, profile_image: file })
 
     // to show profile_image
@@ -75,24 +64,15 @@ export default function ModalAddSupplier({ id, supplier }) {
     }
     else if (modalPage === "details" && data?.name && data?.phone && data?.cnic && data?.address && data?.amount) {
       if (id) {
-        console.log(data);
         dispatch(updateSupplier(data))
         handleCancel()
       } else if (!id) {
-        console.log(data);
         dispatch(addSupplier(data))
         handleCancel()
       }
     } else {
       toast.error("All fields are reqiured")
     }
-    // else if (modalPage === "documents" && data?.profile_image) {
-    //   console.log(data);
-    //   // handleCancel()  // to close and remove all modal data
-    // }
-    // if (rider_id && vehicle_id) {
-    //   dispatch(authorizeVehicle(data))
-    // }
   }
   return (
     <>
@@ -101,7 +81,6 @@ export default function ModalAddSupplier({ id, supplier }) {
           <path fill-rule="evenodd" clip-rule="evenodd" d="M18 17.153H2V1.99599H10V0.101362H0V19.0476H20V9.57448H18V17.153ZM6 9.47597L15.839 0L20 3.91904L9.842 13.3637H6V9.47597Z" fill="#2cb766" />
         </svg></abbr>
       }
-      {/* <button onClick={() => setShowModal(true)} className='w-[128px] h-[37px] bg-colorPrimary text-white hover:ring-2 ring-inset hover:bg-white hover:text-colorPrimary hover:ring-colorPrimary rounded-lg text-base'>Add New</button> */}
       {showModal ? (
         <>
           <div
@@ -124,7 +103,6 @@ export default function ModalAddSupplier({ id, supplier }) {
                         <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <g clipPath="url(#clip0_2797_6743)"><path fillRule="evenodd" clipRule="evenodd" d="M50.4 46.522C50.4 46.8216 50.316 47.0987 50.2292 47.3703C49.6244 39.1271 44.5704 32.1495 37.45 28.7923C40.2304 26.2331 42 22.5988 42 18.522C42 12.6952 38.4384 7.7084 33.376 5.6H47.6C49.1456 5.6 50.4 5.77637 50.4 7.32197V46.522ZM44.6964 50.4H11.13C11.13 50.4 11.1132 49.6746 11.1132 49.5626C11.1132 40.8938 17.7128 33.4881 26.1492 32.6061C28 32.8525 28.714 32.5414 29.7444 32.4126C38.15 33.3254 44.7132 40.9443 44.7132 49.5879C44.7132 49.6999 44.6964 50.4 44.6964 50.4ZM5.6 46.522V7.32197C5.6 5.77637 6.8544 5.6 8.4 5.6H22.624C17.5616 7.7084 14 12.6952 14 18.522C14 22.568 15.7416 26.1826 18.4856 28.739C11.4996 31.9814 6.45958 38.6961 5.63358 46.6901C5.63078 46.6313 5.6 46.5808 5.6 46.522ZM36.4 18.522C36.4 22.554 33.5412 25.9283 29.7444 26.7347C28.0924 26.6003 27.6304 26.6222 26.2304 26.7258C22.4476 25.911 19.6 22.5456 19.6 18.522C19.6 13.8908 23.3688 10.122 28 10.122C32.6312 10.122 36.4 13.8908 36.4 18.522ZM50.4 0H5.6C2.506 0 0 2.506 0 5.6V50.4C0 53.4912 2.506 56 5.6 56H50.4C53.494 56 56 53.4912 56 50.4V5.6C56 2.506 53.494 0 50.4 0Z" fill="currentColor" /></g><defs><clipPath id="clip0_2797_6743"><rect width="56" height="56" fill="white" /></clipPath></defs>
                         </svg>
-
                       </span>
                       <span>
                         <h3 className="font-medium leading-tight">{t("Supplier's Profile Picture")}</h3>
@@ -140,16 +118,6 @@ export default function ModalAddSupplier({ id, supplier }) {
                         <h3 className="font-medium leading-tight">{t("Supplier's Personal Details ")}</h3>
                       </span>
                     </li>
-                    {/* <li className={"flex items-center text-gray-400 space-x-3 rtl:space-x-reverse " + (modalPage === 'documents' && 'text-colorPrimary')}>
-                      <span className="hidden md:flex items-center justify-center w-9 h-9 shrink-0">
-                        <svg width="50" height="56" viewBox="0 0 50 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path fillRule="evenodd" clipRule="evenodd" d="M39 45.5V50.75C39 53.6494 36.6494 56 33.75 56H5.75C2.8505 56 0.5 53.6494 0.5 50.75V15.75C0.5 12.8505 2.8505 10.5 5.75 10.5H11V3.5C11 1.567 12.567 0 14.5 0H36.1006C37.957 0 39.7374 0.737499 41.0503 2.05025L47.4497 8.44974C48.7626 9.76252 49.5 11.543 49.5 13.3995V42C49.5 43.933 47.933 45.5 46 45.5H39ZM42.5 38.5V17.5H35.5C33.567 17.5 32 15.933 32 14V7H18V38.5H42.5ZM32 45.5V49H7.5V17.5H11V42C11 43.933 12.567 45.5 14.5 45.5H32Z" fill="currentColor" />
-                        </svg>
-                      </span>
-                      <span>
-                        <h3 className="font-medium leading-tight">Driver’s Documents</h3>
-                      </span>
-                    </li> */}
                   </ol>
                 </div>
 
@@ -172,7 +140,6 @@ export default function ModalAddSupplier({ id, supplier }) {
                       <input id="file-upload" name="file-upload" type="file" accept='image/*' className="sr-only" ref={fileInpRef} onChange={handleFile} />
                     </div>}
                   {modalPage === "details" &&
-                    // <div className="my-5 overflow-x-auto flex max-h-[43v whitespace-nowrap">
                     <div className="grid grid-cols-2 gap-3 justify-between mb-6 my-5">
                       <div className="flex flex-col grow">
                         <label className='font-medium block mb-3 text-gray-500'>{t("Name")}</label>
@@ -222,20 +189,6 @@ export default function ModalAddSupplier({ id, supplier }) {
                       </div>}
                     </div>
                   }
-                  {/* {modalPage === "documents" &&
-                    <div className="flex justify-evenly my-5 flex-wrap gap-3">
-                      <div className="flex flex-col gap-2">
-                        <label className='font-medium block mb-3 text-gray-500'>License Front</label>
-                        <img src={uploadIcon} className="cursor-pointer" width={190} alt="" onClick={() => fileInpRef.current.click()} />
-                        <input id="file-upload" name="file-upload" type="file" accept='.pdf' className="sr-only" ref={fileInpRef} onChange={handleFile} />
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <label className='font-medium block mb-3 text-gray-500'>License Front</label>
-                        <img src={uploadIcon} className="cursor-pointer" width={190} alt="" onClick={() => fileInpRef.current.click()} />
-                        <input id="file-upload" name="file-upload" type="file" accept='.pdf' className="sr-only" ref={fileInpRef} onChange={handleFile} />
-                      </div>
-                    </div>
-                  } */}
                   {/*footer*/}
                   <div className="flex items-center justify-center border-blueGray-200 rounded-b">
                     <button
