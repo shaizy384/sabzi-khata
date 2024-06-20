@@ -1,10 +1,4 @@
-import { GET_SUPPLIERS, GET_SUPPLIER_DETAILS, BLOCK_SUPPLIER, ADD_CUSTOMER, ADD_SUPPLIER, UPDATE_SUPPLIER, SET_SUPPLIER_STATUS, GET_SALES, ADD_SALE, GET_PURCHASE, ADD_PURCHASE, GET_SUPPLIER_TRANSACTIONS, ADD_SUPPLIER_TRANSACTION, GET_SUPPLIER_STATS, ADD_SUPPLIER_CASH } from "../actionTypes"
-
-export const getSupplierStats = () => {
-    return ({
-        type: GET_SUPPLIER_STATS
-    })
-}
+import { GET_SUPPLIERS, GET_SUPPLIER_DETAILS, ADD_SUPPLIER, UPDATE_SUPPLIER, SET_SUPPLIER_STATUS, ADD_PURCHASE, GET_SUPPLIER_TRANSACTIONS, ADD_SUPPLIER_CASH } from "../actionTypes"
 
 export const getSuppliers = () => {
     return ({
@@ -29,14 +23,6 @@ export const setSupplierStatus = (data) => {
         payload: data
     })
 }
-
-
-export const getPurchases = (data) => {
-    return ({
-        type: GET_PURCHASE,
-        payload: data
-    })
-}
 export const addPurchase = (data) => {
     return ({
         type: ADD_PURCHASE,
@@ -49,29 +35,15 @@ export const getSupplierTransactions = (data) => {
         payload: data
     })
 }
-export const addSupplierTransaction = (data) => {
-    return ({
-        type: ADD_SUPPLIER_TRANSACTION,
-        payload: data
-    })
-}
 export const getSupplierDetails = (data) => {
     return ({
         type: GET_SUPPLIER_DETAILS,
         payload: data
     })
 }
-
-
 export const addSupplierCash = (data) => {
     return ({
         type: ADD_SUPPLIER_CASH,
         payload: data
     })
 }
-// export const blockSupplier = (data) => {
-//     return ({
-//         type: BLOCK_SUPPLIER,
-//         payload: data
-//     })
-// }

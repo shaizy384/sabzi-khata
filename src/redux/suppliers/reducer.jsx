@@ -5,17 +5,6 @@ import {
   GET_SUPPLIER_DETAILS,
   GET_SUPPLIER_DETAILS_SUCCESS,
   GET_SUPPLIER_DETAILS_FAILURE,
-  GET_SUPPLIER_WARNINGS,
-  GET_SUPPLIER_WARNINGS_SUCCESS,
-  GET_SUPPLIER_WARNINGS_FAILURE,
-  SET_SUPPLIER_WARNINGS,
-  SET_SUPPLIER_WARNINGS_SUCCESS,
-  SET_SUPPLIER_WARNINGS_FAILURE,
-  BLOCK_SUPPLIER,
-  BLOCK_SUPPLIER_SUCCESS,
-  BLOCK_SUPPLIER_FAILURE,
-  SUPPLIER_PERSONAL_DETAILS,
-  ORDER_DETAILS,
   ADD_SUPPLIER,
   ADD_SUPPLIER_SUCCESS,
   ADD_SUPPLIER_FAILURE,
@@ -25,26 +14,17 @@ import {
   SET_SUPPLIER_STATUS,
   SET_SUPPLIER_STATUS_SUCCESS,
   SET_SUPPLIER_STATUS_FAILURE,
-  GET_PURCHASE,
-  GET_PURCHASE_SUCCESS,
-  GET_PURCHASE_FAILURE,
   ADD_PURCHASE,
   ADD_PURCHASE_SUCCESS,
   ADD_PURCHASE_FAILURE,
-  ADD_SUPPLIER_TRANSACTION,
-  ADD_SUPPLIER_TRANSACTION_SUCCESS,
-  ADD_SUPPLIER_TRANSACTION_FAILURE,
   GET_SUPPLIER_TRANSACTIONS,
   GET_SUPPLIER_TRANSACTIONS_SUCCESS,
   GET_SUPPLIER_TRANSACTIONS_FAILURE,
-  GET_SUPPLIER_STATS,
-  GET_SUPPLIER_STATS_SUCCESS,
-  GET_SUPPLIER_STATS_FAILURE,
   ADD_SUPPLIER_CASH,
   ADD_SUPPLIER_CASH_SUCCESS,
   ADD_SUPPLIER_CASH_FAILURE
 } from "../actionTypes";
-import { addSupplier, setSupplierStatus, updateSupplier } from "./action";
+
 const initial_state = {
   getSuppliers: {
     data: null,
@@ -83,17 +63,6 @@ const initial_state = {
     loading: false,
     error: null,
   },
-  addSupplierTransaction: {
-    data: null,
-    loading: false,
-    error: null,
-  },
-
-  getSupplierStats: {
-    data: null,
-    loading: false,
-    error: null,
-  },
 
   getSupplierDetails: {
     data: null,
@@ -106,58 +75,10 @@ const initial_state = {
     loading: false,
     error: null,
   },
-  // setSupplierBlock: {
-  //   data: null,
-  //   loading: false,
-  //   error: null,
-  // },
-  // supplierPersonalDetails: {
-  //   data: null,
-  //   loading: false,
-  //   error: null,
-  // },
-  // orderDetails: {
-  //   data: null,
-  //   loading: false,
-  //   error: null,
-  // },
 };
 
 const suppliersReducer = (state = initial_state, { type, payload }) => {
   switch (type) {
-    // case SUPPLIER_PERSONAL_DETAILS:
-    //   return {
-    //     ...state,
-    //     userPersonalDetails: {
-    //       loading: false,
-    //       data: payload,
-    //     }
-    //   };
-
-    case GET_SUPPLIER_STATS:
-      return {
-        ...state,
-        getSupplierStats: {
-          loading: true,
-        }
-      };
-    case GET_SUPPLIER_STATS_SUCCESS:
-      console.log("payload ", payload);
-      return {
-        ...state,
-        getSupplierStats: {
-          loading: false,
-          data: payload.data ? payload.data : [],
-        }
-      };
-    case GET_SUPPLIER_STATS_FAILURE:
-      return {
-        ...state,
-        getSupplierStats: {
-          loading: false,
-          error: payload,
-        }
-      };
 
     case GET_SUPPLIERS:
       return {
@@ -255,7 +176,6 @@ const suppliersReducer = (state = initial_state, { type, payload }) => {
         }
       };
 
-
     case GET_SUPPLIER_TRANSACTIONS:
       return {
         ...state,
@@ -264,7 +184,6 @@ const suppliersReducer = (state = initial_state, { type, payload }) => {
         }
       };
     case GET_SUPPLIER_TRANSACTIONS_SUCCESS:
-      console.log("GET_SUPPLIER_TRANSACTIONS_SUCCESS: ", payload);
       return {
         ...state,
         getSupplierTransactions: {
@@ -276,30 +195,6 @@ const suppliersReducer = (state = initial_state, { type, payload }) => {
       return {
         ...state,
         getSupplierTransactions: {
-          loading: false,
-          error: payload,
-        }
-      };
-
-    case ADD_SUPPLIER_TRANSACTION:
-      return {
-        ...state,
-        addSupplierTransaction: {
-          loading: true,
-        }
-      };
-    case ADD_SUPPLIER_TRANSACTION_SUCCESS:
-      return {
-        ...state,
-        addSupplierTransaction: {
-          loading: false,
-          data: payload.data,
-        }
-      };
-    case ADD_SUPPLIER_TRANSACTION_FAILURE:
-      return {
-        ...state,
-        addSupplierTransaction: {
           loading: false,
           error: payload,
         }
@@ -329,32 +224,6 @@ const suppliersReducer = (state = initial_state, { type, payload }) => {
         }
       };
 
-    // case BLOCK_SUPPLIER:
-    //   return {
-    //     ...state,
-    //     setUserBlock: {
-    //       loading: true,
-    //     }
-    //   };
-    // case BLOCK_SUPPLIER_SUCCESS:
-    //   return {
-    //     ...state,
-    //     setUserBlock: {
-    //       loading: false,
-    //       data: payload.data,
-    //     }
-    //   };
-    // case BLOCK_SUPPLIER_FAILURE:
-    //   return {
-    //     ...state,
-    //     setUserBlock: {
-    //       loading: false,
-    //       error: payload,
-    //     }
-    //   };
-
-
-
     case ADD_SUPPLIER_CASH:
       return {
         ...state,
@@ -374,32 +243,6 @@ const suppliersReducer = (state = initial_state, { type, payload }) => {
       return {
         ...state,
         addSupplierCash: {
-          loading: false,
-          error: payload,
-        }
-      };
-
-
-
-    case GET_PURCHASE:
-      return {
-        ...state,
-        getPurchases: {
-          loading: true,
-        }
-      };
-    case GET_PURCHASE_SUCCESS:
-      return {
-        ...state,
-        getPurchases: {
-          loading: false,
-          data: payload.data ? payload.data : [],
-        }
-      };
-    case GET_PURCHASE_FAILURE:
-      return {
-        ...state,
-        getPurchases: {
           loading: false,
           error: payload,
         }

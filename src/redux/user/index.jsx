@@ -6,7 +6,6 @@ import { GET_USER, GET_USER_FAILURE, GET_USER_SUCCESS, LOGOUT } from "../actionT
 function* watcherGetUser() {
     let url = '/users/getUser';
     const Data = yield call(callApi, url, 'GET', '', true);
-    // console.log("..................................", Data.data)
     if (Data.status === 200 || Data.status === 201) {
         console.log("Data.data", Data)
         yield put({ type: GET_USER_SUCCESS, payload: Data.data });

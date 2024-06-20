@@ -16,7 +16,7 @@ const Products = () => {
     if (!productsData) {
       dispatch(getProducts())
     }
-  }, [productsData])
+  }, [productsData, dispatch])
 
   const handleDisable = (id) => {
     dispatch(setProductStatus(id))
@@ -126,9 +126,7 @@ const Products = () => {
             filteredData?.map(p => {
               return <div className="w-[18rem] p-6 bg-white border border-gray-200 rounded-lg shadow flex items-center justify-between">
                 <div className="">
-                  <a href="#">
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{p.name}</h5>
-                  </a>
+                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{p.name}</h5>
                   <p className="mb-3 font-semibold text-gray-600">{t(p.unit)}</p>
                 </div>
                 <div>

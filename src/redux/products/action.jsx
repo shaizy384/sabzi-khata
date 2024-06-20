@@ -18,7 +18,6 @@ export const updateProduct = (data) => {
     })
 }
 export const setProductStatus = (data) => {
-    console.log("data.payload status: ", data);
     return ({
         type: SET_PRODUCT_STATUS,
         payload: data

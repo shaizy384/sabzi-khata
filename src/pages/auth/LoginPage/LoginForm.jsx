@@ -11,7 +11,7 @@ import Loader from "../../../assets/gifs/loader.gif";
 
 const LoginForm = () => {
   const dispatch = useDispatch()
-  const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+  const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/ //eslint-disable-line
   const [data, setData] = useState({ email: "", password: "" });
   const loading = useSelector((state) => state.authReducer?.loading);
 

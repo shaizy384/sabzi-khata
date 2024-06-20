@@ -24,7 +24,6 @@ const authReducer = (state = initial_state, { type, payload }) => {
 
         case SIGNUP_SUCCESS:
             localStorage.setItem('authToken', `Bearer ${payload.data.accessToken}`);
-            console.log("SIGNUP_SUCCESS SIGNUP_SUCCESS", payload);
             return {
                 ...state,
                 loading: false,
@@ -35,7 +34,6 @@ const authReducer = (state = initial_state, { type, payload }) => {
             }
 
         case SIGNUP_FAILURE:
-            console.log("SIGNUP_FAILURE SIGNUP_FAILURE");
             return {
                 ...state,
                 loading: false,
@@ -49,7 +47,6 @@ const authReducer = (state = initial_state, { type, payload }) => {
             }
 
         case LOGIN_SUCCESS:
-            console.log("LOGIN_SUCCESS LOGIN_SUCCESS", payload);
             localStorage.setItem('authToken', `Bearer ${payload.data.accessToken}`);
             return {
                 ...state,
@@ -61,7 +58,6 @@ const authReducer = (state = initial_state, { type, payload }) => {
             }
 
         case LOGIN_FAILURE:
-            console.log("LOGIN_FAILURE LOGIN_FAILURE");
             return {
                 ...state,
                 loading: false,

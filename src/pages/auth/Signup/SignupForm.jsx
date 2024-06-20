@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Loader from "../../../assets/gifs/loader.gif";
 import Input from "../../../components/ui/Input";
 import lock from "../../../assets/svgs/lock.svg";
@@ -10,8 +10,8 @@ import { signupUser } from "../../../redux/auth/action";
 
 const SignupForm = () => {
   const dispatch = useDispatch();
-  const [rememberMe, setRememberMe] = useState(false);
-  const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+  // const [rememberMe, setRememberMe] = useState(false);
+  const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;  //eslint-disable-line
   const [data, setData] = useState({ fullName: "", email: "", password: "", password_confirmation: "" });
   const loading = useSelector((state) => state.authReducer?.loading);
 
@@ -20,9 +20,9 @@ const SignupForm = () => {
     console.log(data);
   }
 
-  const handleRememberMeChange = () => {
-    setRememberMe(!rememberMe);
-  };
+  // const handleRememberMeChange = () => {
+  //   setRememberMe(!rememberMe);
+  // };
 
   const handleSubmit = async () => {
     if (loading) return;

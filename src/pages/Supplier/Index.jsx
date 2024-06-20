@@ -20,7 +20,7 @@ const Supplier = () => {
     if (!suppliers) {
       dispatch(getSuppliers())
     }
-  }, [suppliers])
+  }, [suppliers, dispatch])
 
   const customStyles = {
     rows: {
@@ -48,7 +48,7 @@ const Supplier = () => {
       selector: row => (<img
         className="ml-5 w-8 h-8 rounded-full"
         src={row.profile_image}
-        alt="user photo"
+        alt="user"
       />),
     },
     {
@@ -70,7 +70,7 @@ const Supplier = () => {
     {
       name: t('Approved/ Disapproved'),
       selector: row => (
-        row?.status === 1 && <div className='text-[#0DA06A] bg-[#F0FFFA] py-2 px-5 rounded-full'>{"Active"}</div> || row?.status === 0 && <div className='text-sm text-[#E63E36] bg-[#e63e361a] py-1 px-3 rounded-full'>{"Blocked"}</div>
+        (row?.status === 1 && <div className='text-[#0DA06A] bg-[#F0FFFA] py-2 px-5 rounded-full'>{"Active"}</div>) || (row?.status === 0 && <div className='text-sm text-[#E63E36] bg-[#e63e361a] py-1 px-3 rounded-full'>{"Blocked"}</div>)
       ),
     },
     {

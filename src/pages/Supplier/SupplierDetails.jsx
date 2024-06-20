@@ -20,13 +20,13 @@ const SupplierDetails = () => {
     if (id !== personId) {
       setPersonId(id)
     }
-  }, [id])
+  }, [id, personId])
 
   useEffect(() => {
     if (id && personId !== id) {
       dispatch(getSupplierDetails(id))
     }
-  }, [id])
+  }, [id, personId, dispatch])
 
   return (
     <div className="py-1 rounded-lg bg-gray-50">
