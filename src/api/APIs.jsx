@@ -1,6 +1,7 @@
 import axios from "axios";
 export const callApi = async (url, requestType, body, auth) => {
-  let host = 'http://localhost:2800/api/v1';
+  let host = process.env.REACT_APP_BACKEND_API;
+  // let host = 'http://localhost:2800/api/v1';
   let token = localStorage.getItem("authToken");
 
   if (requestType === "GET") {
